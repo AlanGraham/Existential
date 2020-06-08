@@ -19,7 +19,7 @@ steps:
 - task: VisualStudioTestPlatformInstaller@1
   inputs:
     packageFeedSelector: 'nugetOrg'
-    versionSelector: 'latestPreRelease'
+    versionSelector: 'latestStable'
 
 - task: VSTest@2
   displayName: 'run tests'
@@ -33,7 +33,7 @@ steps:
 
 - task: PublishTestResults@2
   inputs:
-    testResultsFormat: 'NUnit'
+    testResultsFormat: 'VSTest'
     testResultsFiles: '**/TEST-*.xml'
     mergeTestResults: true
     failTaskOnFailedTests: true
