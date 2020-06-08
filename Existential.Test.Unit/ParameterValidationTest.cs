@@ -179,5 +179,12 @@ namespace GavinGreig.Test
                     ParameterValidation.EnsureNotNull(theNullText, "testparam");
                 });
         }
+
+        /// <summary>A deliberately failing test to check build behaviour.</summary>
+        [Test]
+        public static void Fail()
+        {
+            Assert.Fail();
+        }
     }
 }
