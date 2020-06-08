@@ -1,0 +1,105 @@
+﻿<Project>
+  <PropertyGroup>
+    <SharedFiles>$(SolutionDir).sharedFiles\</SharedFiles>
+    <LangVersion>latest</LangVersion>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <DocumentationFile Condition="!$(MSBuildProjectName.Contains(`QUnit`))">$(MSBuildProjectName).xml</DocumentationFile>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(DocumentationFile);StrykerOutput\**</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Configure Code Analysis -->
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <DefaultRuleSet>GavinGreig.ruleset</DefaultRuleSet>
+    <TestRuleSet>GavinGreigTest.ruleset</TestRuleSet>
+    <BridgeRuleSet>GavinGreigJS.ruleset</BridgeRuleSet>
+    <BridgeTestRuleSet>GavinGreigJSTest.ruleset</BridgeTestRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Use naming patterns to identify types of projects that need special-casing. -->
+    <IsJSProject>false</IsJSProject>
+    <IsDotNetProject>false</IsDotNetProject>
+    <IsTestProject>false</IsTestProject>
+    <IsBridgeProject>false</IsBridgeProject>
+    <IsJSProject Condition="$(MSBuildProjectName.Contains(`.JS`))">true</IsJSProject>
+    <IsJSProject Condition="$(MSBuildProjectName.Contains(`QUnit`))">true</IsJSProject>
+    <IsDotNetProject Condition="$(MSBuildProjectName.Contains(`.Net`))">true</IsDotNetProject>
+    <IsBridgeProject Condition=" '$(IsJSProject)' == 'true' Or '$(IsDotNetProject)' == 'true' ">true</IsBridgeProject>
+    <IsTestProject Condition="$(MSBuildProjectName.Contains(`Test`))">true</IsTestProject>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(IsBridgeProject)' == 'true'">
+    <!-- Bridge doesn't adhere to a strict language version, but temporarily enabling this can help find issues faster. -->
+    <!--<LangVersion>6</LangVersion>-->
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(IsJSProject)' != 'true'">
+    <!-- Always strong name the assembly, except for JS projects. -->
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(SharedFiles)ggreig.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(IsJSProject)' == 'true'">
+    <!-- Exclude .Net-specific files and folders. -->
+    <DefaultItemExcludes>$(DefaultItemExcludes);bin.net\**;obj.net\**</DefaultItemExcludes>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(DocumentationFile.Replace(`JS`,`Net`))</DefaultItemExcludes>
+
+    <DefineConstants>$(DefineConstants);JavaScript</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(IsDotNetProject)' == 'true'">
+    <!-- Redirect output folders to avoid clash with JS folders (which can't be redirected). -->
+    <BaseIntermediateOutputPath>obj.net</BaseIntermediateOutputPath>
+    <BaseOutputPath>bin.net</BaseOutputPath>
+
+    <!-- Exclude JS-specific files and folders. -->
+    <DefaultItemExcludes>$(DefaultItemExcludes);bin\**;obj\**;bridge\**;packages.config;bridge.json</DefaultItemExcludes>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(DocumentationFile.Replace(`Net`,`JS`))</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(IsTestProject)' == 'true'">
+    <DocumentationFile></DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(IsBridgeProject)' != 'true' And '$(IsTestProject)' != 'true' ">
+    <CodeAnalysisRuleSet>$(SharedFiles)$(DefaultRuleSet)</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(IsBridgeProject)' != 'true' And '$(IsTestProject)' == 'true' ">
+    <CodeAnalysisRuleSet>$(SharedFiles)$(TestRuleSet)</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(IsBridgeProject)' == 'true' And '$(IsTestProject)' != 'true' ">
+    <CodeAnalysisRuleSet>$(SharedFiles)$(BridgeRuleSet)</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(IsBridgeProject)' == 'true' And '$(IsTestProject)' == 'true' ">
+    <CodeAnalysisRuleSet>$(SharedFiles)$(BridgeTestRuleSet)</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="$(SharedFiles)CompanyInfo.cs" Link="Properties\CompanyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="$(SharedFiles)stylecop.json" Link="Properties\stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(IsBridgeProject)' != 'true' And '$(IsTestProject)' != 'true' ">
+    <AdditionalFiles Include="$(SharedFiles)$(DefaultRuleSet)" Link="Properties\$(DefaultRuleSet)" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(IsBridgeProject)' != 'true' And '$(IsTestProject)' == 'true' ">
+    <AdditionalFiles Include="$(SharedFiles)$(TestRuleSet)" Link="Properties\$(TestRuleSet)" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(IsBridgeProject)' == 'true' And '$(IsTestProject)' != 'true' ">
+    <AdditionalFiles Include="$(SharedFiles)$(BridgeRuleSet)" Link="Properties\$(BridgeRuleSet)" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(IsBridgeProject)' == 'true' And '$(IsTestProject)' == 'true' ">
+    <AdditionalFiles Include="$(SharedFiles)$(BridgeTestRuleSet)" Link="Properties\$(BridgeTestRuleSet)" />
+  </ItemGroup>
+</Project>
