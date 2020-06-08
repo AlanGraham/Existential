@@ -34,8 +34,8 @@ steps:
 
 - task: PublishTestResults@2
   inputs:
-    testResultsFormat: 'VSTest'
-    testResultsFiles: '**/*.trx'
+    testResultsFormat: 'JUnit'
+    testResultsFiles: '**/**Test.xml'
     mergeTestResults: true
     failTaskOnFailedTests: true
 
