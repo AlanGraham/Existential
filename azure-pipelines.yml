@@ -30,6 +30,7 @@ steps:
       !**\*TestAdapter.dll
       !**\obj\**
     searchFolder: '$(System.DefaultWorkingDirectory)'
+    codeCoverageEnabled: true
 
 - task: PublishTestResults@2
   inputs:
