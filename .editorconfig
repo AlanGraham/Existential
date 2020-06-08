@@ -238,3 +238,7 @@ csharp_preserve_single_line_blocks = true
 
 # Analyzer settings
 dotnet_diagnostic.SA1101.severity = none
+
+# Reduced strictness of checking for test projects.
+[*Test*.{cs,csx,vb,vbx}]
+dotnet_diagnostic.CA1303.severity = none
