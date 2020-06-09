@@ -182,9 +182,6 @@ namespace GavinGreig.Test
 
         /// <summary>A deliberately failing test to check build behaviour.</summary>
         [Test]
-        public static void Fail()
-        {
-            Assert.Fail();
-        }
+        public static void Fail() => Assert.Fail();
     }
 }
