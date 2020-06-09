@@ -26,10 +26,10 @@ steps:
   displayName: 'dotnet test'
   inputs:
     command: 'test'
-    projects: 'Existential.Test.Unit\Existential.Test.Unit.Net.csproj'
+    projects: '**\*.Test.Unit.Net.csproj'
     arguments: '-c $(BuildConfiguration) --collect:"XPlat Code Coverage" -- RunConfiguration.DisableAppDomain=true'
     testRunTitle: 'Run Test and collect Coverage'
-    workingDirectory: 'Existential.Test.Unit'
+#    workingDirectory: 'Existential.Test.Unit'
 
 - task: DotNetCoreCLI@2
   inputs:
