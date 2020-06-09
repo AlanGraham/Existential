@@ -25,6 +25,7 @@ namespace GavinGreig.Test.Architecture
             var theTargetAssembly = Assembly.GetAssembly(typeof(ParameterValidation));
             ConditionList theRootNamespaceRule = Types.InAssembly(theTargetAssembly)
                 .That().AreNotNested()
+                .And().DoNotResideInNamespaceStartingWith("Coverlet")
                 .Should().ResideInNamespaceStartingWith(theRootNamespace);
 
             // Act
