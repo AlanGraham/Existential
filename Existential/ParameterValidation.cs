@@ -70,7 +70,7 @@ namespace GavinGreig
         /// <param name="inName">The name of the value being checked, as a string.</param>
         /// <returns>The validated value.</returns>
         /// <exception cref="System.ArgumentNullException">Thrown if the object value is null.</exception>
-        public static T EnsureNotNull<T>([ValidatedNotNull]T inValue, string inName)
+        public static T EnsureNotNull<T>([ValidatedNotNull] T inValue, string inName)
         {
             if (inValue == null)
             {
@@ -83,25 +83,28 @@ namespace GavinGreig
         /// <summary>
         /// Ensures the specified value is of the expected type; otherwise throws an ArgumentException.
         /// </summary>
-        /// <param name="inExpectedType">The expected type of the value..</param>
+        /// <typeparam name="T">The expected type.</typeparam>
         /// <param name="inActual">The value to check for an expected type.</param>
         /// <param name="inName">The name of the value being checked, as a string.</param>
         /// <exception cref="System.ArgumentException">
         /// Thrown if the object type is not as expected.
         /// </exception>
-        public static void EnsureOfType(System.Type inExpectedType, [ValidatedOfType]object inActual, string inName)
+        /// <returns>The original value.</returns>
+        public static T EnsureOfType<T>([ValidatedOfType] object inActual, string inName)
+            where T : class
         {
-            ParameterValidation.EnsureNotNull(inExpectedType, nameof(inExpectedType));
-
-            if (!IsOfType(inExpectedType, inActual))
+            if (!(inActual is T))
             {
+                ParameterValidation.EnsureNotNull(inActual, "inActual");
                 string theMessage = string.Format(
                     System.Globalization.CultureInfo.CurrentCulture,
                     "An argument of type {0} was provided (expected {1}).",
                     inActual.GetType().GetGenericAwareFullTypeName(),
-                    inExpectedType.GetGenericAwareFullTypeName());
+                    typeof(T).GetGenericAwareFullTypeName());
                 throw new GavinGreig.ArgumentTypeException(theMessage, inName);
             }
+
+            return inActual as T;
         }
 
         /// <summary>Throws an ArgumentNullException if the specified string is null or empty.</summary>
@@ -111,7 +114,7 @@ namespace GavinGreig
         /// <exception cref="System.ArgumentNullException">
         /// Thrown if the string is null or empty.
         /// </exception>
-        public static string EnsureStringNotNullOrEmpty([ValidatedNotNull]string inValue, string inName)
+        public static string EnsureStringNotNullOrEmpty([ValidatedNotNull] string inValue, string inName)
             => EnsureStringNotNullOrEmpty(inValue, inName, trim: true);
 
         /// <summary>Throws an ArgumentNullException if the specified string is null or empty.</summary>
@@ -122,7 +125,7 @@ namespace GavinGreig
         /// <exception cref="System.ArgumentNullException">
         /// Thrown if the string is null or empty.
         /// </exception>
-        public static string EnsureStringNotNullOrEmpty([ValidatedNotNull]string inValue, string inName, bool trim)
+        public static string EnsureStringNotNullOrEmpty([ValidatedNotNull] string inValue, string inName, bool trim)
         {
             if (inValue == null)
             {

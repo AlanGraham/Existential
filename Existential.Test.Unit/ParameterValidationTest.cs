@@ -167,6 +167,20 @@ namespace GavinGreig.Test
                 });
         }
 
+        /// <summary>Checks that validation succeeds when a GUID is not-empty.</summary>
+        /// <param name="assert">Required for compatibility with QUnit's assert instances.</param>
+        [Test]
+        public static void EnsureGuidNotEmpty_WithValidGuid_ReturnsValue()
+        {
+            // Arrange
+            var theParameter = new Guid("1d572f1a-c8e9-4ff8-8ec6-9e585aa64e74");
+
+            // Act
+            Guid theResult = ParameterValidation.EnsureGuidNotEmpty(theParameter, "testparam");
+
+            Assert.That(theResult, Is.EqualTo(theParameter));
+        }
+
         /// <summary>Checks that validation fails when a string is null.</summary>
         /// <param name="assert">Required for compatibility with QUnit's assert instances.</param>
         [Test]
@@ -178,6 +192,47 @@ namespace GavinGreig.Test
                     string theNullText = null; // Need to use a variable, as type can't be inferred from a raw null.
                     ParameterValidation.EnsureNotNull(theNullText, "testparam");
                 });
+        }
+
+        [Test]
+        public static void EnsureOfType_WithExpectedType_ReturnsValue()
+        {
+            // Arrange
+            var theParameter = new ExpectedType();
+
+            // Act
+            ExpectedType theResult = ParameterValidation.EnsureOfType<ExpectedType>(theParameter, "testparam");
+
+            Assert.That(theResult, Is.EqualTo(theParameter));
+        }
+
+        [Test]
+        public static void EnsureOfType_WithNull_ThrowsException()
+        {
+            Assert.Throws<ArgumentNullException>(
+                () =>
+                {
+                    ParameterValidation.EnsureOfType<ExpectedType>(null, "testparam");
+                });
+        }
+
+        [Test]
+        public static void EnsureOfType_WithOtherType_ThrowsException()
+        {
+            Assert.Throws<ArgumentTypeException>(
+                () =>
+                {
+                    var theParameter = new UnexpectedType();
+                    ParameterValidation.EnsureOfType<ExpectedType>(theParameter, "testparam");
+                });
+        }
+
+        private class ExpectedType
+        {
+        }
+
+        private class UnexpectedType
+        {
         }
     }
 }
