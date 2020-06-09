@@ -4,11 +4,15 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
+#jobs:
+#- job: build
+#  displayName: "Project Build"
+  
 trigger:
 - master
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage:  'windows-lates'
 
 steps:
 - task: DotNetCoreCLI@2
@@ -16,28 +20,52 @@ steps:
   inputs:
     command: 'build'
 
-- task: VisualStudioTestPlatformInstaller@1
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet test'
   inputs:
-    packageFeedSelector: 'nugetOrg'
-    versionSelector: 'latestStable'
+    command: 'test'
+    projects: '**/*Tests/*.csproj'
+    arguments: '-c $(BuildConfiguration) --collect:"XPlat Code Coverage" -- RunConfiguration.DisableAppDomain=true'
+    testRunTitle: 'Run Test and collect Coverage'
 
-- task: VSTest@2
-  displayName: 'run tests'
+- task: DotNetCoreCLI@2
   inputs:
-    testSelector: 'testAssemblies'
-    testAssemblyVer2: |
-      **\*test*.dll
-      !**\*TestAdapter.dll
-      !**\obj\**
-    searchFolder: '$(System.DefaultWorkingDirectory)'
-    codeCoverageEnabled: true
+    command: custom
+    custom: tool
+    arguments: install --tool-path . dotnet-reportgenerator-globaltool
+  displayName: Install ReportGenerator tool
 
-- task: PublishTestResults@2
+- script: reportgenerator -reports:$(Agent.TempDirectory)/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/coverlet/reports -reporttypes:"Cobertura"
+  displayName: Create reports
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish code coverage'
   inputs:
-    testResultsFormat: NUnit
-    testResultsFiles: '**/**Test*.xml'
-    mergeTestResults: true
-    failTaskOnFailedTests: true
+    codeCoverageTool: Cobertura
+    summaryFileLocation: $(Build.SourcesDirectory)/coverlet/reports/Cobertura.xml  
+
+#- task: VisualStudioTestPlatformInstaller@1
+#  inputs:
+#    packageFeedSelector: 'nugetOrg'
+#    versionSelector: 'latestStable'
+
+#- task: VSTest@2
+#  displayName: 'run tests'
+#  inputs:
+#    testSelector: 'testAssemblies'
+#    testAssemblyVer2: |
+#      **\*test*.dll
+#      !**\*TestAdapter.dll
+#      !**\obj\**
+#    searchFolder: '$(System.DefaultWorkingDirectory)'
+#    codeCoverageEnabled: true
+
+# - task: PublishTestResults@2
+#  inputs:
+#    testResultsFormat: NUnit
+#    testResultsFiles: '**/**Test*.xml'
+#    mergeTestResults: true
+#    failTaskOnFailedTests: true
 
 #steps:
 #- script: echo Hello, world!
