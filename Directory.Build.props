@@ -36,8 +36,8 @@
     <!--<LangVersion>6</LangVersion>-->
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(IsJSProject)' != 'true'">
-    <!-- Always strong name the assembly, except for JS projects. -->
+  <PropertyGroup Condition=" '$(IsTestProject)' != 'true' AND '$(IsJSProject)' != 'true'">
+    <!-- Always strong name the assembly, except for test and JS projects. -->
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>$(SharedFiles)ggreig.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>

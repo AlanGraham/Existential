@@ -37,7 +37,7 @@ namespace GavinGreig.Test
         public static void EnsureCollectionNotEmpty_Fails_WhenIEnumerableIsNull()
         {
             string theExpectedMessage = "The collection \"theCollection\" is null";
-            ArgumentNullException theException = Assert.Throws<System.ArgumentNullException>(
+            ArgumentNullException theException = Assert.Throws<ArgumentNullException>(
                 () =>
                 {
                     IEnumerable theCollection = null;

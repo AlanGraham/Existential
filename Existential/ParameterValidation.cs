@@ -1,9 +1,6 @@
 ﻿// <copyright file="ParameterValidation.cs" company="Gavin Greig">
 //     Copyright (c) Dr. Gavin T.D. Greig, 2020.
 // </copyright>
-// <author>Dr. Gavin T.D. Greig</author>
-// <date>2012-04-24</date>
-// <summary>Contains parameter validation methods.</summary>
 
 namespace GavinGreig
 {
@@ -95,13 +92,13 @@ namespace GavinGreig
         {
             if (!(inActual is T))
             {
-                ParameterValidation.EnsureNotNull(inActual, "inActual");
                 string theMessage = string.Format(
                     System.Globalization.CultureInfo.CurrentCulture,
                     "An argument of type {0} was provided (expected {1}).",
-                    inActual.GetType().GetGenericAwareFullTypeName(),
+                    EnsureNotNull(inActual, "inActual")
+                        .GetType().GetGenericAwareFullTypeName(),
                     typeof(T).GetGenericAwareFullTypeName());
-                throw new GavinGreig.ArgumentTypeException(theMessage, inName);
+                throw new ArgumentTypeException(theMessage, inName);
             }
 
             return inActual as T;

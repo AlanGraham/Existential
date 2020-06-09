@@ -1,9 +1,6 @@
 ﻿// <copyright file="ExtensionMethodsString.cs" company="Gavin Greig">
 //     Copyright (c) Dr. Gavin T.D. Greig, 2020.
 // </copyright>
-// <author>Dr. Gavin T.D. Greig</author>
-// <date>2012-06-17</date>
-// <summary>Contains string extension methods.</summary>
 
 namespace GavinGreig.Extensions
 {

@@ -1,9 +1,6 @@
 ﻿// <copyright file="ArgumentTypeException.cs" company="Gavin Greig">
 //     Copyright (c) Dr. Gavin T.D. Greig, 2020.
 // </copyright>
-// <author>Dr. Gavin T.D. Greig</author>
-// <date>2013-08-30</date>
-// <summary>An exception that indicates the use of an unexpected type.</summary>
 
 namespace GavinGreig
 {

@@ -14,6 +14,7 @@ charset = utf-8-bom
 end_of_line = crlf
 indent_style = space
 indent_size = 4
+tab_width = unset
 insert_final_newline = false
 trim_trailing_whitespace = true
 
@@ -46,11 +47,12 @@ indent_size = 2
 [*{js,ts}]
 
 # CSS files
-[*.{css,scss,less}]
-indent_size = 2
+#[*.{css,scss,less}]
+#indent_size = 2
 
 # Visual Basic
 #[*.{vb,vbx}]
+#visual_basic_preferred_modifier_order = Partial,Default,Private,Protected,Public,Friend,NotOverridable,Overridable,MustOverride,Overloads,Overrides,MustInherit,NotInheritable,Static,Shared,Shadows,ReadOnly,WriteOnly,Dim,Const,WithEvents,Widening,Narrowing,Custom,Async:suggestion:suggestion
 
 # System script files
 #[*.{sh,ps1,psm1}]
@@ -64,10 +66,14 @@ indent_size = 2
 # See https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference
 # See http://kent-boogaart.com/blog/editorconfig-reference-for-c-developers
 [*.{cs,csx,cake,vb,vbx}]
+
+# File headers
+dotnet_separate_import_directive_groups = true
+
 # Enable cross-assembly checking of Code Analysis CA1062
 # https://github.com/dotnet/roslyn/issues/35104
 # https://github.com/dotnet/roslyn-analyzers/blob/master/docs/Analyzer%20Configuration.md#null-check-validation-methods
-dotnet_code_quality.null_check_validation_methods = EnsureNotNull|EnsureStringNotNullOrEmpty|EnsureCollectionNotEmpty
+dotnet_code_qualityRe.null_check_validation_methods = EnsureNotNull|EnsureStringNotNullOrEmpty|EnsureCollectionNotEmpty
 
 # Restrict FxCop analyzer to checking only public and protected interfaces for Design issues.
 dotnet_code_quality.Design.api_surface = public, protected
@@ -110,12 +116,20 @@ dotnet_style_prefer_conditional_expression_over_return = true:suggestion
 dotnet_style_coalesce_expression = true:suggestion
 dotnet_style_null_propagation = true:suggestion
 
+# Analyzer settings
+dotnet_analyzer_diagnostic.severity = error
+dotnet_analyzer_diagnostic.category-<category>.severity = unset
+dotnet_diagnostic.<rule_id>.severity = unset
+dotnet_diagnostic.SA1101.severity = none
+
 # C# Code Style Settings
 # See https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference
 # See http://kent-boogaart.com/blog/editorconfig-reference-for-c-developers
 [*.{cs,cshtml,csx,cake}]
 
-file_header_template = <copyright file="Caller.cs" company="Gavin Greig">\n  Copyright (c) Dr. Gavin T.D. Greig, 2020.\n</copyright>
+# File headers.
+csharp_using_directive_placement = inside_namespace:suggestion
+file_header_template = <copyright file="{fileName}" company="Gavin Greig">\n  Copyright (c) Dr. Gavin T.D. Greig, 2020.\n</copyright>
 
 # Require curly braces even for one line of code
 csharp_prefer_braces = true:error
@@ -216,6 +230,7 @@ csharp_new_line_between_query_expression_clauses = true
 
 # Indentation settings
 csharp_indent_case_contents = true
+csharp_indent_case_contents_when_block = true
 csharp_indent_switch_labels = true
 csharp_indent_labels = one_less_than_current
 
@@ -236,9 +251,11 @@ csharp_space_between_method_call_empty_parameter_list_parentheses = false
 csharp_preserve_single_line_statements = false
 csharp_preserve_single_line_blocks = true
 
-# Analyzer settings
-dotnet_diagnostic.SA1101.severity = none
-
 # Reduced strictness of checking for test projects.
 [*Test*.{cs,csx,vb,vbx}]
+
+# Permit underlines
 dotnet_diagnostic.CA1303.severity = none
+
+# Permit ignoring return values - particularly common when testing for throws.
+dotnet_diagnostic.IDE0058.severity = none

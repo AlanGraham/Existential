@@ -1,9 +1,6 @@
 ﻿// <copyright file="ExtensionMethodsType.cs" company="Gavin Greig">
 //     Copyright (c) Dr. Gavin T.D. Greig, 2020.
 // </copyright>
-// <author>Dr. Gavin T.D. Greig</author>
-// <date>2013-08-31</date>
-// <summary>Contains Type extension methods.</summary>
 
 namespace GavinGreig.Extensions
 {
@@ -16,9 +13,9 @@ namespace GavinGreig.Extensions
         /// <summary>Gets the full name of the type, including any generic type parameters.</summary>
         /// <param name="inType">The type for which to get the full name.</param>
         /// <returns>The full name of the type, including any generic type parameters.</returns>
-        public static string GetGenericAwareFullTypeName(this System.Type inType)
+        public static string GetGenericAwareFullTypeName(this Type inType)
         {
-            ParameterValidation.EnsureNotNull(inType, "inType");
+            _ = ParameterValidation.EnsureNotNull(inType, "inType");
             return inType.GetGenericAwareTypeName(inType.FullName);
         }
 
@@ -28,7 +25,7 @@ namespace GavinGreig.Extensions
         /// <returns>The full name of the type, including any generic type parameters.</returns>
         public static string GetGenericAwareFullTypeName<T>(this T inInstance)
         {
-            ParameterValidation.EnsureNotNull(inInstance, "inInstance");
+            _ = ParameterValidation.EnsureNotNull(inInstance, "inInstance");
             Type theType = typeof(T);
             return theType.GetGenericAwareTypeName(theType.FullName);
         }
@@ -36,9 +33,9 @@ namespace GavinGreig.Extensions
         /// <summary>Gets the name of the type, including any generic type parameters.</summary>
         /// <param name="inType">The type for which to get the name.</param>
         /// <returns>The name of the type, including any generic type parameters.</returns>
-        public static string GetGenericAwareTypeName(this System.Type inType)
+        public static string GetGenericAwareTypeName(this Type inType)
         {
-            ParameterValidation.EnsureNotNull(inType, "inType");
+            _ = ParameterValidation.EnsureNotNull(inType, "inType");
             return inType.GetGenericAwareTypeName(inType.Name);
         }
 
@@ -48,7 +45,7 @@ namespace GavinGreig.Extensions
         /// <returns>The name of the type, including any generic type parameters.</returns>
         public static string GetGenericAwareTypeName<T>(this T inInstance)
         {
-            ParameterValidation.EnsureNotNull(inInstance, "inInstance");
+            _ = ParameterValidation.EnsureNotNull(inInstance, "inInstance");
             Type theType = typeof(T);
             return theType.GetGenericAwareTypeName(theType.Name);
         }
@@ -57,7 +54,7 @@ namespace GavinGreig.Extensions
         /// <param name="inType">This type.</param>
         /// <param name="inExpectedType">The expected type.</param>
         /// <returns>True if the types are same; otherwise false.</returns>
-        public static bool IsInstanceOfType(this System.Type inType, System.Type inExpectedType)
+        public static bool IsInstanceOfType(this Type inType, Type inExpectedType)
             => inType == inExpectedType;
 
         /// <summary>Gets the name of the type, including any generic type parameters.</summary>
@@ -66,7 +63,7 @@ namespace GavinGreig.Extensions
         /// The preferred format of the non-generic part of the type name.
         /// </param>
         /// <returns>The name of the type, including any generic type parameters.</returns>
-        private static string GetGenericAwareTypeName(this System.Type inType, string inTypeNameRoot)
+        private static string GetGenericAwareTypeName(this Type inType, string inTypeNameRoot)
         {
             string theTypeNameRoot = inTypeNameRoot;
             if (!inType.IsGenericType)
@@ -74,20 +71,20 @@ namespace GavinGreig.Extensions
                 return theTypeNameRoot;
             }
 
-            var theTypeNameBuilder = new System.Text.StringBuilder();
-            theTypeNameBuilder.Append(theTypeNameRoot.Substring(0, theTypeNameRoot.IndexOf('`')));
-            theTypeNameBuilder.Append("<");
-            theTypeNameBuilder.Append(string.Join(
-                ", ",
-                GetTypeParameters(inType)));
-            theTypeNameBuilder.Append(">");
+            System.Text.StringBuilder theTypeNameBuilder = new System.Text.StringBuilder()
+                .Append(theTypeNameRoot.Substring(0, theTypeNameRoot.IndexOf('`')))
+                .Append("<")
+                .Append(string.Join(
+                    ", ",
+                    GetTypeParameters(inType)))
+                .Append(">");
             return theTypeNameBuilder.ToString();
         }
 
         /// <summary>Gets the specified type's generic type parameters as an array of strings.</summary>
         /// <param name="inType">The type for which to get the type parameters.</param>
         /// <returns>The generic type parameters as an array of strings.</returns>
-        private static string[] GetTypeParameters(this System.Type inType)
+        private static string[] GetTypeParameters(this Type inType)
             => inType.GetGenericArguments().Select(t => GetGenericAwareTypeName(t)).ToArray();
     }
 }
