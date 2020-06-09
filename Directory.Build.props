@@ -1,6 +1,6 @@
 ﻿<Project>
   <PropertyGroup>
-    <SharedFiles>$(SolutionDir).sharedFiles/</SharedFiles>
+    <SharedFiles>$(SolutionDir).sharedFiles\</SharedFiles>
     <LangVersion>latest</LangVersion>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
