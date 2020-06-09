@@ -27,7 +27,8 @@ steps:
   inputs:
     command: 'test'
 #    projects: '**\*.Test.Unit.Net.csproj'
-    arguments: '-c $(BuildConfiguration) --collect:"XPlat Code Coverage" -- RunConfiguration.DisableAppDomain=true'
+#    arguments: '-c $(BuildConfiguration) --collect:"XPlat Code Coverage" -- RunConfiguration.DisableAppDomain=true'
+    arguments: '--collect:"XPlat Code Coverage" -- RunConfiguration.DisableAppDomain=true'
     testRunTitle: 'Run Test and collect Coverage'
 #    workingDirectory: 'Existential.Test.Unit'
 
