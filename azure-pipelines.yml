@@ -44,6 +44,13 @@ steps:
     arguments: install dotnet-reportgenerator-globaltool
 
 - task: DotNetCoreCLI@2
+  displayName: 'Install Mutation Testing'
+  inputs:
+    command: custom
+    custom: tool
+    arguments: install dotnet-stryker
+
+- task: DotNetCoreCLI@2
   displayName: 'Collate Code Coverage'
   inputs:
     command: custom
