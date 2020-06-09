@@ -12,7 +12,7 @@ trigger:
 - master
 
 pool:
-  vmImage:  'windows-lates'
+  vmImage:  'windows-latest'
 
 steps:
 - task: DotNetCoreCLI@2
