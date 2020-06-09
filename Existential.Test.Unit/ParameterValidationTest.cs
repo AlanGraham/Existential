@@ -227,6 +227,36 @@ namespace GavinGreig.Test
                 });
         }
 
+        [Test]
+        public static void EnsureStringNotNullOrEmpty_WithEmptyString_ThrowsException()
+        {
+            Assert.Throws<ArgumentNullException>(
+                () =>
+                {
+                    ParameterValidation.EnsureStringNotNullOrEmpty(string.Empty, "testparam");
+                });
+        }
+
+        [Test]
+        public static void EnsureStringNotNullOrEmpty_WithNull_ThrowsException()
+        {
+            Assert.Throws<ArgumentNullException>(
+                () =>
+                {
+                    string theParameter = null; // Need a variable to enforce the type of the null.
+                    ParameterValidation.EnsureStringNotNullOrEmpty(theParameter, "testparam");
+                });
+        }
+
+        [Test]
+        public static void EnsureStringNotNullOrEmpty_WithString_ReturnsValue()
+        {
+            const string ExpectedValue = "Test";
+            string theResult = ParameterValidation.EnsureStringNotNullOrEmpty(ExpectedValue, "testparam");
+
+            Assert.That(theResult, Is.EqualTo(ExpectedValue));
+        }
+
         private class ExpectedType
         {
         }

@@ -158,6 +158,7 @@ namespace GavinGreig
             return theEmptyErrorMessage;
         }
 
+        /*
         /// <summary>Determines whether the specified value is of the expected type.</summary>
         /// <param name="inExpectedType">The expected type of the value..</param>
         /// <param name="inActual">The value to check for an expected type.</param>
@@ -171,5 +172,6 @@ namespace GavinGreig
 
             return inActual.GetType().IsInstanceOfType(inExpectedType);
         }
+        */
     }
 }
