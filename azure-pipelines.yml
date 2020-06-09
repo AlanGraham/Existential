@@ -16,79 +16,42 @@ pool:
 
 steps:
 - task: DotNetCoreCLI@2
-  displayName: 'dotnet build'
+  displayName: 'Build'
   inputs:
     command: 'build'
 
 # Begin testing:
 # https://stackoverflow.com/a/61481951
 - task: DotNetCoreCLI@2
-  displayName: 'dotnet test'
+  displayName: 'Test'
   inputs:
     command: 'test'
-#    projects: '**\*.Test.Unit.Net.csproj'
-#    arguments: '-c $(BuildConfiguration) --collect:"XPlat Code Coverage" -- RunConfiguration.DisableAppDomain=true'
     arguments: '--collect:"XPlat Code Coverage" -- RunConfiguration.DisableAppDomain=true'
     testRunTitle: 'Run Test and collect Coverage'
-#    workingDirectory: 'Existential.Test.Unit'
 
 - task: DotNetCoreCLI@2
+  displayName: 'New Manifest'
   inputs:
     command: 'custom'
     custom: 'new'
     arguments: 'tool-manifest'
 
 - task: DotNetCoreCLI@2
+  displayName: 'Install ReportGenerator'
   inputs:
     command: custom
     custom: tool
- #   arguments: install --tool-path . dotnet-reportgenerator-globaltool
     arguments: install dotnet-reportgenerator-globaltool
-  displayName: Install ReportGenerator tool
 
 - task: DotNetCoreCLI@2
+  displayName: 'Collate Code Coverage'
   inputs:
     command: custom
     custom: tool
     arguments: 'run reportgenerator -reports:$(Agent.TempDirectory)/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/coverlet/reports -reporttypes:"Cobertura"'
 
-#- script: reportgenerator -reports:$(Agent.TempDirectory)/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/coverlet/reports -reporttypes:"Cobertura"
-#  displayName: Create reports
-
 - task: PublishCodeCoverageResults@1
-  displayName: 'Publish code coverage'
+  displayName: 'Publish Code Coverage'
   inputs:
     codeCoverageTool: Cobertura
     summaryFileLocation: $(Build.SourcesDirectory)/coverlet/reports/Cobertura.xml  
-
-#- task: VisualStudioTestPlatformInstaller@1
-#  inputs:
-#    packageFeedSelector: 'nugetOrg'
-#    versionSelector: 'latestStable'
-
-#- task: VSTest@2
-#  displayName: 'run tests'
-#  inputs:
-#    testSelector: 'testAssemblies'
-#    testAssemblyVer2: |
-#      **\*test*.dll
-#      !**\*TestAdapter.dll
-#      !**\obj\**
-#    searchFolder: '$(System.DefaultWorkingDirectory)'
-#    codeCoverageEnabled: true
-
-# - task: PublishTestResults@2
-#  inputs:
-#    testResultsFormat: NUnit
-#    testResultsFiles: '**/**Test*.xml'
-#    mergeTestResults: true
-#    failTaskOnFailedTests: true
-
-#steps:
-#- script: echo Hello, world!
-#  displayName: 'Run a one-line script'
-
-#- script: |
-#    echo Add other tasks to build, test, and deploy your project.
-#    echo See https://aka.ms/yaml
-#  displayName: 'Run a multi-line script'
