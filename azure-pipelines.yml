@@ -81,4 +81,4 @@ steps:
 - task: PublishMutationReport@0
   displayName: 'Publish Mutation Test Results'
   inputs:
-    reportPattern: '**/mutation-report.html'
+    reportPattern: '$(Build.Repository.LocalPath)/**/mutation-report.html'
