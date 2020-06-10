@@ -1,5 +1,0 @@
-﻿{
-  "stryker-config": {
-    "project-file": "Existential.Test.Unit.Net.csproj"
-  }
-}
