@@ -44,6 +44,19 @@ steps:
     arguments: install dotnet-reportgenerator-globaltool
 
 - task: DotNetCoreCLI@2
+  displayName: 'Collate Code Coverage'
+  inputs:
+    command: custom
+    custom: tool
+    arguments: 'run reportgenerator -reports:$(Agent.TempDirectory)/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/coverlet/reports -reporttypes:"Cobertura"'
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish Code Coverage'
+  inputs:
+    codeCoverageTool: Cobertura
+    summaryFileLocation: $(Build.SourcesDirectory)/coverlet/reports/Cobertura.xml  
+
+- task: DotNetCoreCLI@2
   displayName: 'Install Mutation Testing'
   inputs:
     command: custom
@@ -59,15 +72,6 @@ steps:
     arguments: '-s $(Build.Repository.LocalPath)/Existential.sln --reporters "[''html'']" --threshold-high 90 --threshold-low 75'
     workingDirectory: 'Existential.Test.Unit'
 
-- task: DotNetCoreCLI@2
-  displayName: 'Collate Code Coverage'
+- task: PublishMutationReport@0
   inputs:
-    command: custom
-    custom: tool
-    arguments: 'run reportgenerator -reports:$(Agent.TempDirectory)/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/coverlet/reports -reporttypes:"Cobertura"'
-
-- task: PublishCodeCoverageResults@1
-  displayName: 'Publish Code Coverage'
-  inputs:
-    codeCoverageTool: Cobertura
-    summaryFileLocation: $(Build.SourcesDirectory)/coverlet/reports/Cobertura.xml  
+    reportPattern: '**/mutation-report.html'
