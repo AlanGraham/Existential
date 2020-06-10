@@ -56,7 +56,8 @@ steps:
     command: custom
     custom: 'stryker'
 #    arguments: '-tp [''Existential.Test.Unit.Net.csproj''] --reporters "[''html'']" --threshold-high 90 --threshold-low 75 --threshold-break 60 --diff'
-    arguments: '-tp [''$(Agent.BuildDirectory)/Existential.Test.Unit/Existential.Test.Unit.Net.csproj''] --reporters "[''html'']" --threshold-high 90 --threshold-low 75'
+#    arguments: '-tp [''$(Agent.BuildDirectory)/Existential.Test.Unit/Existential.Test.Unit.Net.csproj''] --reporters "[''html'']" --threshold-high 90 --threshold-low 75'
+    arguments: '-tp [''Existential.Test.Unit.Net.csproj''] --reporters "[''html'']" --threshold-high 90 --threshold-low 75'
     workingDirectory: 'Existential.Test.Unit'
 
 - task: DotNetCoreCLI@2
