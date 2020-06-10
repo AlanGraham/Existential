@@ -1,6 +1,7 @@
 ﻿<Project>
   <PropertyGroup>
-    <SharedFiles>$(SolutionDir).sharedFiles\</SharedFiles>
+    <SharedFiles Condition="Exists('$(SolutionDir).sharedFiles\')">$(SolutionDir).sharedFiles\</SharedFiles>
+    <SharedFiles Condition="Exists('..\.sharedFiles\')">..\.sharedFiles\</SharedFiles>
     <LangVersion>latest</LangVersion>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
