@@ -51,6 +51,13 @@ steps:
     arguments: install dotnet-stryker
 
 - task: DotNetCoreCLI@2
+  displayName: 'Mutation Testing'
+  inputs:
+    command: custom
+    custom: 'stryker --reporters "[''dashboard'', ''html'']" --threshold-high 90 --threshold-low 75 --threshold-break 60 --diff'
+    workingDirectory: 'Existential.Test.Unit'
+
+- task: DotNetCoreCLI@2
   displayName: 'Collate Code Coverage'
   inputs:
     command: custom
