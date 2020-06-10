@@ -57,7 +57,7 @@ steps:
     custom: stryker
 #    arguments: '-tp [''Existential.Test.Unit.Net.csproj''] -p $(Build.Repository.LocalPath)/Existential/Existential.Net.csproj --reporters "[''html'']" --threshold-high 90 --threshold-low 75'
     arguments: '--reporters "[''html'']" --threshold-high 90 --threshold-low 75'
-#    workingDirectory: 'Existential.Test.Unit'
+    workingDirectory: 'Existential.Test.Unit'
 
 - task: DotNetCoreCLI@2
   displayName: 'Collate Code Coverage'
