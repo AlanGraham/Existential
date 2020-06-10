@@ -54,7 +54,7 @@ steps:
   displayName: 'Mutation Testing'
   inputs:
     command: custom
-    custom: 'stryker --test-project-file [''Existential.Test.Unit/Existential.Test.Unit.Net.csproj''] --reporters "[''dashboard'', ''html'']" --threshold-high 90 --threshold-low 75 --threshold-break 60 --diff'
+    custom: 'stryker --test-project-file [''Existential.Test.Unit.Net.csproj''] --reporters "[''dashboard'', ''html'']" --threshold-high 90 --threshold-low 75 --threshold-break 60 --diff'
     workingDirectory: 'Existential.Test.Unit'
 
 - task: DotNetCoreCLI@2
