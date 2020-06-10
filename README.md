@@ -2,7 +2,6 @@
 TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
 
 [![Build Status](https://dev.azure.com/ggreig/Existential/_apis/build/status/Existential?branchName=master)](https://dev.azure.com/ggreig/Existential/_build/latest?definitionId=1&branchName=master)
-
 # Getting Started
 TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
 1.	Installation process
