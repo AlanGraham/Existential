@@ -44,20 +44,20 @@ steps:
     arguments: install dotnet-reportgenerator-globaltool
 
 - task: DotNetCoreCLI@2
-  displayName: 'Collate Code Coverage'
+  displayName: 'Collate Code Coverage Results'
   inputs:
     command: custom
     custom: tool
     arguments: 'run reportgenerator -reports:$(Agent.TempDirectory)/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/coverlet/reports -reporttypes:"Cobertura"'
 
 - task: PublishCodeCoverageResults@1
-  displayName: 'Publish Code Coverage'
+  displayName: 'Publish Code Coverage Results'
   inputs:
     codeCoverageTool: Cobertura
     summaryFileLocation: $(Build.SourcesDirectory)/coverlet/reports/Cobertura.xml  
 
 - task: DotNetCoreCLI@2
-  displayName: 'Install Mutation Testing'
+  displayName: 'Install Stryker'
   inputs:
     command: custom
     custom: tool
@@ -68,9 +68,10 @@ steps:
   inputs:
     command: custom
     custom: stryker
-    arguments: '-s $(Build.Repository.LocalPath)/Existential.sln --reporters "[''html'']" --threshold-high 90 --threshold-low 75'
+    arguments: '-s $(Build.Repository.LocalPath)/Existential.sln --diff --reporters "[''html'']" --threshold-high 90 --threshold-low 75'
     workingDirectory: 'Existential.Test.Unit'
 
 - task: PublishMutationReport@0
+  displayName: 'Publish Mutation Test Results'
   inputs:
     reportPattern: '**/mutation-report.html'
