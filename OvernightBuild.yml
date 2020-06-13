@@ -1,0 +1,83 @@
+﻿# Starter pipeline
+
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+  
+trigger: none
+
+schedule:
+- cron: '0 0 * * *'
+  displayName: 'Overnight Scheduled Build'
+  branches:
+    include: master
+    always: true
+
+pool:
+  vmImage:  'ubuntu-latest'
+
+steps:
+- task: NuGetAuthenticate@0
+  inputs:
+    nuGetServiceConnections: 
+
+- task: DotNetCoreCLI@2
+  displayName: 'Build'
+  inputs:
+    command: 'build'
+
+# Begin testing:
+# https://stackoverflow.com/a/61481951
+- task: DotNetCoreCLI@2
+  displayName: 'Test'
+  inputs:
+    command: 'test'
+    arguments: '--collect:"XPlat Code Coverage" -- RunConfiguration.DisableAppDomain=true'
+    testRunTitle: 'Run Test and collect Coverage'
+
+- task: DotNetCoreCLI@2
+  displayName: 'New Manifest'
+  inputs:
+    command: 'custom'
+    custom: 'new'
+    arguments: 'tool-manifest --force'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Install ReportGenerator'
+  inputs:
+    command: custom
+    custom: tool
+    arguments: install dotnet-reportgenerator-globaltool
+
+- task: DotNetCoreCLI@2
+  displayName: 'Collate Code Coverage Results'
+  inputs:
+    command: custom
+    custom: tool
+    arguments: 'run reportgenerator -reports:$(Agent.TempDirectory)/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/coverlet/reports -reporttypes:"Cobertura"'
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish Code Coverage Results'
+  inputs:
+    codeCoverageTool: Cobertura
+    summaryFileLocation: $(Build.SourcesDirectory)/coverlet/reports/Cobertura.xml  
+
+- task: DotNetCoreCLI@2
+  displayName: 'Install Stryker'
+  inputs:
+    command: custom
+    custom: tool
+    arguments: install dotnet-stryker
+
+- task: DotNetCoreCLI@2
+  displayName: 'Mutation Testing'
+  inputs:
+    command: custom
+    custom: stryker
+    arguments: '-s $(Build.Repository.LocalPath)/Existential.sln --reporters "[''html'']" --threshold-high 90 --threshold-low 75'
+    workingDirectory: 'Existential.Test.Unit'
+
+- task: PublishMutationReport@0
+  displayName: 'Publish Mutation Test Results'
+  inputs:
+    reportPattern: '**/mutation-report.html'
