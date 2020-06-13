@@ -21,9 +21,9 @@ pool:
   vmImage:  'ubuntu-latest'
 
 steps:
-- task: NuGetAuthenticate@0
-  inputs:
-    nuGetServiceConnections: 
+#- task: NuGetAuthenticate@0
+#  inputs:
+#    nuGetServiceConnections: 
 
 #- task: DotNetCoreCLI@2
 #  displayName: 'Build'
