@@ -79,3 +79,8 @@ steps:
   displayName: 'Publish Mutation Test Results'
   inputs:
     reportPattern: '**/mutation-report.html'
+
+- task: NuKeeper@0
+  inputs:
+    arguments: '-m 3 -v detailed'
+    version: '0.*'
