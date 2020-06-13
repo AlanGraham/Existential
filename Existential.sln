@@ -10,7 +10,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8492AC6B-34D4-4E45-80C7-F9768A4501B5}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
-		azure-pipelines.yml = azure-pipelines.yml
 		.sharedFiles\CompanyInfo.cs = .sharedFiles\CompanyInfo.cs
 		ContinuousIntegration.yml = ContinuousIntegration.yml
 		Directory.Build.props = Directory.Build.props
