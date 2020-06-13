@@ -6,12 +6,12 @@
   
 trigger: none
 
-schedule:
+schedules:
 - cron: '0 0 * * *'
   displayName: 'Overnight Scheduled Build'
   branches:
-    include: master
-    always: true
+    include: [master]
+  always: true
 
 pool:
   vmImage:  'ubuntu-latest'
