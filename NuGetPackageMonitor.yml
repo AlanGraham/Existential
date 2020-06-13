@@ -10,12 +10,12 @@
   
 trigger: none
 
-schedule:
+schedules:
 - cron: '0 0 * * *'
   displayName: 'Overnight Scheduled Build'
+  always: true
   branches:
-    include: master
-    always: true
+    include: [master]
 
 pool:
   vmImage:  'ubuntu-latest'
@@ -25,10 +25,10 @@ steps:
   inputs:
     nuGetServiceConnections: 
 
-- task: DotNetCoreCLI@2
-  displayName: 'Build'
-  inputs:
-    command: 'build'
+#- task: DotNetCoreCLI@2
+#  displayName: 'Build'
+#  inputs:
+#    command: 'build'
 
 - task: NuKeeper@0
   inputs:
