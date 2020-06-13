@@ -1,13 +1,6 @@
-﻿# Starter pipeline
+﻿# Intended to run overnight; will create a pull request if
+# NuGet package updates are available.
 
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
-#jobs:
-#- job: build
-#  displayName: "Project Build"
-  
 trigger: none
 
 schedules:
@@ -24,11 +17,6 @@ steps:
 #- task: NuGetAuthenticate@0
 #  inputs:
 #    nuGetServiceConnections: 
-
-#- task: DotNetCoreCLI@2
-#  displayName: 'Build'
-#  inputs:
-#    command: 'build'
 
 - task: NuKeeper@0
   inputs:
