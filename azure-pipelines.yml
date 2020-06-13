@@ -25,10 +25,10 @@ steps:
   inputs:
     nuGetServiceConnections: 
 
-- task: DotNetCoreCLI@2
-  displayName: 'Build'
-  inputs:
-    command: 'build'
+#- task: DotNetCoreCLI@2
+#  displayName: 'Build'
+#  inputs:
+#    command: 'build'
 
 - task: NuKeeper@0
   inputs:
