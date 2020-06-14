@@ -1,7 +1,14 @@
 ﻿# Introduction 
 TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
 
+<table><tr><td>CI build:</td><td>
+
 [![Build Status](https://dev.azure.com/ggreig/Existential/_apis/build/status/Existential?branchName=master)](https://dev.azure.com/ggreig/Existential/_build?definitionId=1)
+</td></tr><tr> <td>Overnight build:</td><td>
+
+[![Build Status](https://dev.azure.com/ggreig/Existential/_apis/build/status/Overnight%20Build?branchName=master)](https://dev.azure.com/ggreig/Existential/_build?definitionId=2)
+</td></tr></table>
+
 # Getting Started
 TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
 1.	Installation process
