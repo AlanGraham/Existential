@@ -7,7 +7,7 @@ trigger: none
 pr: none
 
 schedules:
-- cron: '16 11 * * 0'
+- cron: '28 11 * * 0'
   displayName: 'NuGet Package Monitor'
   always: true
   branches:
