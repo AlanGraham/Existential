@@ -1,26 +1,27 @@
-﻿# Intended to run overnight; will create a pull request if
+﻿# Intended to run weekly on a Sunday; will create a pull request if
 # NuGet package updates are available.
 # This build should remain very minimal; while configuration
 # details might change, it should not be extended to do more.
 
 trigger: none
+pr: none
 
 schedules:
-- cron: '0 0 * * *'
+- cron: '0 12 * * 0'
   displayName: 'NuGet Package Monitor'
   always: true
   branches:
     include: [master]
+    exclude: []
 
 pool:
   vmImage:  'ubuntu-latest'
 
 steps:
-# This task left in place but commented out in case it's needed
-# when local feeds are enabled.
-#- task: NuGetAuthenticate@0
-#  inputs:
-#    nuGetServiceConnections: 
+
+- task: NuGetAuthenticate@0
+  inputs:
+    nuGetServiceConnections: 
 
 - task: NuKeeper@0
   inputs:

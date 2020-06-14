@@ -4,15 +4,17 @@
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
-  
+
 trigger: none
+pr: none
 
 schedules:
-- cron: '0 0 * * *'
+- cron: '10 14 * * *'
   displayName: 'Overnight Build'
   always: true
   branches:
     include: [master]
+    exclude: []
 
 pool:
   vmImage:  'ubuntu-latest'
