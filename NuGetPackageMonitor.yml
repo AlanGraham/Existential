@@ -7,7 +7,7 @@ trigger: none
 pr: none
 
 schedules:
-- cron: '13 11 * * 0'
+- cron: '16 11 * * 0'
   displayName: 'NuGet Package Monitor'
   always: true
   branches:
@@ -18,11 +18,10 @@ pool:
   vmImage:  'ubuntu-latest'
 
 steps:
-# This task left in place but commented out in case it's needed
-# when local feeds are enabled.
-#- task: NuGetAuthenticate@0
-#  inputs:
-#    nuGetServiceConnections: 
+
+- task: NuGetAuthenticate@0
+  inputs:
+    nuGetServiceConnections: 
 
 - task: NuKeeper@0
   inputs:
