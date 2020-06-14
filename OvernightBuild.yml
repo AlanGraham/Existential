@@ -9,7 +9,7 @@ trigger: none
 pr: none
 
 schedules:
-- cron: '0 0 * * *'
+- cron: '10 14 * * *'
   displayName: 'Overnight Build'
   always: true
   branches:
