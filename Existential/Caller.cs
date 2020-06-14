@@ -6,8 +6,6 @@ namespace GavinGreig
 {
     using System.Runtime.CompilerServices;
 
-    Oink
-
     /// <summary>A utility class for caller methods.</summary>
     public static class Caller
     {
