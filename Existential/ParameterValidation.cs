@@ -4,6 +4,9 @@
 
 namespace GavinGreig
 {
+    using System;
+    using System.Globalization;
+
     using GavinGreig.Extensions;
 
     /// <summary>Contains parameter validation methods.</summary>
@@ -17,23 +20,21 @@ namespace GavinGreig
         /// <param name="inCollection">The collection to check.</param>
         /// <param name="inName">The name of the parameter.</param>
         /// <returns>The validated value.</returns>
-        /// <exception cref="System.ArgumentNullException">Thrown if the collection is null.</exception>
-        /// <exception cref="System.ArgumentException">
-        /// Thrown if the collection exists but is empty.
-        /// </exception>
+        /// <exception cref="ArgumentNullException">Thrown if the collection is null.</exception>
+        /// <exception cref="ArgumentException">Thrown if the collection exists but is empty.</exception>
         public static T EnsureCollectionNotEmpty<T>(T inCollection, string inName)
             where T : class, System.Collections.IEnumerable
         {
             if (inCollection == null)
             {
-                throw new System.ArgumentNullException(
+                throw new ArgumentNullException(
                     inName,
                     InsertNameIntoExceptionMessage("The collection \"{0}\" is null", inName));
             }
 
             if (!inCollection.GetEnumerator().MoveNext())
             {
-                throw new System.ArgumentException(
+                throw new ArgumentException(
                     InsertNameIntoExceptionMessage("The collection \"{0}\" is empty", inName),
                     inName);
             }
@@ -45,17 +46,17 @@ namespace GavinGreig
         /// <param name="inValue">The GUID being checked for emptiness.</param>
         /// <param name="inName">The name of the parameter.</param>
         /// <returns>The validated value.</returns>
-        /// <exception cref="System.ArgumentException">Thrown if the GUID has the empty value.</exception>
+        /// <exception cref="ArgumentException">Thrown if the GUID has the empty value.</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Globalization",
             "CA1303:Do not pass literals as localized parameters",
             Justification = "Exception messages should not be localized.")]
-        public static System.Guid EnsureGuidNotEmpty(System.Guid inValue, string inName)
+        public static Guid EnsureGuidNotEmpty(Guid inValue, string inName)
         {
-            if (inValue == System.Guid.Empty)
+            if (inValue == Guid.Empty)
             {
                 const string Message = "The GUID has the empty value, {00000000-0000-0000-0000-000000000000}.";
-                throw new System.ArgumentException(Message, inName);
+                throw new ArgumentException(Message, inName);
             }
 
             return inValue;
@@ -66,12 +67,12 @@ namespace GavinGreig
         /// <param name="inValue">The value to check for null.</param>
         /// <param name="inName">The name of the value being checked, as a string.</param>
         /// <returns>The validated value.</returns>
-        /// <exception cref="System.ArgumentNullException">Thrown if the object value is null.</exception>
+        /// <exception cref="ArgumentNullException">Thrown if the object value is null.</exception>
         public static T EnsureNotNull<T>([ValidatedNotNull] T inValue, string inName)
         {
             if (inValue == null)
             {
-                throw new System.ArgumentNullException(inName);
+                throw new ArgumentNullException(inName);
             }
 
             return inValue;
@@ -83,9 +84,7 @@ namespace GavinGreig
         /// <typeparam name="T">The expected type.</typeparam>
         /// <param name="inActual">The value to check for an expected type.</param>
         /// <param name="inName">The name of the value being checked, as a string.</param>
-        /// <exception cref="System.ArgumentException">
-        /// Thrown if the object type is not as expected.
-        /// </exception>
+        /// <exception cref="ArgumentException">Thrown if the object type is not as expected.</exception>
         /// <returns>The original value.</returns>
         public static T EnsureOfType<T>([ValidatedOfType] object inActual, string inName)
             where T : class
@@ -93,11 +92,11 @@ namespace GavinGreig
             if (!(inActual is T))
             {
                 string theMessage = string.Format(
-                    System.Globalization.CultureInfo.CurrentCulture,
+                    CultureInfo.CurrentCulture,
                     "An argument of type {0} was provided (expected {1}).",
-                    EnsureNotNull(inActual, "inActual")
-                        .GetType().GetGenericAwareFullTypeName(),
-                    typeof(T).GetGenericAwareFullTypeName());
+                    EnsureNotNull(inActual, inName)
+                        .GetType().GetGenericAwareTypeName(),
+                    typeof(T).GetGenericAwareTypeName());
                 throw new ArgumentTypeException(theMessage, inName);
             }
 
@@ -108,9 +107,7 @@ namespace GavinGreig
         /// <param name="inValue">The parameter being checked for null.</param>
         /// <param name="inName">The name of the parameter.</param>
         /// <returns>The validated value.</returns>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown if the string is null or empty.
-        /// </exception>
+        /// <exception cref="ArgumentNullException">Thrown if the string is null or empty.</exception>
         public static string EnsureStringNotNullOrEmpty([ValidatedNotNull] string inValue, string inName)
             => EnsureStringNotNullOrEmpty(inValue, inName, trim: true);
 
@@ -119,24 +116,18 @@ namespace GavinGreig
         /// <param name="inName">The name of the parameter.</param>
         /// <param name="trim">Trim string before check.</param>
         /// <returns>The validated value.</returns>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown if the string is null or empty.
-        /// </exception>
+        /// <exception cref="ArgumentNullException">Thrown if the string is null or empty.</exception>
         public static string EnsureStringNotNullOrEmpty([ValidatedNotNull] string inValue, string inName, bool trim)
         {
             if (inValue == null)
             {
-                throw new System.ArgumentNullException(inName);
+                throw new ArgumentNullException(inName);
             }
 
-            if (trim)
+            string theTestValue = trim ? inValue.Trim() : inValue;
+            if (string.IsNullOrEmpty(theTestValue))
             {
-                inValue = inValue.Trim();
-            }
-
-            if (string.IsNullOrEmpty(inValue))
-            {
-                throw new System.ArgumentNullException(inName);
+                throw new ArgumentException("String cannot be empty.", inName);
             }
 
             return inValue;
@@ -149,7 +140,7 @@ namespace GavinGreig
         private static string InsertNameIntoExceptionMessage(string inMessage, string inArgumentName)
         {
             string theEmptyErrorMessage = string.Format(
-                System.Globalization.CultureInfo.InvariantCulture,
+                CultureInfo.InvariantCulture,
                 inMessage,
                 inArgumentName);
             return theEmptyErrorMessage;

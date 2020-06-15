@@ -8,6 +8,9 @@ namespace GavinGreig.Test
     using System.Collections;
     using System.Collections.Generic;
 
+    using GavinGreig.Extensions;
+
+    // using FsCheck; using AssertPropertyThat = FsCheck.Prop; using PropertyAttribute = FsCheck.NUnit.PropertyAttribute;
     using NUnit.Framework;
 
     /// <summary>Unit tests for parameter validation methods.</summary>
@@ -21,14 +24,20 @@ namespace GavinGreig.Test
         [Test]
         public static void EnsureCollectionNotEmpty_Fails_WhenIEnumerableIsEmpty()
         {
-            string theExpectedMessage = "The collection \"theTest\" is empty";
-            Assert.Throws<ArgumentException>(
+            // Arrange
+            string theExpectedMessage = "The collection \"theCollection\" is empty";
+            IEnumerable theCollection = new List<int> { };
+
+            // Assert
+            Assert.That(
                 () =>
                 {
-                    IEnumerable theCollection = new List<int> { };
-                    ParameterValidation.EnsureCollectionNotEmpty(theCollection, "theTest");
+                    // Act
+                    ParameterValidation.EnsureCollectionNotEmpty(theCollection, nameof(theCollection));
                 },
-                theExpectedMessage);
+                Throws.ArgumentException
+                    .With.Message.Contains(theExpectedMessage)
+                    .And.Message.Contains(nameof(theCollection)));
         }
 
         /// <summary>Checks that validation fails when an IEnumerable collection is null.</summary>
@@ -36,16 +45,20 @@ namespace GavinGreig.Test
         [Test]
         public static void EnsureCollectionNotEmpty_Fails_WhenIEnumerableIsNull()
         {
+            // Arrange
             string theExpectedMessage = "The collection \"theCollection\" is null";
-            ArgumentNullException theException = Assert.Throws<ArgumentNullException>(
+            IEnumerable theCollection = null;
+
+            // Assert
+            Assert.That(
                 () =>
                 {
-                    IEnumerable theCollection = null;
+                    // Act
                     ParameterValidation.EnsureCollectionNotEmpty(theCollection, nameof(theCollection));
                 },
-                theExpectedMessage);
-            ////assert.AreEqual(theExpectedMessage, theException.Message);
-            ////NUnit.Framework.Assert.That(theException.Message, Contains.Substring(theExpectedMessage));
+                Throws.ArgumentNullException
+                    .With.Message.Contains(theExpectedMessage)
+                    .And.Message.Contains(nameof(theCollection)));
         }
 
         /// <summary>
@@ -55,14 +68,20 @@ namespace GavinGreig.Test
         [Test]
         public static void EnsureCollectionNotEmpty_Fails_WhenIEnumerableTIsEmpty()
         {
-            string theExpectedMessage = "The collection \"theTest\" is empty";
-            Assert.Throws<ArgumentException>(
+            // Arrange
+            string theExpectedMessage = "The collection \"theCollection\" is empty";
+            IEnumerable<int> theCollection = new List<int> { };
+
+            // Assert
+            Assert.That(
                 () =>
                 {
-                    IEnumerable<int> theCollection = new List<int> { };
-                    ParameterValidation.EnsureCollectionNotEmpty(theCollection, "theTest");
+                    // Act
+                    ParameterValidation.EnsureCollectionNotEmpty(theCollection, nameof(theCollection));
                 },
-                theExpectedMessage);
+                Throws.ArgumentException
+                    .With.Message.Contains(theExpectedMessage)
+                    .And.Message.Contains(nameof(theCollection)));
         }
 
         /// <summary>Checks that validation fails when an IEnumerable{T} collection is null.</summary>
@@ -70,14 +89,20 @@ namespace GavinGreig.Test
         [Test]
         public static void EnsureCollectionNotEmpty_Fails_WhenIENumerableTIsNull()
         {
+            // Arrange
             string theExpectedMessage = "The collection \"theCollection\" is null";
-            Assert.Throws<ArgumentNullException>(
+            IEnumerable<int> theCollection = null;
+
+            // Assert
+            Assert.That(
                 () =>
                 {
-                    IEnumerable<int> theCollection = null;
+                    // Act
                     ParameterValidation.EnsureCollectionNotEmpty(theCollection, nameof(theCollection));
                 },
-                theExpectedMessage);
+                Throws.ArgumentNullException
+                    .With.Message.Contains(theExpectedMessage)
+                    .And.Message.Contains(nameof(theCollection)));
         }
 
         /// <summary>Checks that validation fails when a List{T} collection is non-null but empty.</summary>
@@ -85,14 +110,20 @@ namespace GavinGreig.Test
         [Test]
         public static void EnsureCollectionNotEmpty_Fails_WhenListTIsEmpty()
         {
-            string theExpectedMessage = "The collection \"theTest\" is empty";
-            Assert.Throws<ArgumentException>(
+            // Arrange
+            string theExpectedMessage = "The collection \"theCollection\" is empty";
+            var theCollection = new List<int> { };
+
+            // Assert
+            Assert.That(
                 () =>
                 {
-                    var theCollection = new List<int> { };
-                    ParameterValidation.EnsureCollectionNotEmpty(theCollection, "theTest");
+                    // Act
+                    ParameterValidation.EnsureCollectionNotEmpty(theCollection, nameof(theCollection));
                 },
-                theExpectedMessage);
+                Throws.ArgumentException
+                    .With.Message.Contains(theExpectedMessage)
+                    .And.Message.Contains(nameof(theCollection)));
         }
 
         /// <summary>Checks that validation fails when a List{T} collection is null.</summary>
@@ -100,14 +131,20 @@ namespace GavinGreig.Test
         [Test]
         public static void EnsureCollectionNotEmpty_Fails_WhenListTIsNull()
         {
-            string theExpectedMessage = "The collection \"theTest\" is null";
-            Assert.Throws<ArgumentNullException>(
+            // Arrange
+            string theExpectedMessage = "The collection \"theCollection\" is null";
+            List<int> theCollection = null;
+
+            // Assert
+            Assert.That(
                 () =>
                 {
-                    List<int> theCollection = null;
-                    ParameterValidation.EnsureCollectionNotEmpty(theCollection, "theTest");
+                    // Act
+                    ParameterValidation.EnsureCollectionNotEmpty(theCollection, nameof(theCollection));
                 },
-                theExpectedMessage);
+                Throws.ArgumentNullException
+                    .With.Message.Contains(theExpectedMessage)
+                    .And.Message.Contains(nameof(theCollection)));
         }
 
         /// <summary>Checks that validation succeeds when an IEnumerable collection has content.</summary>
@@ -119,10 +156,10 @@ namespace GavinGreig.Test
             IEnumerable theCollection = new List<int> { 1 };
 
             // Act
-            IEnumerable theResult = ParameterValidation.EnsureCollectionNotEmpty(theCollection, "theTest");
+            IEnumerable theResult = ParameterValidation.EnsureCollectionNotEmpty(theCollection, nameof(theCollection));
 
             // Assert
-            Assert.That(theResult, Is.InstanceOf<IEnumerable>());
+            Assert.AreSame(theResult, theCollection);
         }
 
         /// <summary>Checks that validation succeeds when an IEnumerable{T} collection has content.</summary>
@@ -134,10 +171,10 @@ namespace GavinGreig.Test
             IEnumerable<int> theCollection = new List<int> { 1 };
 
             // Act
-            IEnumerable<int> theResult = ParameterValidation.EnsureCollectionNotEmpty(theCollection, "theTest");
+            IEnumerable<int> theResult = ParameterValidation.EnsureCollectionNotEmpty(theCollection, nameof(theCollection));
 
             // Assert
-            Assert.That(theResult, Is.InstanceOf<IEnumerable<int>>());
+            Assert.AreSame(theResult, theCollection);
         }
 
         /// <summary>Checks that validation succeeds when a List{T} collection has content.</summary>
@@ -149,10 +186,10 @@ namespace GavinGreig.Test
             var theCollection = new List<int> { 1 };
 
             // Act
-            List<int> theResult = ParameterValidation.EnsureCollectionNotEmpty(theCollection, "theTest");
+            List<int> theResult = ParameterValidation.EnsureCollectionNotEmpty(theCollection, nameof(theCollection));
 
             // Assert
-            Assert.That(theResult, Is.InstanceOf<List<int>>());
+            Assert.AreSame(theResult, theCollection);
         }
 
         /// <summary>Checks that validation fails when a GUID is empty.</summary>
@@ -160,11 +197,20 @@ namespace GavinGreig.Test
         [Test]
         public static void EnsureGuidNotEmpty_WithEmptyGuid_ThrowsException()
         {
-            Assert.Throws<ArgumentException>(
+            // Arrange
+            Guid theGuid = Guid.Empty;
+            string theExpectedMessage = "The GUID has the empty value, {00000000-0000-0000-0000-000000000000}.";
+
+            // Assert
+            Assert.That(
                 () =>
                 {
-                    ParameterValidation.EnsureGuidNotEmpty(Guid.Empty, "testparam");
-                });
+                    // Act
+                    ParameterValidation.EnsureGuidNotEmpty(theGuid, nameof(theGuid));
+                },
+                Throws.ArgumentException
+                    .With.Message.Contains(theExpectedMessage)
+                    .And.Message.Contains(nameof(theGuid)));
         }
 
         /// <summary>Checks that validation succeeds when a GUID is not-empty.</summary>
@@ -173,12 +219,13 @@ namespace GavinGreig.Test
         public static void EnsureGuidNotEmpty_WithValidGuid_ReturnsValue()
         {
             // Arrange
-            var theParameter = new Guid("1d572f1a-c8e9-4ff8-8ec6-9e585aa64e74");
+            var theGuid = new Guid("1d572f1a-c8e9-4ff8-8ec6-9e585aa64e74");
 
             // Act
-            Guid theResult = ParameterValidation.EnsureGuidNotEmpty(theParameter, "testparam");
+            Guid theResult = ParameterValidation.EnsureGuidNotEmpty(theGuid, nameof(theGuid));
 
-            Assert.That(theResult, Is.EqualTo(theParameter));
+            // Assert
+            Assert.AreEqual(theResult, theGuid);
         }
 
         /// <summary>Checks that validation fails when a string is null.</summary>
@@ -186,12 +233,54 @@ namespace GavinGreig.Test
         [Test]
         public static void EnsureNotNull_WithNullData_ThrowsException()
         {
-            Assert.Throws<ArgumentNullException>(
+            // Arrange
+            string theExpectedMessage = "Value cannot be null.";
+            string theNullText = null; // Need to use a variable, as type can't be inferred from a raw null.
+
+            // Assert
+            Assert.That(
                 () =>
                 {
-                    string theNullText = null; // Need to use a variable, as type can't be inferred from a raw null.
-                    ParameterValidation.EnsureNotNull(theNullText, "testparam");
-                });
+                    // Act
+                    ParameterValidation.EnsureNotNull(theNullText, nameof(theNullText));
+                },
+                Throws.ArgumentNullException
+                    .With.Message.Contains(theExpectedMessage)
+                    .And.Message.Contains(nameof(theNullText)));
+        }
+
+        /*
+        [Property]
+        public static Property EnsureNotNull_WithValidString_ReturnsValue(string inValue, bool inTrim)
+        {
+            return ParameterValidation.EnsureStringNotNullOrEmpty(inValue, nameof(inValue), inTrim)
+                       .Equals(inValue, StringComparison.Ordinal)
+                       .When(!inValue.IsNullOrEmpty());
+
+            // inValue != null && !inValue.Length.Equals(string.Empty.Length),
+            bool inTrim = true;
+            AssertPropertyThat.When(
+                !inValue.IsNullOrEmpty(),
+                () =>
+                {
+                    return ParameterValidation.EnsureStringNotNullOrEmpty(inValue, nameof(inValue), inTrim)
+                        .Equals(inValue, StringComparison.Ordinal);
+                })
+                .VerboseCheckThrowOnFailure();
+        }
+        */
+
+        [Test]
+        public static void EnsureOfType_WithDerivedType_ReturnsValue()
+        {
+            // Arrange
+            var theParameter = new DerivedType();
+
+            // Act
+            ExpectedType theResult = ParameterValidation.EnsureOfType<ExpectedType>(theParameter, nameof(theParameter));
+
+            // Assert
+            Assert.AreSame(theResult, theParameter);
         }
 
         [Test]
@@ -201,60 +290,107 @@ namespace GavinGreig.Test
             var theParameter = new ExpectedType();
 
             // Act
-            ExpectedType theResult = ParameterValidation.EnsureOfType<ExpectedType>(theParameter, "testparam");
+            ExpectedType theResult = ParameterValidation.EnsureOfType<ExpectedType>(theParameter, nameof(theParameter));
 
-            Assert.That(theResult, Is.EqualTo(theParameter));
+            // Assert
+            Assert.AreSame(theResult, theParameter);
         }
 
         [Test]
         public static void EnsureOfType_WithNull_ThrowsException()
         {
-            Assert.Throws<ArgumentNullException>(
+            // Arrange
+            string theExpectedMessage = "Value cannot be null.";
+            ExpectedType theNullReference = null;
+
+            // Assert
+            Assert.That(
                 () =>
                 {
-                    ParameterValidation.EnsureOfType<ExpectedType>(null, "testparam");
-                });
+                    // Act
+                    ParameterValidation.EnsureOfType<ExpectedType>(theNullReference, nameof(theNullReference));
+                },
+                Throws.ArgumentNullException
+                    .With.Message.Contains(theExpectedMessage)
+                    .And.Message.Contains(nameof(theNullReference)));
         }
 
         [Test]
         public static void EnsureOfType_WithOtherType_ThrowsException()
         {
-            Assert.Throws<ArgumentTypeException>(
+            // Arrange
+            var theUnexpectedType = new UnexpectedType();
+            string theExpectedMessage = "An argument of type " +
+                theUnexpectedType.GetGenericAwareTypeName() +
+                " was provided (expected " +
+                new ExpectedType().GetGenericAwareTypeName() +
+                ").";
+
+            // Assert
+            Assert.That(
                 () =>
                 {
-                    var theParameter = new UnexpectedType();
-                    ParameterValidation.EnsureOfType<ExpectedType>(theParameter, "testparam");
-                });
+                    // Act
+                    ParameterValidation.EnsureOfType<ExpectedType>(theUnexpectedType, nameof(theUnexpectedType));
+                },
+                Throws.Exception.TypeOf<ArgumentTypeException>()
+                    .With.Message.Contains(theExpectedMessage)
+                    .And.Message.Contains(nameof(theUnexpectedType)));
         }
 
         [Test]
         public static void EnsureStringNotNullOrEmpty_WithEmptyString_ThrowsException()
         {
-            Assert.Throws<ArgumentNullException>(
+            // Arrange
+            string theExpectedMessage = "String cannot be empty.";
+            string theEmptyString = string.Empty;
+
+            // Assert
+            Assert.That(
                 () =>
                 {
-                    ParameterValidation.EnsureStringNotNullOrEmpty(string.Empty, "testparam");
-                });
+                    // Act
+                    ParameterValidation.EnsureStringNotNullOrEmpty(theEmptyString, nameof(theEmptyString));
+                },
+                Throws.ArgumentException
+                    .With.Message.Contains(theExpectedMessage)
+                    .And.Message.Contains(nameof(theEmptyString)));
         }
 
         [Test]
         public static void EnsureStringNotNullOrEmpty_WithNull_ThrowsException()
         {
-            Assert.Throws<ArgumentNullException>(
+            // Arrange
+            string theExpectedMessage = "Value cannot be null.";
+            string theNullString = null;
+
+            // Assert
+            Assert.That(
                 () =>
                 {
-                    string theParameter = null; // Need a variable to enforce the type of the null.
-                    ParameterValidation.EnsureStringNotNullOrEmpty(theParameter, "testparam");
-                });
+                    // Act
+                    ParameterValidation.EnsureStringNotNullOrEmpty(theNullString, nameof(theNullString));
+                },
+                Throws.ArgumentNullException
+                    .With.Message.Contains(theExpectedMessage)
+                    .And.Message.Contains(nameof(theNullString)));
         }
 
         [Test]
         public static void EnsureStringNotNullOrEmpty_WithString_ReturnsValue()
         {
+            // Arrange
             const string ExpectedValue = "Test";
-            string theResult = ParameterValidation.EnsureStringNotNullOrEmpty(ExpectedValue, "testparam");
 
-            Assert.That(theResult, Is.EqualTo(ExpectedValue));
+            // Act
+            string theResult = ParameterValidation.EnsureStringNotNullOrEmpty(ExpectedValue, nameof(ExpectedValue));
+
+            // Assert
+            Assert.AreSame(theResult, ExpectedValue);
+        }
+
+        private class DerivedType : ExpectedType
+        {
         }
 
         private class ExpectedType
