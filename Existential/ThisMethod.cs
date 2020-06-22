@@ -1,4 +1,4 @@
-﻿// <copyright file="Caller.cs" company="Gavin Greig">
+﻿// <copyright file="ThisMethod.cs" company="Gavin Greig">
 //     Copyright (c) Dr. Gavin T.D. Greig, 2020.
 // </copyright>
 
@@ -7,7 +7,7 @@ namespace GavinGreig
     using System.Runtime.CompilerServices;
 
     /// <summary>A utility class for caller methods.</summary>
-    public static class Caller
+    public static class ThisMethod
     {
         /// <summary>
         /// Gets the name of the calling method at compile time (i.e. not requiring reflection).

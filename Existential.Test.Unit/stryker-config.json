@@ -1,0 +1,10 @@
+﻿{
+  "stryker-config": {
+    "project-file": "Existential.Net.csproj",
+    "ignore-methods": [
+      //"*Log*",
+      //"ToString",
+      "*HashCode*"
+    ]
+  }
+}

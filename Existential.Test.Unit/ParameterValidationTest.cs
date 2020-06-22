@@ -8,10 +8,14 @@ namespace GavinGreig.Test
     using System.Collections;
     using System.Collections.Generic;
 
+    using FsCheck;
+
     using GavinGreig.Extensions;
 
-    // using FsCheck; using AssertPropertyThat = FsCheck.Prop; using PropertyAttribute = FsCheck.NUnit.PropertyAttribute;
     using NUnit.Framework;
+
+    // using AssertPropertyThat = FsCheck.Prop;
+    using PropertyAttribute = FsCheck.NUnit.PropertyAttribute;
 
     /// <summary>Unit tests for parameter validation methods.</summary>
     [TestFixture]
@@ -228,6 +232,13 @@ namespace GavinGreig.Test
             Assert.AreEqual(theResult, theGuid);
         }
 
+        [Property]
+        public static Property EnsureNotNull_WithNonWhiteSpaceString_ReturnsValue(NonEmptyString x, bool y)
+        {
+            Func<bool> theProperty = () => ParameterValidation.EnsureStringNotNullOrEmpty(x.Get, nameof(x), y) == x.Get;
+            return theProperty.When(!string.IsNullOrWhiteSpace(x.Get));
+        }
+
         /// <summary>Checks that validation fails when a string is null.</summary>
         /// <param name="assert">Required for compatibility with QUnit's assert instances.</param>
         [Test]
@@ -248,27 +259,6 @@ namespace GavinGreig.Test
                     .With.Message.Contains(theExpectedMessage)
                     .And.Message.Contains(nameof(theNullText)));
         }
-
-        /*
-        [Property]
-        public static Property EnsureNotNull_WithValidString_ReturnsValue(string inValue, bool inTrim)
-        {
-            return ParameterValidation.EnsureStringNotNullOrEmpty(inValue, nameof(inValue), inTrim)
-                       .Equals(inValue, StringComparison.Ordinal)
-                       .When(!inValue.IsNullOrEmpty());
-
-            // inValue != null && !inValue.Length.Equals(string.Empty.Length),
-            bool inTrim = true;
-            AssertPropertyThat.When(
-                !inValue.IsNullOrEmpty(),
-                () =>
-                {
-                    return ParameterValidation.EnsureStringNotNullOrEmpty(inValue, nameof(inValue), inTrim)
-                        .Equals(inValue, StringComparison.Ordinal);
-                })
-                .VerboseCheckThrowOnFailure();
-        }
-        */
 
         [Test]
         public static void EnsureOfType_WithDerivedType_ReturnsValue()
@@ -387,6 +377,57 @@ namespace GavinGreig.Test
 
             // Assert
             Assert.AreSame(theResult, ExpectedValue);
+        }
+
+        [Test]
+        public static void EnsureStringNotNullOrEmpty_WithWhiteSpaceStringAndNoTrim_ReturnsValue()
+        {
+            string theWhiteSpaceText = "    ";
+
+            // Act
+            string theResult = ParameterValidation.EnsureStringNotNullOrEmpty(
+                theWhiteSpaceText,
+                nameof(theWhiteSpaceText),
+                trim: false);
+
+            // Assert
+            Assert.AreSame(theResult, theWhiteSpaceText);
+        }
+
+        public static void EnsureStringNotNullOrEmpty_WithWhiteSpaceStringAndTrim_ThrowsException()
+        {
+            // Arrange
+            string theExpectedMessage = "Value cannot be empty.";
+            string theWhiteSpaceText = "    ";
+
+            // Assert
+            Assert.That(
+                () =>
+                {
+                    // Act
+                    _ = ParameterValidation.EnsureStringNotNullOrEmpty(theWhiteSpaceText, nameof(theWhiteSpaceText), trim: true);
+                },
+                Throws.ArgumentNullException
+                    .With.Message.Contains(theExpectedMessage)
+                    .And.Message.Contains(nameof(theWhiteSpaceText)));
+        }
+
+        public static void EnsureStringNotNullOrEmpty_WithWhiteSpaceStringAndUnspecifiedTrim_ThrowsException()
+        {
+            // Arrange
+            string theExpectedMessage = "Value cannot be empty.";
+            string theWhiteSpaceText = "    ";
+
+            // Assert
+            Assert.That(
+                () =>
+                {
+                    // Act
+                    ParameterValidation.EnsureStringNotNullOrEmpty(theWhiteSpaceText, nameof(theWhiteSpaceText));
+                },
+                Throws.ArgumentNullException
+                    .With.Message.Contains(theExpectedMessage)
+                    .And.Message.Contains(nameof(theWhiteSpaceText)));
         }
 
         private class DerivedType : ExpectedType
