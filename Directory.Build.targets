@@ -1,2 +1,5 @@
-<Project>
+﻿<Project>
+  <Target Name="CleanStryker" BeforeTargets="Clean;Rebuild">
+    <RemoveDir Directories="StrykerOutput" />
+  </Target>
 </Project>
