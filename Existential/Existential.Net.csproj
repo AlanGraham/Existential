@@ -3,6 +3,23 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>GavinGreig</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <AssemblyTitle>Existential.Net</AssemblyTitle>
+    <Description>A library for things that may or may not exist.</Description>
+    <PackageProjectUrl>https://dev.azure.com/ggreig/Existential</PackageProjectUrl>
+    <RepositoryUrl>https://dev.azure.com/ggreig/_git/Existential</RepositoryUrl>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <!-- Settings for Source Link. -->
+    <!-- Determine the root of the repository and ensure its \'s are escaped -->
+    <SrcRootDirectory>$([System.IO.Directory]::GetParent($(MSBuildThisFileDirectory.TrimEnd("\"))))</SrcRootDirectory>
+    <SourceLinkRoot>$(SrcRootDirectory.Replace("\", "\\"))</SourceLinkRoot>
+
+    <!-- Define our VSTS repo's Account and Project -->
+    <VstsAccount>ggreig</VstsAccount>
+    <VstsProject>Existential</VstsProject>
+    <VstsRepo>Existential</VstsRepo>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,9 +35,14 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="MinVer" Version="2.3.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+
 </Project>

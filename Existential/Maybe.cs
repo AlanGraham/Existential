@@ -58,6 +58,16 @@ namespace GavinGreig
         public static bool operator !=(Maybe<T> left, Maybe<T> right)
             => !(left == right);
 
+        /// <summary>
+        /// Performs a conversion from a <typeparamref name="T"/> to a <see cref="Maybe{T}"/>.
+        /// </summary>
+        /// <param name="inValue">The value.</param>
+        /// <returns>The result of the conversion.</returns>
+        //// Bridge.NET doesn't support simplifying this use of "default" (2020/03/22).
+        public Maybe<T> ToMaybe(T inValue) => inValue == null || inValue is Maybe.MaybeNone
+               ? default(Maybe<T>)
+                 : new Maybe<T>(inValue);
+
         /// <summary>Indicates whether this instance and a specified object are equal.</summary>
         /// <param name="obj">The object to compare with the current instance.</param>
         /// <returns>
@@ -105,16 +115,6 @@ namespace GavinGreig
         /// structures like a hash table.
         /// </returns>
         public override int GetHashCode() => myValueExists ? myValue.GetHashCode() : 0;
-
-        /// <summary>
-        /// Performs a conversion from a <typeparamref name="T"/> to a <see cref="Maybe{T}"/>.
-        /// </summary>
-        /// <param name="inValue">The value.</param>
-        /// <returns>The result of the conversion.</returns>
-        //// Bridge.NET doesn't support simplifying this use of "default" (2020/03/22).
-        public Maybe<T> ToMaybe(T inValue) => inValue == null || inValue is Maybe.MaybeNone
-               ? default(Maybe<T>)
-                 : new Maybe<T>(inValue);
 
         /// <summary>Applies different functions depending on whether the value exists.</summary>
         /// <typeparam name="TResult">The type of the result.</typeparam>
@@ -331,6 +331,19 @@ namespace GavinGreig
 
             return value;
         }
+
+        /// <summary>
+        /// Ensures that a <see cref="Maybe{T}" /> doesn't get double-wrapped to become a Maybe{Maybe{T}}.
+        /// </summary>
+        /// <typeparam name="T">The type of the value.</typeparam>
+        /// <param name="value">The <see cref="Maybe{T}" />.</param>
+        /// <returns>The value.</returns>
+        public static Maybe<T> Some<T>(Maybe<T> value) => value;
+
+        /// <summary>Ensures that a <see cref="MaybeNone" /> doesn't get double-wrapped.</summary>
+        /// <param name="value">The <see cref="Maybe{T}" />.</param>
+        /// <returns>The value.</returns>
+        public static MaybeNone Some(MaybeNone value) => value;
 
         /// <summary>A class representing the absence of a value in a <see cref="Maybe{T}" />.</summary>
 #pragma warning disable CA1034 // Nested types should not be visible

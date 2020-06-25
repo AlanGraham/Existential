@@ -5,9 +5,15 @@
     <LangVersion>latest</LangVersion>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Deterministic>true</Deterministic>
+    <!--<GenerateAssemblyInfo>false</GenerateAssemblyInfo>-->
     <DocumentationFile Condition="!$(MSBuildProjectName.Contains(`QUnit`))">$(MSBuildProjectName).xml</DocumentationFile>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(DocumentationFile);StrykerOutput\**</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TF_BUILD)' == 'true'">
+    <!-- Mark as a CI build when built in an Azure DevOps pipeline. This allows for a determistic build. -->
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -81,12 +87,47 @@
     <CodeAnalysisRuleSet>$(SharedFiles)$(BridgeTestRuleSet)</CodeAnalysisRuleSet>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <!-- Package / Assembly info configuration - has to come after $(BaseIntermediateOutputPath) is configured. -->
+    <TargetFrameworkMonikerAssemblyAttributesPath>$(BaseIntermediateOutputPath)\AssemblyAttributes.cs</TargetFrameworkMonikerAssemblyAttributesPath>
+    <TargetFrameworkMonikerAssemblyAttributesFileClean>True</TargetFrameworkMonikerAssemblyAttributesFileClean>
+    <Authors>Dr. Gavin T.D. Greig</Authors>
+    <Copyright>© Copyright $([System.DateTime]::Now.ToString(`yyyy`)), Dr. Gavin T.D. Greig</Copyright>
+    <RepositoryType>Git</RepositoryType>
+    <NeutralLanguage>en-GB</NeutralLanguage>
+    <PackageIcon>GRune128.png</PackageIcon>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Include Source Link. -->
+    <SourceLink>$(BaseIntermediateOutputPath)source_link.json</SourceLink>
+
+    <!-- Optional: Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
+    <PublishRepositoryUrl>false</PublishRepositoryUrl>
+
+    <!-- Optional: Embed source files that are not tracked by the source control manager in the PDB -->
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+
+    <!-- Optional: Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Reference the package for my source control provider. This is a build-time-only dependency. -->
+    <PackageReference Include="Microsoft.SourceLink.AzureRepos.Git" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
   <ItemGroup>
     <Compile Include="$(SharedFiles)CompanyInfo.cs" Link="Properties\CompanyInfo.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <AdditionalFiles Include="$(SharedFiles)stylecop.json" Link="Properties\stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(IsJSProject)' != 'true' And '$(IsTestProject)' != 'true' ">
+    <None Include="$(SharedFiles)GRune128.png" Link="Properties\GRune128.png" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(IsBridgeProject)' != 'true' And '$(IsTestProject)' != 'true' ">

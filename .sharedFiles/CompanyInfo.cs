@@ -16,16 +16,12 @@
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
+/*
 [assembly: System.Reflection.AssemblyCompany("Gavin Greig")]
 [assembly: System.Reflection.AssemblyCopyright("Copyright © Dr. Gavin T.D. Greig. 2020")]
+*/
 [assembly: System.Reflection.AssemblyTrademark("")]
 [assembly: System.Reflection.AssemblyCulture("")] // Empty string for any main (non-satellite) assembly
-
-#if DEBUG
-[assembly: System.Reflection.AssemblyConfiguration("Debug")]
-#else
-[assembly: System.Reflection.AssemblyConfiguration("Release")]
-#endif
 
 #if JavaScript
 #else
@@ -34,8 +30,6 @@
 // COM, set the ComVisible attribute to true on that type.
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 
-// Default language of resources in the assembly.
-[assembly: System.Resources.NeutralResourcesLanguage("en-GB")]
 #endif
 
 #if NETCOREAPP || JavaScript
