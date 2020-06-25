@@ -99,6 +99,11 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <!-- Settings for Source Link. -->
+
+    <!-- Define our VSTS repo's Account and Project -->
+    <VstsAccount>ggreig</VstsAccount>
+
     <!-- Include Source Link. -->
     <SourceLink>$(BaseIntermediateOutputPath)source_link.json</SourceLink>
 
