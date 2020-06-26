@@ -1,7 +1,6 @@
 ﻿{
   "stryker-config": {
     "project-file": "Existential.Net.csproj",
-    "max-concurrent-test-runners": 2,
     "ignore-methods": [
       //"*Log*",
       //"ToString",
