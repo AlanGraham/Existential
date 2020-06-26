@@ -8,7 +8,10 @@ namespace GavinGreig
 
     /// <summary>A container representing a value that may or may not exist.</summary>
     /// <typeparam name="T">The type of the object that may exist.</typeparam>
-    /// <remarks>Very strongly based on an example by Yacoub Massad: https://www.dotnetcurry.com/patterns-practices/1510/maybe-monad-csharp.</remarks>
+    /// <remarks>
+    /// Very strongly based on an example by Yacoub Massad: https://www.dotnetcurry.com/patterns-practices/1510/maybe-monad-csharp.
+    /// TODO: Add support for nullable? values.
+    /// </remarks>
     public struct Maybe<T> : IEquatable<Maybe<T>>
     {
         private readonly T myValue;
@@ -122,6 +125,22 @@ namespace GavinGreig
         /// structures like a hash table.
         /// </returns>
         public override int GetHashCode() => myValueExists ? myValue.GetHashCode() : 0;
+
+        /// <summary>
+        /// Returns the underlying value, or the default for its type, converted to a string.
+        /// </summary>
+        /// <returns>The string representation of the value, or a suitable fall-back value.</returns>
+        /// <remarks>
+        /// Fall-backs: if no value exists, the string representation of the default value for the
+        /// type will be returned. If the default value for the type is null, the empty string will
+        /// be returned.
+        /// </remarks>
+        public override string ToString()
+            => myValueExists ?
+                myValue.ToString() :
+                default(T) != null ?
+                    default(T).ToString() :
+                    string.Empty;
 
         /// <summary>Applies different functions depending on whether the value exists.</summary>
         /// <typeparam name="TResult">The type of the result.</typeparam>

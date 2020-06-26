@@ -310,6 +310,33 @@ namespace GavinGreig.Test
         }
 
         [Test]
+        public static void ToString_WithNullString_ReturnsStringOfDefault()
+        {
+            // Arrange
+            string theNullString = null;
+            Maybe<string> theMaybe = theNullString;
+
+            // Act
+            string theResult = theMaybe.ToString();
+
+            // Assert
+            Assert.That(theResult, Is.EqualTo(string.Empty));
+        }
+
+        [Test]
+        public static void ToString_WithValue_ReturnsStringOfValue()
+        {
+            // Arrange
+            Maybe<string> theMaybe = "A test string";
+
+            // Act
+            string theResult = theMaybe.ToString();
+
+            // Assert
+            Assert.That(theResult, Is.EqualTo("A test string"));
+        }
+
+        [Test]
         public static void TryGetValue_WithNoValue_HasDefaultOutValue()
         {
             // Arrange
