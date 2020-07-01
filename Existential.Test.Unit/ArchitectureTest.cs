@@ -22,7 +22,7 @@ namespace GavinGreig.Test.Architecture
             // Arrange
             const string theRootNamespace = "GavinGreig";
 
-            var theTargetAssembly = Assembly.GetAssembly(typeof(ParameterValidation));
+            var theTargetAssembly = Assembly.GetAssembly(typeof(Validation));
             ConditionList theRootNamespaceRule = Types.InAssembly(theTargetAssembly)
                 .That().AreNotNested()
                 .And().DoNotResideInNamespaceStartingWith("Coverlet")

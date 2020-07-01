@@ -37,7 +37,7 @@ namespace GavinGreig.Test
                 () =>
                 {
                     // Act
-                    ParameterValidation.EnsureCollectionNotEmpty(theCollection, nameof(theCollection));
+                    Validation.ThrowIfCollectionNullOrEmpty(theCollection, nameof(theCollection));
                 },
                 Throws.ArgumentException
                     .With.Message.Contains(theExpectedMessage)
@@ -58,7 +58,7 @@ namespace GavinGreig.Test
                 () =>
                 {
                     // Act
-                    ParameterValidation.EnsureCollectionNotEmpty(theCollection, nameof(theCollection));
+                    Validation.ThrowIfCollectionNullOrEmpty(theCollection, nameof(theCollection));
                 },
                 Throws.ArgumentNullException
                     .With.Message.Contains(theExpectedMessage)
@@ -81,7 +81,7 @@ namespace GavinGreig.Test
                 () =>
                 {
                     // Act
-                    ParameterValidation.EnsureCollectionNotEmpty(theCollection, nameof(theCollection));
+                    Validation.ThrowIfCollectionNullOrEmpty(theCollection, nameof(theCollection));
                 },
                 Throws.ArgumentException
                     .With.Message.Contains(theExpectedMessage)
@@ -102,7 +102,7 @@ namespace GavinGreig.Test
                 () =>
                 {
                     // Act
-                    ParameterValidation.EnsureCollectionNotEmpty(theCollection, nameof(theCollection));
+                    Validation.ThrowIfCollectionNullOrEmpty(theCollection, nameof(theCollection));
                 },
                 Throws.ArgumentNullException
                     .With.Message.Contains(theExpectedMessage)
@@ -123,7 +123,7 @@ namespace GavinGreig.Test
                 () =>
                 {
                     // Act
-                    ParameterValidation.EnsureCollectionNotEmpty(theCollection, nameof(theCollection));
+                    Validation.ThrowIfCollectionNullOrEmpty(theCollection, nameof(theCollection));
                 },
                 Throws.ArgumentException
                     .With.Message.Contains(theExpectedMessage)
@@ -144,7 +144,7 @@ namespace GavinGreig.Test
                 () =>
                 {
                     // Act
-                    ParameterValidation.EnsureCollectionNotEmpty(theCollection, nameof(theCollection));
+                    Validation.ThrowIfCollectionNullOrEmpty(theCollection, nameof(theCollection));
                 },
                 Throws.ArgumentNullException
                     .With.Message.Contains(theExpectedMessage)
@@ -160,7 +160,7 @@ namespace GavinGreig.Test
             IEnumerable theCollection = new List<int> { 1 };
 
             // Act
-            IEnumerable theResult = ParameterValidation.EnsureCollectionNotEmpty(theCollection, nameof(theCollection));
+            IEnumerable theResult = Validation.ThrowIfCollectionNullOrEmpty(theCollection, nameof(theCollection));
 
             // Assert
             Assert.AreSame(theResult, theCollection);
@@ -175,7 +175,7 @@ namespace GavinGreig.Test
             IEnumerable<int> theCollection = new List<int> { 1 };
 
             // Act
-            IEnumerable<int> theResult = ParameterValidation.EnsureCollectionNotEmpty(theCollection, nameof(theCollection));
+            IEnumerable<int> theResult = Validation.ThrowIfCollectionNullOrEmpty(theCollection, nameof(theCollection));
 
             // Assert
             Assert.AreSame(theResult, theCollection);
@@ -190,7 +190,7 @@ namespace GavinGreig.Test
             var theCollection = new List<int> { 1 };
 
             // Act
-            List<int> theResult = ParameterValidation.EnsureCollectionNotEmpty(theCollection, nameof(theCollection));
+            List<int> theResult = Validation.ThrowIfCollectionNullOrEmpty(theCollection, nameof(theCollection));
 
             // Assert
             Assert.AreSame(theResult, theCollection);
@@ -210,7 +210,7 @@ namespace GavinGreig.Test
                 () =>
                 {
                     // Act
-                    ParameterValidation.EnsureGuidNotEmpty(theGuid, nameof(theGuid));
+                    Validation.ThrowIfEmptyGuid(theGuid, nameof(theGuid));
                 },
                 Throws.ArgumentException
                     .With.Message.Contains(theExpectedMessage)
@@ -226,7 +226,7 @@ namespace GavinGreig.Test
             var theGuid = new Guid("1d572f1a-c8e9-4ff8-8ec6-9e585aa64e74");
 
             // Act
-            Guid theResult = ParameterValidation.EnsureGuidNotEmpty(theGuid, nameof(theGuid));
+            Guid theResult = Validation.ThrowIfEmptyGuid(theGuid, nameof(theGuid));
 
             // Assert
             Assert.AreEqual(theResult, theGuid);
@@ -235,7 +235,7 @@ namespace GavinGreig.Test
         [Property]
         public static Property EnsureNotNull_WithNonWhiteSpaceString_ReturnsValue(NonEmptyString x, bool y)
         {
-            Func<bool> theProperty = () => ParameterValidation.EnsureStringNotNullOrEmpty(x.Get, nameof(x), y) == x.Get;
+            Func<bool> theProperty = () => Validation.ThrowIfStringNullOrEmpty(x.Get, nameof(x), y) == x.Get;
             return theProperty.When(!string.IsNullOrWhiteSpace(x.Get));
         }
 
@@ -253,7 +253,7 @@ namespace GavinGreig.Test
                 () =>
                 {
                     // Act
-                    ParameterValidation.EnsureNotNull(theNullText, nameof(theNullText));
+                    Validation.ThrowIfNull(theNullText, nameof(theNullText));
                 },
                 Throws.ArgumentNullException
                     .With.Message.Contains(theExpectedMessage)
@@ -267,7 +267,7 @@ namespace GavinGreig.Test
             var theParameter = new DerivedType();
 
             // Act
-            ExpectedType theResult = ParameterValidation.EnsureOfType<ExpectedType>(theParameter, nameof(theParameter));
+            ExpectedType theResult = Validation.ThrowIfNotOfType<ExpectedType>(theParameter, nameof(theParameter));
 
             // Assert
             Assert.AreSame(theResult, theParameter);
@@ -280,7 +280,7 @@ namespace GavinGreig.Test
             var theParameter = new ExpectedType();
 
             // Act
-            ExpectedType theResult = ParameterValidation.EnsureOfType<ExpectedType>(theParameter, nameof(theParameter));
+            ExpectedType theResult = Validation.ThrowIfNotOfType<ExpectedType>(theParameter, nameof(theParameter));
 
             // Assert
             Assert.AreSame(theResult, theParameter);
@@ -298,7 +298,7 @@ namespace GavinGreig.Test
                 () =>
                 {
                     // Act
-                    ParameterValidation.EnsureOfType<ExpectedType>(theNullReference, nameof(theNullReference));
+                    Validation.ThrowIfNotOfType<ExpectedType>(theNullReference, nameof(theNullReference));
                 },
                 Throws.ArgumentNullException
                     .With.Message.Contains(theExpectedMessage)
@@ -321,7 +321,7 @@ namespace GavinGreig.Test
                 () =>
                 {
                     // Act
-                    ParameterValidation.EnsureOfType<ExpectedType>(theUnexpectedType, nameof(theUnexpectedType));
+                    Validation.ThrowIfNotOfType<ExpectedType>(theUnexpectedType, nameof(theUnexpectedType));
                 },
                 Throws.Exception.TypeOf<ArgumentTypeException>()
                     .With.Message.Contains(theExpectedMessage)
@@ -340,7 +340,7 @@ namespace GavinGreig.Test
                 () =>
                 {
                     // Act
-                    ParameterValidation.EnsureStringNotNullOrEmpty(theEmptyString, nameof(theEmptyString));
+                    Validation.ThrowIfStringNullOrEmpty(theEmptyString, nameof(theEmptyString));
                 },
                 Throws.ArgumentException
                     .With.Message.Contains(theExpectedMessage)
@@ -359,7 +359,7 @@ namespace GavinGreig.Test
                 () =>
                 {
                     // Act
-                    ParameterValidation.EnsureStringNotNullOrEmpty(theNullString, nameof(theNullString));
+                    Validation.ThrowIfStringNullOrEmpty(theNullString, nameof(theNullString));
                 },
                 Throws.ArgumentNullException
                     .With.Message.Contains(theExpectedMessage)
@@ -373,7 +373,7 @@ namespace GavinGreig.Test
             const string ExpectedValue = "Test";
 
             // Act
-            string theResult = ParameterValidation.EnsureStringNotNullOrEmpty(ExpectedValue, nameof(ExpectedValue));
+            string theResult = Validation.ThrowIfStringNullOrEmpty(ExpectedValue, nameof(ExpectedValue));
 
             // Assert
             Assert.AreSame(theResult, ExpectedValue);
@@ -385,7 +385,7 @@ namespace GavinGreig.Test
             string theWhiteSpaceText = "    ";
 
             // Act
-            string theResult = ParameterValidation.EnsureStringNotNullOrEmpty(
+            string theResult = Validation.ThrowIfStringNullOrEmpty(
                 theWhiteSpaceText,
                 nameof(theWhiteSpaceText),
                 trim: false);
@@ -405,7 +405,7 @@ namespace GavinGreig.Test
                 () =>
                 {
                     // Act
-                    _ = ParameterValidation.EnsureStringNotNullOrEmpty(theWhiteSpaceText, nameof(theWhiteSpaceText), trim: true);
+                    _ = Validation.ThrowIfStringNullOrEmpty(theWhiteSpaceText, nameof(theWhiteSpaceText), trim: true);
                 },
                 Throws.ArgumentNullException
                     .With.Message.Contains(theExpectedMessage)
@@ -423,7 +423,7 @@ namespace GavinGreig.Test
                 () =>
                 {
                     // Act
-                    ParameterValidation.EnsureStringNotNullOrEmpty(theWhiteSpaceText, nameof(theWhiteSpaceText));
+                    Validation.ThrowIfStringNullOrEmpty(theWhiteSpaceText, nameof(theWhiteSpaceText));
                 },
                 Throws.ArgumentNullException
                     .With.Message.Contains(theExpectedMessage)

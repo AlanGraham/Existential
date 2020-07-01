@@ -15,7 +15,7 @@ namespace GavinGreig.Extensions
         /// <returns>The full name of the type, including any generic type parameters.</returns>
         public static string GetGenericAwareFullTypeName(this Type inType)
         {
-            _ = ParameterValidation.EnsureNotNull(inType, "inType");
+            _ = Validation.ThrowIfNull(inType, "inType");
             return inType.GetGenericAwareTypeName(inType.FullName);
         }
 
@@ -25,7 +25,7 @@ namespace GavinGreig.Extensions
         /// <returns>The full name of the type, including any generic type parameters.</returns>
         public static string GetGenericAwareFullTypeName<T>(this T inInstance)
         {
-            _ = ParameterValidation.EnsureNotNull(inInstance, "inInstance");
+            _ = Validation.ThrowIfNull(inInstance, "inInstance");
             Type theType = typeof(T);
             return theType.GetGenericAwareTypeName(theType.FullName);
         }
@@ -35,7 +35,7 @@ namespace GavinGreig.Extensions
         /// <returns>The name of the type, including any generic type parameters.</returns>
         public static string GetGenericAwareTypeName(this Type inType)
         {
-            _ = ParameterValidation.EnsureNotNull(inType, "inType");
+            _ = Validation.ThrowIfNull(inType, "inType");
             return inType.GetGenericAwareTypeName(inType.Name);
         }
 
@@ -45,7 +45,7 @@ namespace GavinGreig.Extensions
         /// <returns>The name of the type, including any generic type parameters.</returns>
         public static string GetGenericAwareTypeName<T>(this T inInstance)
         {
-            _ = ParameterValidation.EnsureNotNull(inInstance, "inInstance");
+            _ = Validation.ThrowIfNull(inInstance, "inInstance");
             Type theType = typeof(T);
             return theType.GetGenericAwareTypeName(theType.Name);
         }
