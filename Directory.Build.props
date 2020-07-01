@@ -8,11 +8,12 @@
     <Deterministic>true</Deterministic>
     <!--<GenerateAssemblyInfo>false</GenerateAssemblyInfo>-->
     <DocumentationFile Condition="!$(MSBuildProjectName.Contains(`QUnit`))">$(MSBuildProjectName).xml</DocumentationFile>
-    <DefaultItemExcludes>$(DefaultItemExcludes);$(DocumentationFile);StrykerOutput\**</DefaultItemExcludes>
+    <DocFXExcludes>log.txt;api\**\*.yml;api\**\.manifest</DocFXExcludes>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(DocumentationFile);$(DocFXExcludes);StrykerOutput\**</DefaultItemExcludes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TF_BUILD)' == 'true'">
-    <!-- Mark as a CI build when built in an Azure DevOps pipeline. This allows for a determistic build. -->
+    <!-- Mark as a CI build when built in an Azure DevOps pipeline. This allows for a deterministic build. -->
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
   </PropertyGroup>
 

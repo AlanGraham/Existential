@@ -1,0 +1,12 @@
+﻿###############
+#    folder   #
+###############
+/**/DROP/
+/**/TEMP/
+/**/packages/
+/**/bin/
+/**/obj/
+_site
+/**/wwwroot/
+/**/api/*.yml
+Existential.Net.Docs.xml

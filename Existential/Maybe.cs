@@ -9,7 +9,9 @@ namespace GavinGreig
     /// <summary>A container representing a value that may or may not exist.</summary>
     /// <typeparam name="T">The type of the object that may exist.</typeparam>
     /// <remarks>
-    /// Very strongly based on an example by Yacoub Massad: https://www.dotnetcurry.com/patterns-practices/1510/maybe-monad-csharp.
+    /// Very strongly based on an example by Yacoub Massad:
+    /// https://www.dotnetcurry.com/patterns-practices/1510/maybe-monad-csharp. Defined as a struct
+    /// because structs themselves cannot be null.
     /// TODO: Add support for nullable? values.
     /// </remarks>
     public struct Maybe<T> : IEquatable<Maybe<T>>
@@ -18,6 +20,13 @@ namespace GavinGreig
 
         private readonly bool myValueExists;
 
+        /// <summary>Initialises a new instance of the <see cref="Maybe{T}" /> struct.</summary>
+        /// <param name="value">The value for the maybe to contain.</param>
+        /// <remarks>
+        /// Private so that it can only be used by methods within the class that check for null
+        /// before construction. If the provided value is null, they will use the default
+        /// constructor instead.
+        /// </remarks>
         private Maybe(T value)
         {
             myValue = value;
@@ -34,6 +43,7 @@ namespace GavinGreig
         public static implicit operator Maybe<T>(T inValue)
             => (inValue == null) ? default(Maybe<T>) : new Maybe<T>(inValue);
 
+        /*
         /// <summary>
         /// Performs an implicit conversion from <see cref="Maybe.MaybeNone"/> to <see cref="Maybe{T}"/>.
         /// </summary>
@@ -46,6 +56,7 @@ namespace GavinGreig
             Justification = "The underscore is a conventional name for values that will be discarded.")]
         public static implicit operator Maybe<T>(Maybe.MaybeNone _)
             => default(Maybe<T>);
+        */
 
         /// <summary>Implements the == operator.</summary>
         /// <param name="left">The left.</param>
@@ -66,16 +77,16 @@ namespace GavinGreig
         /// </summary>
         /// <param name="inValue">The value.</param>
         /// <returns>The result of the conversion.</returns>
+        /// <remarks>Required by Framework Design Guidelines as an alternate for the implicit operator.</remarks>
         //// Bridge.NET doesn't support simplifying this use of "default" (2020/03/22).
-        //// TODO: Decide whether "ToMaybe" makes sense in this context. Have to have a Maybe first?
-        public Maybe<T> ToMaybe(T inValue) => inValue == null || inValue is Maybe.MaybeNone
+        public Maybe<T> ToMaybe(T inValue) => inValue == null // || inValue is Maybe.MaybeNone
                ? default(Maybe<T>)
                  : new Maybe<T>(inValue);
 
         /// <summary>Returns a <see cref="Maybe{T}" /> when given one, to avoid double-wrapping.</summary>
         /// <param name="inValue">The value.</param>
         /// <returns>The original value, passed through.</returns>
-        //// TODO: Decide whether "ToMaybe" makes sense in this context. Have to have a Maybe first?
+        /// <remarks>Complements the method <see cref="ToMaybe(T)" />.</remarks>
         public Maybe<T> ToMaybe(Maybe<T> inValue) => inValue;
 
         /// <summary>Indicates whether this instance and a specified object are equal.</summary>
@@ -331,6 +342,7 @@ namespace GavinGreig
         }
     }
 
+    /*
     /// <summary>Class Maybe.</summary>
     public static class Maybe
     {
@@ -372,12 +384,13 @@ namespace GavinGreig
         public static MaybeNone Some(MaybeNone value) => value;
 
         /// <summary>A class representing the absence of a value in a <see cref="Maybe{T}" />.</summary>
-#pragma warning disable CA1034 // Nested types should not be visible
+    #pragma warning disable CA1034 // Nested types should not be visible
 
         public class MaybeNone
 
-#pragma warning restore CA1034 // Nested types should not be visible
+    #pragma warning restore CA1034 // Nested types should not be visible
         {
         }
     }
+    */
 }

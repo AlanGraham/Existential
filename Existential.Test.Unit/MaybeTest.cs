@@ -12,40 +12,74 @@ namespace GavinGreig.Test
     public static class MaybeTest
     {
         [Test]
-        public static void Create_WithInt_HasExpectedValue()
+        public static void Bind_WithNoValue_ReturnsMaybeWithNoValue()
         {
+            // Arrange
+            Maybe<string> theNullString = null;
+
             // Act
-            Maybe<int> theResult = 1;
+            Maybe<int> theResult = theNullString.Bind(x =>
+            {
+                Maybe<int> theMaybe = x.Length;
+                return theMaybe;
+            });
 
             // Assert
-            Assert.That(theResult.ValueOr(0), Is.EqualTo(1));
+            Assert.That(theResult.ValueOr(12), Is.EqualTo(12));
         }
 
         [Test]
-        public static void Create_WithInt_Succeeds()
+        public static void Bind_WithValue_ReturnsExpectedValue()
+        {
+            // Arrange
+            Maybe<string> theString = "Call me Maybe";
+
+            // Act
+            Maybe<int> theResult = theString.Bind(x =>
+            {
+                Maybe<int> theMaybe = x.Length;
+                return theMaybe;
+            });
+
+            // Assert
+            Assert.That(theResult.ValueOr(0), Is.EqualTo(13));
+        }
+
+        [Test]
+        public static void DefaultCreate_WithInt_HasNoValue()
         {
             // Act
-            Maybe<int> theResult = 1;
+            var theResult = default(Maybe<int>);
+
+            // Assert
+            Assert.That(theResult.ValueOr(1), Is.EqualTo(1));
+        }
+
+        [Test]
+        public static void DefaultCreate_WithInt_Succeeds()
+        {
+            // Act
+            var theResult = default(Maybe<int>);
 
             // Assert
             Assert.That(theResult, Is.InstanceOf<Maybe<int>>());
         }
 
         [Test]
-        public static void Create_WithString_HasExpectedValue()
+        public static void DefaultCreate_WithString_HasNoValue()
         {
             // Act
-            Maybe<string> theResult = "Test";
+            var theResult = default(Maybe<string>);
 
             // Assert
-            Assert.That(theResult.ValueOr(string.Empty), Is.EqualTo("Test"));
+            Assert.That(theResult.ValueOr("Default value"), Is.EqualTo("Default value"));
         }
 
         [Test]
-        public static void Create_WithString_Succeeds()
+        public static void DefaultCreate_WithString_Succeeds()
         {
             // Act
-            Maybe<string> theResult = "Test";
+            var theResult = default(Maybe<string>);
 
             // Assert
             Assert.That(theResult, Is.InstanceOf<Maybe<string>>());
@@ -198,6 +232,99 @@ namespace GavinGreig.Test
         }
 
         [Test]
+        public static void ImplicitCreate_WithInt_HasExpectedValue()
+        {
+            // Act
+            Maybe<int> theResult = 1;
+
+            // Assert
+            Assert.That(theResult.ValueOr(0), Is.EqualTo(1));
+        }
+
+        [Test]
+        public static void ImplicitCreate_WithInt_Succeeds()
+        {
+            // Act
+            Maybe<int> theResult = 1;
+
+            // Assert
+            Assert.That(theResult, Is.InstanceOf<Maybe<int>>());
+        }
+
+        [Test]
+        public static void ImplicitCreate_WithString_HasExpectedValue()
+        {
+            // Act
+            Maybe<string> theResult = "Test";
+
+            // Assert
+            Assert.That(theResult.ValueOr(string.Empty), Is.EqualTo("Test"));
+        }
+
+        [Test]
+        public static void ImplicitCreate_WithString_Succeeds()
+        {
+            // Act
+            Maybe<string> theResult = "Test";
+
+            // Assert
+            Assert.That(theResult, Is.InstanceOf<Maybe<string>>());
+        }
+
+        [Test]
+        public static void Map_WithNoValue_ReturnsExpectedType()
+        {
+            // Arrange
+            Maybe<string> theNullString = null;
+
+            // Act
+            Maybe<int> theResult = theNullString.Map(x => x.Length);
+
+            // Assert
+            Assert.That(theResult, Is.InstanceOf<Maybe<int>>());
+        }
+
+        [Test]
+        public static void Map_WithNoValue_ReturnsMaybeWithNoValue()
+        {
+            // Arrange
+            Maybe<string> theNullString = null;
+
+            // Act
+            Maybe<int> theResult = theNullString.Map(x => x.Length);
+
+            // Assert
+            Assert.That(theResult.ValueOr(17), Is.EqualTo(17));
+        }
+
+        [Test]
+        public static void Map_WithValue_ReturnsExpectedType()
+        {
+            // Arrange
+            Maybe<string> theString = "Call me Maybe";
+
+            // Act
+            Maybe<int> theResult = theString.Map(x => x.Length);
+
+            // Assert
+            Assert.That(theResult, Is.InstanceOf<Maybe<int>>());
+        }
+
+        [Test]
+        public static void Map_WithValue_ReturnsExpectedValue()
+        {
+            // Arrange
+            Maybe<string> theString = "Call me Maybe";
+
+            // Act
+            Maybe<int> theResult = theString.Map(x => x.Length);
+
+            // Assert
+            Assert.That(theResult.ValueOr(0), Is.EqualTo(13));
+        }
+
+        /*
+        [Test]
         public static void Some_WithMaybe_IsMaybe()
         {
             // Arrange
@@ -253,6 +380,7 @@ namespace GavinGreig.Test
             // Assert
             Assert.That(theResult.ValueOr("A default string"), Is.EqualTo("A valid string"));
         }
+        */
 
         [Test]
         public static void ToMaybe_WithMaybe_IsMaybe()
@@ -368,7 +496,7 @@ namespace GavinGreig.Test
         public static void TryGetValue_WithValue_HasCorrectOutValue()
         {
             // Arrange
-            var theTestValue = Maybe.Some("A test string");
+            Maybe<string> theTestValue = "A test string";
 
             // Act
             _ = theTestValue.TryGetValue(out string theOutValue);
@@ -381,7 +509,7 @@ namespace GavinGreig.Test
         public static void TryGetValue_WithValue_ReturnsTrue()
         {
             // Arrange
-            var theTestValue = Maybe.Some("A test string");
+            Maybe<string> theTestValue = "A test string";
 
             // Act
             bool theResult = theTestValue.TryGetValue(out _);
