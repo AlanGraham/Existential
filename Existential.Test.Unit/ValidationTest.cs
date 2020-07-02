@@ -1,16 +1,16 @@
-﻿// <copyright file="ParameterValidationTest.cs" company="Gavin Greig">
+﻿// <copyright file="ValidationTest.cs" company="Gavin Greig">
 //     Copyright (c) Dr. Gavin T.D. Greig, 2020.
 // </copyright>
 
-namespace GavinGreig.Test
+namespace Existential.Test
 {
     using System;
     using System.Collections;
     using System.Collections.Generic;
 
-    using FsCheck;
+    using Existential.Extensions;
 
-    using GavinGreig.Extensions;
+    using FsCheck;
 
     using NUnit.Framework;
 
@@ -19,7 +19,7 @@ namespace GavinGreig.Test
 
     /// <summary>Unit tests for parameter validation methods.</summary>
     [TestFixture]
-    public static class ParameterValidationTest
+    public static class ValidationTest
     {
         /// <summary>
         /// Checks that validation fails when an IEnumerable collection is non-null but empty.

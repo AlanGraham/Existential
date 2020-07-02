@@ -2,7 +2,7 @@
 //     Copyright (c) Dr. Gavin T.D. Greig, 2020.
 // </copyright>
 
-namespace GavinGreig.Test.Architecture
+namespace Existential.Test.Architecture
 {
     using System.Globalization;
     using System.Linq;
@@ -20,7 +20,7 @@ namespace GavinGreig.Test.Architecture
         public static void RootNamespace_IsCorrect()
         {
             // Arrange
-            const string theRootNamespace = "GavinGreig";
+            const string theRootNamespace = "Existential";
 
             var theTargetAssembly = Assembly.GetAssembly(typeof(Validation));
             ConditionList theRootNamespaceRule = Types.InAssembly(theTargetAssembly)

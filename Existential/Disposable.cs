@@ -2,7 +2,7 @@
 //     Copyright (c) Dr. Gavin T.D. Greig, 2020.
 // </copyright>
 
-namespace GavinGreig
+namespace Existential
 {
     /// <summary>
     /// Contains a method that supports the correct usage of <see cref="System.IDisposable" /> objects.

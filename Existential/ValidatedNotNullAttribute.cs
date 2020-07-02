@@ -2,7 +2,7 @@
 //     Copyright (c) Dr. Gavin T.D. Greig, 2020.
 // </copyright>
 
-namespace GavinGreig
+namespace Existential
 {
     /// <summary>
     /// An attribute that indicates to Code Analysis that a parameter is validated as not null, and

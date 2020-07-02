@@ -2,12 +2,12 @@
 //     Copyright (c) Dr. Gavin T.D. Greig, 2020.
 // </copyright>
 
-namespace GavinGreig
+namespace Existential
 {
     using System;
     using System.Globalization;
 
-    using GavinGreig.Extensions;
+    using Existential.Extensions;
 
     /// <summary>Contains validation methods.</summary>
     public static class Validation

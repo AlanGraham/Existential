@@ -2,7 +2,7 @@
 //     Copyright (c) Dr. Gavin T.D. Greig, 2020.
 // </copyright>
 
-namespace GavinGreig
+namespace Existential
 {
     using System.Collections;
     using System.Collections.Generic;
@@ -24,10 +24,12 @@ namespace GavinGreig
         /// <summary>Gets or sets the <see cref="IEnumerable" /> collection.</summary>
         public IEnumerable Target { get; set; }
 
-        /// <inheritdoc />
+        /// <summary>Returns an enumerator that iterates through the collection.</summary>
+        /// <returns>An enumerator that can be used to iterate through the collection.</returns>
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        /// <inheritdoc />
+        /// <summary>Returns an enumerator that iterates through the collection.</summary>
+        /// <returns>An enumerator that can be used to iterate through the collection.</returns>
         public IEnumerator<T> GetEnumerator()
         {
             foreach (T item in Target)

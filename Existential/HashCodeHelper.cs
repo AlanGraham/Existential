@@ -2,7 +2,7 @@
 //     Copyright (c) Dr. Gavin T.D. Greig, 2020.
 // </copyright>
 
-namespace GavinGreig
+namespace Existential
 {
     /// <summary>A class containing methods to help with hash codes.</summary>
     public static class HashCodeHelper

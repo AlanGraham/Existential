@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>GavinGreig</RootNamespace>
+    <RootNamespace>Existential</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AssemblyTitle>Existential.Net</AssemblyTitle>
     <Description>A library for things that may or may not exist.</Description>

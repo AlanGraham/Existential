@@ -2,7 +2,7 @@
 //     Copyright (c) Dr. Gavin T.D. Greig, 2020.
 // </copyright>
 
-namespace GavinGreig.Extensions
+namespace Existential.Extensions
 {
     using System.Text.RegularExpressions;
 

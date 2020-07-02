@@ -2,7 +2,7 @@
 //     Copyright (c) Dr. Gavin T.D. Greig, 2020.
 // </copyright>
 
-namespace GavinGreig
+namespace Existential
 {
     /// <summary>An exception that indicates the use of an unexpected type.</summary>
     public class ArgumentTypeException : System.ArgumentException
