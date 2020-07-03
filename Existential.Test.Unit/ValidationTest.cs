@@ -37,7 +37,7 @@ namespace Existential.Test
                 () =>
                 {
                     // Act
-                    Validation.ThrowIfCollectionNullOrEmpty(theCollection, nameof(theCollection));
+                    Validation.ThrowIfNullOrEmpty(theCollection, nameof(theCollection));
                 },
                 Throws.ArgumentException
                     .With.Message.Contains(theExpectedMessage)
@@ -58,7 +58,7 @@ namespace Existential.Test
                 () =>
                 {
                     // Act
-                    Validation.ThrowIfCollectionNullOrEmpty(theCollection, nameof(theCollection));
+                    Validation.ThrowIfNullOrEmpty(theCollection, nameof(theCollection));
                 },
                 Throws.ArgumentNullException
                     .With.Message.Contains(theExpectedMessage)
@@ -81,7 +81,7 @@ namespace Existential.Test
                 () =>
                 {
                     // Act
-                    Validation.ThrowIfCollectionNullOrEmpty(theCollection, nameof(theCollection));
+                    Validation.ThrowIfNullOrEmpty(theCollection, nameof(theCollection));
                 },
                 Throws.ArgumentException
                     .With.Message.Contains(theExpectedMessage)
@@ -102,7 +102,7 @@ namespace Existential.Test
                 () =>
                 {
                     // Act
-                    Validation.ThrowIfCollectionNullOrEmpty(theCollection, nameof(theCollection));
+                    Validation.ThrowIfNullOrEmpty(theCollection, nameof(theCollection));
                 },
                 Throws.ArgumentNullException
                     .With.Message.Contains(theExpectedMessage)
@@ -123,7 +123,7 @@ namespace Existential.Test
                 () =>
                 {
                     // Act
-                    Validation.ThrowIfCollectionNullOrEmpty(theCollection, nameof(theCollection));
+                    Validation.ThrowIfNullOrEmpty(theCollection, nameof(theCollection));
                 },
                 Throws.ArgumentException
                     .With.Message.Contains(theExpectedMessage)
@@ -144,7 +144,7 @@ namespace Existential.Test
                 () =>
                 {
                     // Act
-                    Validation.ThrowIfCollectionNullOrEmpty(theCollection, nameof(theCollection));
+                    Validation.ThrowIfNullOrEmpty(theCollection, nameof(theCollection));
                 },
                 Throws.ArgumentNullException
                     .With.Message.Contains(theExpectedMessage)
@@ -160,7 +160,7 @@ namespace Existential.Test
             IEnumerable theCollection = new List<int> { 1 };
 
             // Act
-            IEnumerable theResult = Validation.ThrowIfCollectionNullOrEmpty(theCollection, nameof(theCollection));
+            IEnumerable theResult = Validation.ThrowIfNullOrEmpty(theCollection, nameof(theCollection));
 
             // Assert
             Assert.AreSame(theResult, theCollection);
@@ -175,7 +175,7 @@ namespace Existential.Test
             IEnumerable<int> theCollection = new List<int> { 1 };
 
             // Act
-            IEnumerable<int> theResult = Validation.ThrowIfCollectionNullOrEmpty(theCollection, nameof(theCollection));
+            IEnumerable<int> theResult = Validation.ThrowIfNullOrEmpty(theCollection, nameof(theCollection));
 
             // Assert
             Assert.AreSame(theResult, theCollection);
@@ -190,7 +190,7 @@ namespace Existential.Test
             var theCollection = new List<int> { 1 };
 
             // Act
-            List<int> theResult = Validation.ThrowIfCollectionNullOrEmpty(theCollection, nameof(theCollection));
+            List<int> theResult = Validation.ThrowIfNullOrEmpty(theCollection, nameof(theCollection));
 
             // Assert
             Assert.AreSame(theResult, theCollection);
@@ -235,7 +235,7 @@ namespace Existential.Test
         [Property]
         public static Property EnsureNotNull_WithNonWhiteSpaceString_ReturnsValue(NonEmptyString x, bool y)
         {
-            Func<bool> theProperty = () => Validation.ThrowIfStringNullOrEmpty(x.Get, nameof(x), y) == x.Get;
+            Func<bool> theProperty = () => Validation.ThrowIfNullOrEmpty(x.Get, nameof(x), y) == x.Get;
             return theProperty.When(!string.IsNullOrWhiteSpace(x.Get));
         }
 
@@ -340,7 +340,7 @@ namespace Existential.Test
                 () =>
                 {
                     // Act
-                    Validation.ThrowIfStringNullOrEmpty(theEmptyString, nameof(theEmptyString));
+                    Validation.ThrowIfNullOrEmpty(theEmptyString, nameof(theEmptyString));
                 },
                 Throws.ArgumentException
                     .With.Message.Contains(theExpectedMessage)
@@ -359,7 +359,7 @@ namespace Existential.Test
                 () =>
                 {
                     // Act
-                    Validation.ThrowIfStringNullOrEmpty(theNullString, nameof(theNullString));
+                    Validation.ThrowIfNullOrEmpty(theNullString, nameof(theNullString));
                 },
                 Throws.ArgumentNullException
                     .With.Message.Contains(theExpectedMessage)
@@ -373,7 +373,7 @@ namespace Existential.Test
             const string ExpectedValue = "Test";
 
             // Act
-            string theResult = Validation.ThrowIfStringNullOrEmpty(ExpectedValue, nameof(ExpectedValue));
+            string theResult = Validation.ThrowIfNullOrEmpty(ExpectedValue, nameof(ExpectedValue));
 
             // Assert
             Assert.AreSame(theResult, ExpectedValue);
@@ -385,7 +385,7 @@ namespace Existential.Test
             string theWhiteSpaceText = "    ";
 
             // Act
-            string theResult = Validation.ThrowIfStringNullOrEmpty(
+            string theResult = Validation.ThrowIfNullOrEmpty(
                 theWhiteSpaceText,
                 nameof(theWhiteSpaceText),
                 trim: false);
@@ -405,7 +405,7 @@ namespace Existential.Test
                 () =>
                 {
                     // Act
-                    _ = Validation.ThrowIfStringNullOrEmpty(theWhiteSpaceText, nameof(theWhiteSpaceText), trim: true);
+                    _ = Validation.ThrowIfNullOrEmpty(theWhiteSpaceText, nameof(theWhiteSpaceText), trim: true);
                 },
                 Throws.ArgumentNullException
                     .With.Message.Contains(theExpectedMessage)
@@ -423,7 +423,7 @@ namespace Existential.Test
                 () =>
                 {
                     // Act
-                    Validation.ThrowIfStringNullOrEmpty(theWhiteSpaceText, nameof(theWhiteSpaceText));
+                    Validation.ThrowIfNullOrEmpty(theWhiteSpaceText, nameof(theWhiteSpaceText));
                 },
                 Throws.ArgumentNullException
                     .With.Message.Contains(theExpectedMessage)

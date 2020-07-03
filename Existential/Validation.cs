@@ -12,36 +12,6 @@ namespace Existential
     /// <summary>Contains validation methods.</summary>
     public static class Validation
     {
-        /// <summary>
-        /// Throws an ArgumentNullException if the collection is null, or an ArgumentException if it
-        /// exists but is empty.
-        /// </summary>
-        /// <typeparam name="T">Type of object in the collection.</typeparam>
-        /// <param name="inCollection">The collection to check.</param>
-        /// <param name="inName">The name of the parameter.</param>
-        /// <returns>The validated value.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if the collection is null.</exception>
-        /// <exception cref="ArgumentException">Thrown if the collection exists but is empty.</exception>
-        public static T ThrowIfCollectionNullOrEmpty<T>(T inCollection, string inName)
-            where T : class, System.Collections.IEnumerable
-        {
-            if (inCollection == null)
-            {
-                throw new ArgumentNullException(
-                    inName,
-                    InsertNameIntoExceptionMessage("The collection \"{0}\" is null", inName));
-            }
-
-            if (!inCollection.GetEnumerator().MoveNext())
-            {
-                throw new ArgumentException(
-                    InsertNameIntoExceptionMessage("The collection \"{0}\" is empty", inName),
-                    inName);
-            }
-
-            return inCollection;
-        }
-
         /// <summary>Throws an ArgumentNullException if the specified GUID is the empty GUID.</summary>
         /// <param name="inValue">The GUID being checked for emptiness.</param>
         /// <param name="inName">The name of the parameter.</param>
@@ -103,13 +73,43 @@ namespace Existential
             return inValue;
         }
 
+        /// <summary>
+        /// Throws an ArgumentNullException if the collection is null, or an ArgumentException if it
+        /// exists but is empty.
+        /// </summary>
+        /// <typeparam name="T">Type of object in the collection.</typeparam>
+        /// <param name="inCollection">The collection to check.</param>
+        /// <param name="inName">The name of the parameter.</param>
+        /// <returns>The validated value.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if the collection is null.</exception>
+        /// <exception cref="ArgumentException">Thrown if the collection exists but is empty.</exception>
+        public static T ThrowIfNullOrEmpty<T>(T inCollection, string inName)
+            where T : class, System.Collections.IEnumerable
+        {
+            if (inCollection == null)
+            {
+                throw new ArgumentNullException(
+                    inName,
+                    InsertNameIntoExceptionMessage("The collection \"{0}\" is null", inName));
+            }
+
+            if (!inCollection.GetEnumerator().MoveNext())
+            {
+                throw new ArgumentException(
+                    InsertNameIntoExceptionMessage("The collection \"{0}\" is empty", inName),
+                    inName);
+            }
+
+            return inCollection;
+        }
+
         /// <summary>Throws an ArgumentNullException if the specified string is null or empty.</summary>
         /// <param name="inValue">The parameter being checked for null.</param>
         /// <param name="inName">The name of the parameter.</param>
         /// <param name="trim">Trim string before check.</param>
         /// <returns>The validated value.</returns>
         /// <exception cref="ArgumentNullException">Thrown if the string is null or empty.</exception>
-        public static string ThrowIfStringNullOrEmpty([ValidatedNotNull] string inValue, string inName, bool trim)
+        public static string ThrowIfNullOrEmpty([ValidatedNotNull] string inValue, string inName, bool trim)
         {
             if (inValue == null)
             {
@@ -130,8 +130,8 @@ namespace Existential
         /// <param name="inName">The name of the parameter.</param>
         /// <returns>The validated value.</returns>
         /// <exception cref="ArgumentNullException">Thrown if the string is null or empty.</exception>
-        public static string ThrowIfStringNullOrEmpty([ValidatedNotNull] string inValue, string inName)
-            => ThrowIfStringNullOrEmpty(inValue, inName, trim: true);
+        public static string ThrowIfNullOrEmpty([ValidatedNotNull] string inValue, string inName)
+            => ThrowIfNullOrEmpty(inValue, inName, trim: true);
 
         /// <summary>Inserts a name into an exception message.</summary>
         /// <param name="inMessage">The message into which the name should be inserted.</param>
