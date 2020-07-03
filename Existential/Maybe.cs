@@ -160,8 +160,8 @@ namespace Existential
         /// <returns>The result of the function that was applied.</returns>
         public TResult Match<TResult>(Func<T, TResult> some, Func<TResult> none)
         {
-            _ = Validation.ThrowIfNull(some, nameof(some));
-            _ = Validation.ThrowIfNull(none, nameof(none));
+            _ = Validate.ThrowIfNull(some, nameof(some));
+            _ = Validate.ThrowIfNull(none, nameof(none));
 
             return myValueExists
                        ? some(myValue)
@@ -173,8 +173,8 @@ namespace Existential
         /// <param name="none">The action to apply if no value exists.</param>
         public void Match(Action<T> some, Action none)
         {
-            _ = Validation.ThrowIfNull(some, nameof(some));
-            _ = Validation.ThrowIfNull(none, nameof(none));
+            _ = Validate.ThrowIfNull(some, nameof(some));
+            _ = Validate.ThrowIfNull(none, nameof(none));
 
             if (myValueExists)
             {
@@ -222,7 +222,7 @@ namespace Existential
         /// <remarks>Equivalent to Map. Required for Linq compatibility.</remarks>
         public Maybe<TResult> Select<TResult>(Func<T, TResult> convert)
         {
-            _ = Validation.ThrowIfNull(convert, nameof(convert));
+            _ = Validate.ThrowIfNull(convert, nameof(convert));
 
             return !myValueExists ? default(Maybe<TResult>) : convert(myValue);
         }
@@ -236,7 +236,7 @@ namespace Existential
         /// <remarks>Required Monad method.</remarks>
         public Maybe<TResult> Bind<TResult>(Func<T, Maybe<TResult>> convert)
         {
-            _ = Validation.ThrowIfNull(convert, nameof(convert));
+            _ = Validate.ThrowIfNull(convert, nameof(convert));
 
             // Bridge.NET doesn't support simplifying this use of "default" (2020/03/22).
             return !myValueExists ? default(Maybe<TResult>) : convert(myValue);
@@ -265,7 +265,7 @@ namespace Existential
                 return default(Maybe<TResult>);
             }
 
-            _ = Validation.ThrowIfNull(convert, nameof(convert));
+            _ = Validate.ThrowIfNull(convert, nameof(convert));
             Maybe<T2> converted = convert(myValue);
 
             // Bridge.NET doesn't support simplifying this use of "default" (2020/03/22).
@@ -285,7 +285,7 @@ namespace Existential
                 return default(Maybe<T>);
             }
 
-            _ = Validation.ThrowIfNull(predicate, nameof(predicate));
+            _ = Validate.ThrowIfNull(predicate, nameof(predicate));
 
             //// Bridge.NET doesn't support simplifying this use of "default" (2020/03/22).
             return predicate(myValue)
@@ -303,7 +303,7 @@ namespace Existential
         /// <returns>The value, if it exists, or the value provided by a factory function.</returns>
         public T ValueOr(Func<T> defaultValueFactory)
         {
-            _ = Validation.ThrowIfNull(defaultValueFactory, nameof(defaultValueFactory));
+            _ = Validate.ThrowIfNull(defaultValueFactory, nameof(defaultValueFactory));
             return myValueExists ? myValue : defaultValueFactory();
         }
 
@@ -323,7 +323,7 @@ namespace Existential
         /// </returns>
         public Maybe<T> ValueOrMaybe(Func<Maybe<T>> alternativeValueFactory)
         {
-            _ = Validation.ThrowIfNull(alternativeValueFactory, nameof(alternativeValueFactory));
+            _ = Validate.ThrowIfNull(alternativeValueFactory, nameof(alternativeValueFactory));
             return myValueExists ? this : alternativeValueFactory();
         }
 

@@ -1,4 +1,4 @@
-﻿// <copyright file="Validation.cs" company="Gavin Greig">
+﻿// <copyright file="Validate.cs" company="Gavin Greig">
 //     Copyright (c) Dr. Gavin T.D. Greig, 2020.
 // </copyright>
 
@@ -10,7 +10,7 @@ namespace Existential
     using Existential.Extensions;
 
     /// <summary>Contains validation methods.</summary>
-    public static class Validation
+    public static class Validate
     {
         /// <summary>Throws an ArgumentNullException if the specified GUID is the empty GUID.</summary>
         /// <param name="inValue">The GUID being checked for emptiness.</param>

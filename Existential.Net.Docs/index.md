@@ -9,7 +9,7 @@ The two main classes for this are **Validation** and **Maybe&lt;T&gt;**.
 
 ---
 ### Validation
-The static methods in **[Validation](xref:Existential.Validation)** take a 
+The static methods in **[Validation](xref:Existential.Validate)** take a 
 simplistic approach to validating whether a value exists or not and will 
 throw an exception if the value doesn't exist at all, or doesn't exist in 
 the expected form. They can be used to perform null-checking in a single line
@@ -24,7 +24,7 @@ If you're using Code Analysis to ensure that your code satisfies Microsoft's
 Framework Design Guidelines, these methods can be used to satisfy
 [CA1062: Validate arguments of public methods](https://docs.microsoft.com/en-gb/visualstudio/code-quality/ca1062).
 Until cross-assembly checking becomes standard in Roslyn analysers you 
-may need to add them to your
+will need to add them to your
 [null_check_validation_methods](https://docs.microsoft.com/en-gb/visualstudio/code-quality/ca1062)
 setting in editor.config.
 
@@ -38,13 +38,3 @@ approach to dealing with whether a value exists or not.
 The icon for Existential contains the two symbols for 
 [existential quantification](https://en.wikipedia.org/wiki/Existential_quantification),
 in predicate logic: &#8707; (there exists) and &#8708; (there does not exist).
-
-
-Refer to [Markdown](http://daringfireball.net/projects/markdown/) for how to write markdown files.
-## Quick Start Notes:
-1. Add images to the *images* folder if the file is referencing an image.
-
-Doing more with DocFX:
-https://skypointcloud.com/blog/docfx-azure-devops-github-integration-1/
-
-https://dotnet.github.io/docfx/tutorial/docfx_getting_started.html

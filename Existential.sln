@@ -28,7 +28,24 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.sharedFiles\stylecop.json = .sharedFiles\stylecop.json
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Existential.Net.Docs", "Existential.Net.Docs\Existential.Net.Docs.csproj", "{0327D0CF-1A6C-4465-97AD-47CA694EF6BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Existential.Net.Docs", "Existential.Net.Docs\Existential.Net.Docs.csproj", "{0327D0CF-1A6C-4465-97AD-47CA694EF6BC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Existential.Images", "Existential.Images", "{D3827F71-E6CC-45A6-806D-36D29F42A7DB}"
+	ProjectSection(SolutionItems) = preProject
+		Existential.Images\Existential.ico = Existential.Images\Existential.ico
+		Existential.Images\Existential128.png = Existential.Images\Existential128.png
+		Existential.Images\Existential16.png = Existential.Images\Existential16.png
+		Existential.Images\Existential256.png = Existential.Images\Existential256.png
+		Existential.Images\Existential32.png = Existential.Images\Existential32.png
+		Existential.Images\Existential48.png = Existential.Images\Existential48.png
+		Existential.Images\Existential64.png = Existential.Images\Existential64.png
+		Existential.Images\ExistentialBanner.png = Existential.Images\ExistentialBanner.png
+		Existential.Images\ExistentialBannerHighDefinition.png = Existential.Images\ExistentialBannerHighDefinition.png
+		Existential.Images\ExistentialHighDefinition.pdn = Existential.Images\ExistentialHighDefinition.pdn
+		Existential.Images\ExistentialHighDefinition.png = Existential.Images\ExistentialHighDefinition.png
+		Existential.Images\ExistentialLogo.svg = Existential.Images\ExistentialLogo.svg
+		Existential.Images\ExistentialLogoWhite.svg = Existential.Images\ExistentialLogoWhite.svg
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

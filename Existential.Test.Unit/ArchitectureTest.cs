@@ -22,7 +22,7 @@ namespace Existential.Test.Architecture
             // Arrange
             const string theRootNamespace = "Existential";
 
-            var theTargetAssembly = Assembly.GetAssembly(typeof(Validation));
+            var theTargetAssembly = Assembly.GetAssembly(typeof(Validate));
             ConditionList theRootNamespaceRule = Types.InAssembly(theTargetAssembly)
                 .That().AreNotNested()
                 .And().DoNotResideInNamespaceStartingWith("Coverlet")
