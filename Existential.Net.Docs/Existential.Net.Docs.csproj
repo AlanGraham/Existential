@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <LogLevel>Warning</LogLevel>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +15,10 @@
   <ItemGroup>
     <Folder Include="images\" />
     <Folder Include="templates\existential\pdf\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Existential\Existential.Net.csproj" />
   </ItemGroup>
 
 </Project>
