@@ -1,15 +1,15 @@
 ﻿# **Existential.Net**
-# The library for things that may or may not exist
+## The library for things that may or may not exist
 
 Existential contains utilities for dealing with very fundamental issues,
 such as whether a value exists or not, or whether it exists
 in the desired form.
 
-The two main classes for this are **Validation** and **Maybe&lt;T&gt;**.
+The two main classes for this are **Validate** and **Maybe&lt;T&gt;**.
 
 ---
-### Validation
-The static methods in **[Validation](xref:Existential.Validate)** take a 
+### Validate
+The static methods in **[Validate](xref:Existential.Validate)** take a 
 simplistic approach to validating whether a value exists or not and will 
 throw an exception if the value doesn't exist at all, or doesn't exist in 
 the expected form. They can be used to perform null-checking in a single line

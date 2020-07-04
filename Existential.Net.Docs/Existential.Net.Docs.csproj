@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <Folder Include="images\" />
-    <Folder Include="templates\" />
+    <Folder Include="templates\existential\pdf\" />
   </ItemGroup>
 
 </Project>
