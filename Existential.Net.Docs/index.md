@@ -1,6 +1,7 @@
 ﻿# **Existential.Net**
-## The library for things that may or may not exist
+***The library for things that may or may not exist***
 
+## Introduction
 Existential contains utilities for dealing with very fundamental issues,
 such as whether a value exists or not, or whether it exists
 in the desired form.
