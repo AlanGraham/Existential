@@ -5,12 +5,15 @@
 namespace Existential.Test
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     using NUnit.Framework;
 
     [TestFixture]
     public static class MaybeTest
     {
+        /*
         [Test]
         public static void Bind_WithNoValue_ReturnsMaybeWithNoValue()
         {
@@ -44,6 +47,7 @@ namespace Existential.Test
             // Assert
             Assert.That(theResult.ValueOr(0), Is.EqualTo(13));
         }
+        */
 
         [Test]
         public static void DefaultCreate_WithInt_HasNoValue()
@@ -272,6 +276,88 @@ namespace Existential.Test
         }
 
         [Test]
+        public static void Some_WithInt_HasExpectedValue()
+        {
+            // Act
+            var theResult = Maybe.Some(1);
+
+            // Assert
+            Assert.That(theResult.ValueOr(0), Is.EqualTo(1));
+        }
+
+        [Test]
+        public static void Some_WithInt_Succeeds()
+        {
+            // Act
+            var theResult = Maybe.Some(1);
+
+            // Assert
+            Assert.That(theResult, Is.InstanceOf<Maybe<int>>());
+        }
+
+        [Test]
+        public static void Some_WithString_HasExpectedValue()
+        {
+            // Act
+            var theResult = Maybe.Some("Test");
+
+            // Assert
+            Assert.That(theResult.ValueOr(string.Empty), Is.EqualTo("Test"));
+        }
+
+        [Test]
+        public static void Some_WithString_Succeeds()
+        {
+            // Act
+            var theResult = Maybe.Some("Test");
+
+            // Assert
+            Assert.That(theResult, Is.InstanceOf<Maybe<string>>());
+        }
+
+        [Test]
+        public static void Some_WithMaybe_IsMaybe()
+        {
+            // Arrange
+            string theValidString = "A valid string";
+            Maybe<string> theMaybe = theValidString;
+
+            // Act
+            var theResult = Maybe.Some(theMaybe);
+
+            // Assert
+            Assert.That(theResult.ValueOr("A default string"), Is.EqualTo("A valid string"));
+        }
+
+        [Test]
+        public static void Some_WithNone_IsNone()
+        {
+            // Arrange
+            string theInvalidString = null;
+            Maybe<string> theNone = theInvalidString;
+
+            // Act
+            var theResult = Maybe.Some(theNone);
+
+            // Assert
+            Assert.That(theResult.ValueOr("A default string"), Is.EqualTo("A default string"));
+        }
+
+        [Test]
+        public static void Some_WithNull_IsNone()
+        {
+            // Arrange
+            string theNullString = null;
+
+            // Act
+            var theResult = Maybe.Some(theNullString);
+
+            // Assert
+            Assert.That(theResult.ValueOr("A default string"), Is.EqualTo("A default string"));
+        }
+
+        /*
+        [Test]
         public static void Map_WithNoValue_ReturnsExpectedType()
         {
             // Arrange
@@ -321,64 +407,6 @@ namespace Existential.Test
 
             // Assert
             Assert.That(theResult.ValueOr(0), Is.EqualTo(13));
-        }
-
-        /*
-        [Test]
-        public static void Some_WithMaybe_IsMaybe()
-        {
-            // Arrange
-            string theValidString = "A valid string";
-            Maybe<string> theMaybe = theValidString;
-
-            // Act
-            var theResult = Maybe.Some(theMaybe);
-
-            // Assert
-            Assert.That(theResult.ValueOr("A default string"), Is.EqualTo("A valid string"));
-        }
-
-        [Test]
-        public static void Some_WithNone_IsNone()
-        {
-            // Arrange
-            string theInvalidString = null;
-            Maybe<string> theNone = theInvalidString;
-
-            // Act
-            var theResult = Maybe.Some(theNone);
-
-            // Assert
-            Assert.That(theResult.ValueOr("A default string"), Is.EqualTo("A default string"));
-        }
-
-        [Test]
-        public static void Some_WithNull_Throws()
-        {
-            // Arrange
-            string theNullString = null;
-
-            // Assert
-            Assert.That(
-                () =>
-                {
-                    // Act
-                    var theResult = Maybe.Some(theNullString);
-                },
-                Throws.ArgumentNullException);
-        }
-
-        [Test]
-        public static void Some_WithValid_HasExpectedValue()
-        {
-            // Arrange
-            string theValidString = "A valid string";
-
-            // Act
-            var theResult = Maybe.Some(theValidString);
-
-            // Assert
-            Assert.That(theResult.ValueOr("A default string"), Is.EqualTo("A valid string"));
         }
         */
 
@@ -658,6 +686,149 @@ namespace Existential.Test
 
             // Assert
             Assert.That(theResult, Is.EqualTo("A test string"));
+        }
+
+        [Test]
+        public static void StringValueOrEmpty_WithValue_ReturnsValue()
+        {
+            // Arrange
+            Maybe<string> theMaybe = "A test string";
+
+            // Act
+            string theResult = theMaybe.ValueOrEmpty();
+
+            // Assert
+            Assert.That(theResult, Is.EqualTo("A test string"));
+        }
+
+        [Test]
+        public static void StringValueOrEmpty_WithNone_ReturnsEmpty()
+        {
+            // Arrange
+            Maybe<string> theMaybe = null;
+
+            // Act
+            string theResult = theMaybe.ValueOrEmpty();
+
+            // Assert
+            Assert.That(theResult, Is.EqualTo(string.Empty));
+        }
+
+        [Test]
+        public static void ListOfStringValueOrEmpty_WithValue_ReturnsValue()
+        {
+            // Arrange
+            Maybe<List<string>> theMaybe = new List<string>
+            {
+                "A test string",
+            };
+
+            // Act
+            List<string> theResult = theMaybe.ValueOrEmpty();
+
+            // Assert
+            Assert.That(theResult, Has.Count.EqualTo(1).And.Contains("A test string"));
+        }
+
+        [Test]
+        public static void ListOfStringValueOrEmpty_WithNone_ReturnsEmpty()
+        {
+            // Arrange
+            Maybe<List<string>> theMaybe = null;
+
+            // Act
+            List<string> theResult = theMaybe.ValueOrEmpty();
+
+            // Assert
+            Assert.That(theResult, Has.Count.EqualTo(0));
+        }
+
+        [Test]
+        public static void ArrayOfStringValueOrEmpty_WithValue_ReturnsValue()
+        {
+            // Arrange
+            Maybe<string[]> theMaybe = new string[]
+            {
+                "A test string",
+            };
+
+            // Act
+            string[] theResult = theMaybe.ValueOrEmpty();
+
+            // Assert
+            Assert.That(theResult, Has.Length.EqualTo(1).And.Contains("A test string"));
+        }
+
+        [Test]
+        public static void ArrayOfStringValueOrEmpty_WithNone_ReturnsEmpty()
+        {
+            // Arrange
+            Maybe<string[]> theMaybe = null;
+
+            // Act
+            string[] theResult = theMaybe.ValueOrEmpty();
+
+            // Assert
+            Assert.That(theResult, Has.Length.EqualTo(0));
+        }
+
+        [Test]
+        public static void GetItemsWithValue_WithOneValue_ReturnsExpectedResult()
+        {
+            // Arrange
+            var theMaybeCollection = new List<Maybe<string>>
+            {
+                null,
+                "Test string",
+            };
+
+            // Act
+            IEnumerable<string> theResult = theMaybeCollection.GetItemsWithValue();
+
+            // Assert
+            Assert.That(Enumerable.Count(theResult), Is.EqualTo(1));
+            Assert.That(theResult, Contains.Item("Test string"));
+        }
+
+        [Test]
+        public static void GetItemsWithValue_WithMultipleValues_ReturnsExpectedResult()
+        {
+            // Arrange
+            var theMaybeCollection = new List<Maybe<string>>
+            {
+                null,
+                "Test string",
+                null,
+                "Test string 2",
+                null,
+                null,
+            };
+
+            // Act
+            IEnumerable<string> theResult = theMaybeCollection.GetItemsWithValue();
+
+            // Assert
+            Assert.That(Enumerable.Count(theResult), Is.EqualTo(2));
+            Assert.That(theResult, Contains.Item("Test string"));
+            Assert.That(theResult, Contains.Item("Test string 2"));
+        }
+
+        [Test]
+        public static void GetItemsWithValue_WithNoValues_ReturnsEmptyCollection()
+        {
+            // Arrange
+            var theMaybeCollection = new List<Maybe<string>>
+            {
+                null,
+                null,
+                null,
+            };
+
+            // Act
+            IEnumerable<string> theResult = theMaybeCollection.GetItemsWithValue();
+
+            // Assert
+            Assert.That(Enumerable.Count(theResult), Is.EqualTo(0));
         }
     }
 }

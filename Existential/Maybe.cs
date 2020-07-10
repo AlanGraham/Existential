@@ -5,6 +5,7 @@
 namespace Existential
 {
     using System;
+    using System.Collections.Generic;
 
     /// <summary>A container representing a value that may or may not exist.</summary>
     /// <typeparam name="T">The type of the object that may exist.</typeparam>
@@ -71,6 +72,17 @@ namespace Existential
         /// <returns>The result of the operator.</returns>
         public static bool operator !=(Maybe<T> left, Maybe<T> right)
             => !left.Equals(right);
+
+        /// <summary>
+        /// Performs an explicit conversion from a <typeparamref name="T"/> to <see cref="Maybe{T}"/>.
+        /// </summary>
+        /// <param name="inValue">The value.</param>
+        /// <returns>The value, contained in a <see cref="Maybe{T}"/>.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Design",
+            "CA1000:Do not declare static members on generic types",
+            Justification = "This static method helps with readability in some cases.")]
+        public static Maybe<T> Some(T inValue) => inValue;
 
         /// <summary>
         /// Performs a conversion from a <typeparamref name="T"/> to a <see cref="Maybe{T}"/>.
@@ -266,6 +278,7 @@ namespace Existential
             }
 
             _ = Validate.ThrowIfNull(convert, nameof(convert));
+            _ = Validate.ThrowIfNull(finalSelect, nameof(finalSelect));
             Maybe<T2> converted = convert(myValue);
 
             // Bridge.NET doesn't support simplifying this use of "default" (2020/03/22).
@@ -342,33 +355,16 @@ namespace Existential
         }
     }
 
-    /*
     /// <summary>Class Maybe.</summary>
     public static class Maybe
     {
-        /// <summary>
-        /// Gets a value (implicitly convertible to <see cref="Maybe{T}" />) indicating the absence
-        /// of a value.
-        /// </summary>
-        /// <value>A value indicating the absence of a value.</value>
-        public static MaybeNone None { get; } = new MaybeNone();
-
         /// <summary>
         /// Converts the provided value of type <typeparamref name="T" /> to a <see cref="Maybe{T}" />.
         /// </summary>
         /// <typeparam name="T">The type of the value to be converted.</typeparam>
         /// <param name="value">The value to be converted.</param>
         /// <returns>A container holding the value, if it exists.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if the value provided is null.</exception>
-        public static Maybe<T> Some<T>(T value)
-        {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
-
-            return value;
-        }
+        public static Maybe<T> Some<T>(T value) => value ?? default(Maybe<T>);
 
         /// <summary>
         /// Ensures that a <see cref="Maybe{T}" /> doesn't get double-wrapped to become a Maybe{Maybe{T}}.
@@ -378,19 +374,64 @@ namespace Existential
         /// <returns>The value.</returns>
         public static Maybe<T> Some<T>(Maybe<T> value) => value;
 
-        /// <summary>Ensures that a <see cref="MaybeNone" /> doesn't get double-wrapped.</summary>
-        /// <param name="value">The <see cref="Maybe{T}" />.</param>
-        /// <returns>The value.</returns>
-        public static MaybeNone Some(MaybeNone value) => value;
+        /// <summary>
+        /// Returns the value, if it exists, or the empty string.
+        /// </summary>
+        /// <param name="inMaybe">The <see cref="Maybe{T}"/> (where T is <see cref="string"/>) that may or may not contain a value.</param>
+        /// <returns>The value, if it exists, or the empty string.</returns>
+        /// <remarks>Implemented as an extension method to keep it type-specific to strings.</remarks>
+        public static string ValueOrEmpty(this Maybe<string> inMaybe) => inMaybe.ValueOr(string.Empty);
 
-        /// <summary>A class representing the absence of a value in a <see cref="Maybe{T}" />.</summary>
-    #pragma warning disable CA1034 // Nested types should not be visible
+        /// <summary>
+        /// Returns the value, if it exists, or <see cref="Guid.Empty"/>.
+        /// </summary>
+        /// <param name="inMaybe">The <see cref="Maybe{T}"/> (where T is <see cref="Guid"/>) that may or may not contain a value.</param>
+        /// <returns>The value, if it exists, or <see cref="Guid.Empty"/>.</returns>
+        /// <remarks>Implemented as an extension method to keep it type-specific to Guids.</remarks>
+        public static Guid ValueOrEmpty(this Maybe<Guid> inMaybe) => inMaybe.ValueOr(Guid.Empty);
 
-        public class MaybeNone
+        /// <summary>
+        /// Returns the value, if it exists, or an empty array of the same type.
+        /// </summary>
+        /// <typeparam name="T">The type contained by the array.</typeparam>
+        /// <param name="inMaybe">The <see cref="Maybe{T}"/> that may or may not contain an array.</param>
+        /// <returns>The value, if it exists, or an empty array of the same type.</returns>
+        /// <remarks>Implemented as an extension method to keep it type-specific to arrays of T.</remarks>
+        public static T[] ValueOrEmpty<T>(this Maybe<T[]> inMaybe) => inMaybe.ValueOr(Array.Empty<T>());
 
-    #pragma warning restore CA1034 // Nested types should not be visible
+        /// <summary>
+        /// Returns the value, if it exists, or an empty collection of the same type.
+        /// </summary>
+        /// <typeparam name="T">The type contained by the collection.</typeparam>
+        /// <param name="inMaybe">The <see cref="Maybe{T}"/> that may or may not contain a generic collection.</param>
+        /// <returns>The value, if it exists, or an empty collection of the same type.</returns>
+        /// <remarks>Implemented as an extension method to keep it type-specific to generic collections of T.</remarks>
+        /// <remarks>Wanted to make the type of collection generic (where IEnumerable, new()), but type constraints do not form
+        /// part of a signature and so type parameters had to be specified explicitly, which removed the usefulness.</remarks>
+        public static List<T> ValueOrEmpty<T>(this Maybe<List<T>> inMaybe)
+            => inMaybe.ValueOr(new List<T>());
+
+        /// <summary>
+        /// Returns a collection containing only the members of the input collection that have values.
+        /// </summary>
+        /// <typeparam name="T">The type of members of the collection.</typeparam>
+        /// <param name="inCollection">The collection that may contain values.</param>
+        /// <returns>A collection containing only the members of the input collection that have values.</returns>
+        public static IEnumerable<T> GetItemsWithValue<T>(this IEnumerable<Maybe<T>> inCollection)
         {
+            // Should be impossible to fail this null check, but...
+            if (inCollection != null)
+            {
+                foreach (Maybe<T> aMaybe in inCollection)
+                {
+                    if (aMaybe.TryGetValue(out T aValue))
+                    {
+                        yield return aValue;
+                    }
+                }
+            }
+
+            // ...don't need an explicit return to mark the end of the collection when we're using "yield return".
         }
     }
-    */
 }
