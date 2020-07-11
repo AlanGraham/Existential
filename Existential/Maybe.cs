@@ -417,7 +417,7 @@ namespace Existential
         /// <typeparam name="T">The type of members of the collection.</typeparam>
         /// <param name="inCollection">The collection that may contain values.</param>
         /// <returns>A collection containing only the members of the input collection that have values.</returns>
-        public static IEnumerable<T> GetItemsWithValue<T>(this IEnumerable<Maybe<T>> inCollection)
+        public static IEnumerable<T> ThatExist<T>(this IEnumerable<Maybe<T>> inCollection)
         {
             // Should be impossible to fail this null check, but...
             if (inCollection != null)

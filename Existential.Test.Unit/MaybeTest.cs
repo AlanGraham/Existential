@@ -13,7 +13,6 @@ namespace Existential.Test
     [TestFixture]
     public static class MaybeTest
     {
-        /*
         [Test]
         public static void Bind_WithNoValue_ReturnsMaybeWithNoValue()
         {
@@ -47,7 +46,6 @@ namespace Existential.Test
             // Assert
             Assert.That(theResult.ValueOr(0), Is.EqualTo(13));
         }
-        */
 
         [Test]
         public static void DefaultCreate_WithInt_HasNoValue()
@@ -356,20 +354,6 @@ namespace Existential.Test
             Assert.That(theResult.ValueOr("A default string"), Is.EqualTo("A default string"));
         }
 
-        /*
-        [Test]
-        public static void Map_WithNoValue_ReturnsExpectedType()
-        {
-            // Arrange
-            Maybe<string> theNullString = null;
-
-            // Act
-            Maybe<int> theResult = theNullString.Map(x => x.Length);
-
-            // Assert
-            Assert.That(theResult, Is.InstanceOf<Maybe<int>>());
-        }
-
         [Test]
         public static void Map_WithNoValue_ReturnsMaybeWithNoValue()
         {
@@ -384,19 +368,6 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void Map_WithValue_ReturnsExpectedType()
-        {
-            // Arrange
-            Maybe<string> theString = "Call me Maybe";
-
-            // Act
-            Maybe<int> theResult = theString.Map(x => x.Length);
-
-            // Assert
-            Assert.That(theResult, Is.InstanceOf<Maybe<int>>());
-        }
-
-        [Test]
         public static void Map_WithValue_ReturnsExpectedValue()
         {
             // Arrange
@@ -408,7 +379,6 @@ namespace Existential.Test
             // Assert
             Assert.That(theResult.ValueOr(0), Is.EqualTo(13));
         }
-        */
 
         [Test]
         public static void ToMaybe_WithMaybe_IsMaybe()
@@ -773,7 +743,7 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void GetItemsWithValue_WithOneValue_ReturnsExpectedResult()
+        public static void ThatExist_WithOneValue_ReturnsExpectedResult()
         {
             // Arrange
             var theMaybeCollection = new List<Maybe<string>>
@@ -783,7 +753,7 @@ namespace Existential.Test
             };
 
             // Act
-            IEnumerable<string> theResult = theMaybeCollection.GetItemsWithValue();
+            IEnumerable<string> theResult = theMaybeCollection.ThatExist();
 
             // Assert
             Assert.That(Enumerable.Count(theResult), Is.EqualTo(1));
@@ -791,7 +761,7 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void GetItemsWithValue_WithMultipleValues_ReturnsExpectedResult()
+        public static void ThatExist_WithMultipleValues_ReturnsExpectedResult()
         {
             // Arrange
             var theMaybeCollection = new List<Maybe<string>>
@@ -805,7 +775,7 @@ namespace Existential.Test
             };
 
             // Act
-            IEnumerable<string> theResult = theMaybeCollection.GetItemsWithValue();
+            IEnumerable<string> theResult = theMaybeCollection.ThatExist();
 
             // Assert
             Assert.That(Enumerable.Count(theResult), Is.EqualTo(2));
@@ -814,7 +784,7 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void GetItemsWithValue_WithNoValues_ReturnsEmptyCollection()
+        public static void ThatExist_WithNoValues_ReturnsEmptyCollection()
         {
             // Arrange
             var theMaybeCollection = new List<Maybe<string>>
@@ -825,7 +795,7 @@ namespace Existential.Test
             };
 
             // Act
-            IEnumerable<string> theResult = theMaybeCollection.GetItemsWithValue();
+            IEnumerable<string> theResult = theMaybeCollection.ThatExist();
 
             // Assert
             Assert.That(Enumerable.Count(theResult), Is.EqualTo(0));

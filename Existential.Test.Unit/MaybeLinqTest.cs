@@ -4,9 +4,7 @@
 
 namespace Existential.Test
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
+    using System.Globalization;
 
     using NUnit.Framework;
 
@@ -14,23 +12,31 @@ namespace Existential.Test
     public static class MaybeLinqTest
     {
         [Test]
-        public static void Select_Works()
+        public static void Select_WithValue_ReturnsCorrectValue()
         {
             // Arrange
-            var theStrings = new List<Maybe<string>>
-            {
-                "value 1",
-                "value 2",
-            };
+            Maybe<string> theMaybe = "1";
 
             // Act
-            IEnumerable<Maybe<string>> theResult = from maybe in theStrings
-                                .Where((x) => x.ValueOr("Default text").Contains('1', StringComparison.Ordinal))
-                                                   select maybe;
+            Maybe<int> theResult = from value in theMaybe
+                                   select value.Length;
 
             // Assert
-            Assert.That(theResult.Count() == 1);
-            Assert.That(theResult.Contains("value 1"));
+            Assert.That(theResult.ValueOr(0), Is.EqualTo(1));
+        }
+
+        [Test]
+        public static void Select_WithNone_ReturnsNone()
+        {
+            // Arrange
+            Maybe<string> theMaybe = null;
+
+            // Act
+            Maybe<int> theResult = from value in theMaybe
+                                   select value.Length;
+
+            // Assert
+            Assert.That(theResult.ValueOr(7), Is.EqualTo(7));
         }
     }
 }
