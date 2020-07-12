@@ -17,14 +17,15 @@ namespace Existential.Test
         public static void Bind_WithNoValue_ReturnsMaybeWithNoValue()
         {
             // Arrange
-            Maybe<string> theNullString = null;
+            Maybe<string> theEmptyMaybe = null;
 
             // Act
-            Maybe<int> theResult = theNullString.Bind(x =>
-            {
-                Maybe<int> theMaybe = x.Length;
-                return theMaybe;
-            });
+            Maybe<int> theResult = theEmptyMaybe.Bind(
+                inText =>
+                {
+                    Maybe<int> theIntegerMaybe = inText.Length;
+                    return theIntegerMaybe;
+                });
 
             // Assert
             Assert.That(theResult.ValueOr(12), Is.EqualTo(12));
@@ -34,14 +35,15 @@ namespace Existential.Test
         public static void Bind_WithValue_ReturnsExpectedValue()
         {
             // Arrange
-            Maybe<string> theString = "Call me Maybe";
+            Maybe<string> theTextMaybe = "Call me Maybe";
 
             // Act
-            Maybe<int> theResult = theString.Bind(x =>
-            {
-                Maybe<int> theMaybe = x.Length;
-                return theMaybe;
-            });
+            Maybe<int> theResult = theTextMaybe.Bind(
+                inText =>
+                {
+                    Maybe<int> theIntegerMaybe = inText.Length;
+                    return theIntegerMaybe;
+                });
 
             // Assert
             Assert.That(theResult.ValueOr(0), Is.EqualTo(13));
@@ -88,7 +90,7 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void DoesNotEqualOperator_WithDifferentValue_ReturnsTrue()
+        public static void DoesNotEqualOperator_WithDifferentValues_ReturnsTrue()
         {
             // Arrange
             Maybe<string> theFirstMaybe = "A test string";
@@ -102,7 +104,7 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void DoesNotEqualOperator_WithIdenticalValue_ReturnsFalse()
+        public static void DoesNotEqualOperator_WithIdenticalValues_ReturnsFalse()
         {
             // Arrange
             Maybe<string> theFirstMaybe = "A test string";
@@ -116,12 +118,11 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void DoesNotEqualOperator_WithNoneAndValue_ReturnsTrue()
+        public static void DoesNotEqualOperator_WhereOneValueDoesNotExist_ReturnsTrue()
         {
             // Arrange
-            string theNullString = null;
             Maybe<string> theFirstMaybe = "A test string";
-            Maybe<string> theSecondMaybe = theNullString;
+            Maybe<string> theSecondMaybe = null;
 
             // Act
             bool theResult = theFirstMaybe != theSecondMaybe;
@@ -131,13 +132,11 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void DoesNotEqualOperator_WithNones_ReturnsFalse()
+        public static void DoesNotEqualOperator_WhereNeitherValueExists_ReturnsFalse()
         {
             // Arrange
-            string theNullString1 = null;
-            string theNullString2 = null;
-            Maybe<string> theFirstMaybe = theNullString1;
-            Maybe<string> theSecondMaybe = theNullString2;
+            Maybe<string> theFirstMaybe = null;
+            Maybe<string> theSecondMaybe = null;
 
             // Act
             bool theResult = theFirstMaybe != theSecondMaybe;
@@ -147,7 +146,7 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void EqualsOperator_WithDifferentValue_ReturnsFalse()
+        public static void EqualsOperator_WithDifferentValues_ReturnsFalse()
         {
             // Arrange
             Maybe<string> theFirstMaybe = "A test string";
@@ -161,7 +160,7 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void EqualsOperator_WithIdenticalValue_ReturnsTrue()
+        public static void EqualsOperator_WithIdenticalValues_ReturnsTrue()
         {
             // Arrange
             Maybe<string> theFirstMaybe = "A test string";
@@ -175,12 +174,11 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void EqualsOperator_WithNoneAndValue_ReturnsFalse()
+        public static void EqualsOperator_WhereOneValueDoesNotExist_ReturnsFalse()
         {
             // Arrange
-            string theNullString = null;
             Maybe<string> theFirstMaybe = "A test string";
-            Maybe<string> theSecondMaybe = theNullString;
+            Maybe<string> theSecondMaybe = null;
 
             // Act
             bool theResult = theFirstMaybe == theSecondMaybe;
@@ -190,13 +188,11 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void EqualsOperator_WithNones_ReturnsTrue()
+        public static void EqualsOperator_WhenNeitherValueExists_ReturnsTrue()
         {
             // Arrange
-            string theNullString1 = null;
-            string theNullString2 = null;
-            Maybe<string> theFirstMaybe = theNullString1;
-            Maybe<string> theSecondMaybe = theNullString2;
+            Maybe<string> theFirstMaybe = null;
+            Maybe<string> theSecondMaybe = null;
 
             // Act
             bool theResult = theFirstMaybe == theSecondMaybe;
@@ -208,11 +204,8 @@ namespace Existential.Test
         [Test]
         public static void HashCode_WithInvalid_HasExpectedValue()
         {
-            // Arrange
-            string theNullString = null;
-
             // Act
-            Maybe<string> theResult = theNullString;
+            Maybe<string> theResult = null;
 
             // Assert
             Assert.That(theResult.GetHashCode(), Is.EqualTo(0));
@@ -331,8 +324,7 @@ namespace Existential.Test
         public static void Some_WithNone_IsNone()
         {
             // Arrange
-            string theInvalidString = null;
-            Maybe<string> theNone = theInvalidString;
+            Maybe<string> theNone = null;
 
             // Act
             var theResult = Maybe.Some(theNone);
@@ -344,11 +336,8 @@ namespace Existential.Test
         [Test]
         public static void Some_WithNull_IsNone()
         {
-            // Arrange
-            string theNullString = null;
-
             // Act
-            var theResult = Maybe.Some(theNullString);
+            var theResult = Maybe.Some((string)null);
 
             // Assert
             Assert.That(theResult.ValueOr("A default string"), Is.EqualTo("A default string"));
@@ -361,7 +350,7 @@ namespace Existential.Test
             Maybe<string> theNullString = null;
 
             // Act
-            Maybe<int> theResult = theNullString.Map(x => x.Length);
+            Maybe<int> theResult = theNullString.Map(inText => inText.Length);
 
             // Assert
             Assert.That(theResult.ValueOr(17), Is.EqualTo(17));
@@ -374,10 +363,52 @@ namespace Existential.Test
             Maybe<string> theString = "Call me Maybe";
 
             // Act
-            Maybe<int> theResult = theString.Map(x => x.Length);
+            Maybe<int> theResult = theString.Map(inText => inText.Length);
 
             // Assert
             Assert.That(theResult.ValueOr(0), Is.EqualTo(13));
+        }
+
+        [Test]
+        public static void Select_WithNoValue_ReturnsMaybeWithNoValue()
+        {
+            // Arrange
+            Maybe<string> theNullString = null;
+
+            // Act
+            Maybe<int> theResult = theNullString.Select(inText => inText.Length);
+
+            // Assert
+            Assert.That(theResult.ValueOr(17), Is.EqualTo(17));
+        }
+
+        [Test]
+        public static void Select_WithValue_ReturnsExpectedValue()
+        {
+            // Arrange
+            Maybe<string> theString = "Call me Maybe";
+
+            // Act
+            Maybe<int> theResult = theString.Select(inText => inText.Length);
+
+            // Assert
+            Assert.That(theResult.ValueOr(0), Is.EqualTo(13));
+        }
+
+        [Test]
+        public static void SelectMany_WithValues_ReturnsExpectedValue()
+        {
+            // Arrange
+            Maybe<string> theMaybe = "A test string";
+            Maybe<string> theOtherMaybe = "Another test string";
+
+            // Act
+            Maybe<(int, int)> theResult = theMaybe.SelectMany(
+                inText2 => theOtherMaybe,
+                (inText1, inText2) => (Length1: inText1.Length, Length2: inText2.Length));
+
+            // Assert
+            Assert.That(theResult.ValueOr((0, 0)), Is.EqualTo((13, 19)));
         }
 
         [Test]
@@ -411,11 +442,10 @@ namespace Existential.Test
         public static void ToMaybe_WithNull_IsNone()
         {
             // Arrange
-            string theNullString = null;
             var theDefaultMaybe = default(Maybe<string>);
 
             // Act
-            var theResult = theDefaultMaybe.ToMaybe(theNullString);
+            var theResult = theDefaultMaybe.ToMaybe(null);
 
             // Assert
             Assert.That(theResult, Is.EqualTo(theDefaultMaybe));
@@ -439,8 +469,7 @@ namespace Existential.Test
         public static void ToString_WithNullString_ReturnsStringOfDefault()
         {
             // Arrange
-            string theNullString = null;
-            Maybe<string> theMaybe = theNullString;
+            Maybe<string> theMaybe = null;
 
             // Act
             string theResult = theMaybe.ToString();
@@ -466,8 +495,7 @@ namespace Existential.Test
         public static void TryGetValue_WithNoValue_HasDefaultOutValue()
         {
             // Arrange
-            string theNullString = null;
-            Maybe<string> theTestValue = theNullString;
+            Maybe<string> theTestValue = null;
 
             // Act
             _ = theTestValue.TryGetValue(out string theOutValue);
@@ -480,8 +508,7 @@ namespace Existential.Test
         public static void TryGetValue_WithNoValue_ReturnsFalse()
         {
             // Arrange
-            string theNullString = null;
-            Maybe<string> theTestValue = theNullString;
+            Maybe<string> theTestValue = null;
 
             // Act
             bool theResult = theTestValue.TryGetValue(out _);
@@ -520,8 +547,7 @@ namespace Existential.Test
         public static void ValueOr_WithNull_ReturnsDefaultValue()
         {
             // Arrange
-            string theNullString = null;
-            Maybe<string> theMaybe = theNullString;
+            Maybe<string> theMaybe = null;
 
             // Act
             string theResult = theMaybe.ValueOr("A default string");
@@ -534,8 +560,7 @@ namespace Existential.Test
         public static void ValueOr_WithNullAndFactory_ReturnsFactoryValue()
         {
             // Arrange
-            string theNullString = null;
-            Maybe<string> theMaybe = theNullString;
+            Maybe<string> theMaybe = null;
 
             // Act
             string theResult = theMaybe.ValueOr(() => "A factory string");
@@ -575,8 +600,7 @@ namespace Existential.Test
         {
             // Arrange
             Maybe<string> theDefault = "A different default string";
-            string theNullString = null;
-            Maybe<string> theMaybe = theNullString;
+            Maybe<string> theMaybe = null;
 
             // Act
             Maybe<string> theResult = theMaybe.ValueOrMaybe(theDefault);
@@ -590,8 +614,7 @@ namespace Existential.Test
         {
             // Arrange
             Maybe<string> theDefault = "A factory string";
-            string theNullString = null;
-            Maybe<string> theMaybe = theNullString;
+            Maybe<string> theMaybe = null;
 
             // Act
             Maybe<string> theResult = theMaybe.ValueOrMaybe(() => theDefault);
@@ -632,8 +655,7 @@ namespace Existential.Test
         public static void ValueOrThrow_WithNone_Throws()
         {
             // Arrange
-            string theNullString = null;
-            Maybe<string> theMaybe = theNullString;
+            Maybe<string> theMaybe = null;
 
             // Assert
             Assert.That(
@@ -717,7 +739,7 @@ namespace Existential.Test
         public static void ArrayOfStringValueOrEmpty_WithValue_ReturnsValue()
         {
             // Arrange
-            Maybe<string[]> theMaybe = new string[]
+            Maybe<string[]> theMaybe = new[]
             {
                 "A test string",
             };
@@ -753,10 +775,11 @@ namespace Existential.Test
             };
 
             // Act
-            IEnumerable<string> theResult = theMaybeCollection.ThatExist();
+            // Specifying ToList() ensures the result is only evaluated once.
+            IEnumerable<string> theResult = theMaybeCollection.ThatExist().ToList();
 
             // Assert
-            Assert.That(Enumerable.Count(theResult), Is.EqualTo(1));
+            Assert.That(theResult.Count(), Is.EqualTo(1));
             Assert.That(theResult, Contains.Item("Test string"));
         }
 
@@ -775,10 +798,11 @@ namespace Existential.Test
             };
 
             // Act
-            IEnumerable<string> theResult = theMaybeCollection.ThatExist();
+            // Specifying ToList() ensures the result is only evaluated once.
+            IEnumerable<string> theResult = theMaybeCollection.ThatExist().ToList();
 
             // Assert
-            Assert.That(Enumerable.Count(theResult), Is.EqualTo(2));
+            Assert.That(theResult.Count(), Is.EqualTo(2));
             Assert.That(theResult, Contains.Item("Test string"));
             Assert.That(theResult, Contains.Item("Test string 2"));
         }
@@ -798,7 +822,7 @@ namespace Existential.Test
             IEnumerable<string> theResult = theMaybeCollection.ThatExist();
 
             // Assert
-            Assert.That(Enumerable.Count(theResult), Is.EqualTo(0));
+            Assert.That(theResult.Count(), Is.EqualTo(0));
         }
     }
 }
