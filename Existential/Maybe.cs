@@ -433,5 +433,34 @@ namespace Existential
 
             // ...don't need an explicit return to mark the end of the collection when we're using "yield return".
         }
+
+        /// <summary>
+        /// Returns a collection only if all the members of the input collection have values.
+        /// </summary>
+        /// <typeparam name="T">The type of members of the collection.</typeparam>
+        /// <param name="inCollection">The collection that may contain values.</param>
+        /// <returns>The input collection if all its members exist; otherwise no collection.</returns>
+        public static Maybe<IEnumerable<T>> WhereAllExist<T>(this IEnumerable<Maybe<T>> inCollection)
+        {
+            // Should be impossible to fail this null check, but...
+            if (inCollection != null)
+            {
+                var theResultBuilder = new List<T>();
+
+                foreach (Maybe<T> aMaybe in inCollection)
+                {
+                    if (!aMaybe.TryGetValue(out T theValue))
+                    {
+                        return null;
+                    }
+
+                    theResultBuilder.Add(theValue);
+                }
+
+                return theResultBuilder;
+            }
+
+            return null;
+        }
     }
 }

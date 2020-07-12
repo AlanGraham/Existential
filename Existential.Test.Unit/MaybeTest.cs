@@ -854,5 +854,40 @@ namespace Existential.Test
             // Assert
             Assert.That(theResult.ValueOr(0), Is.EqualTo(0));
         }
+
+        [Test]
+        public static void WhereAllExist_IsTrue_ReturnsOriginalCollection()
+        {
+            // Arrange
+            var theCollection = new List<Maybe<string>>
+            {
+                "Test string 1",
+                "Test string 2",
+            };
+
+            // Act
+            Maybe<IEnumerable<string>> theResult = theCollection.WhereAllExist();
+
+            // Assert
+            Assert.That(theResult.ValueOr(() => null), Contains.Item("Test string 1"));
+            Assert.That(theResult.ValueOr(() => null), Contains.Item("Test string 2"));
+        }
+
+        [Test]
+        public static void WhereAllExist_IsNotTrue_ReturnsNoCollection()
+        {
+            // Arrange
+            var theCollection = new List<Maybe<string>>
+            {
+                "Test string 1",
+                null,
+            };
+
+            // Act
+            Maybe<IEnumerable<string>> theResult = theCollection.WhereAllExist();
+
+            // Assert
+            Assert.That(theResult.ValueOr(() => null), Is.EqualTo(null));
+        }
     }
 }
