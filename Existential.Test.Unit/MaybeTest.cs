@@ -824,5 +824,35 @@ namespace Existential.Test
             // Assert
             Assert.That(theResult.Count(), Is.EqualTo(0));
         }
+
+        [Test]
+        public static void Where_WithValue_ReturnsCorrectValue()
+        {
+            // Arrange
+            Maybe<string> theMaybe = "1";
+
+            // Act
+            Maybe<int> theResult = theMaybe
+                .Where(inText => inText.Contains('1', StringComparison.Ordinal))
+                .Select(inText => inText.Length);
+
+            // Assert
+            Assert.That(theResult.ValueOr(0), Is.EqualTo(1));
+        }
+
+        [Test]
+        public static void Where_WithNoValue_ReturnsCorrectValue()
+        {
+            // Arrange
+            Maybe<string> theMaybe = "2";
+
+            // Act
+            Maybe<int> theResult = theMaybe
+                .Where(inText => inText.Contains('1', StringComparison.Ordinal))
+                .Select(inText => inText.Length);
+
+            // Assert
+            Assert.That(theResult.ValueOr(0), Is.EqualTo(0));
+        }
     }
 }

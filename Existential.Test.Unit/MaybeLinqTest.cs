@@ -4,6 +4,8 @@
 
 namespace Existential.Test
 {
+    using System;
+
     using NUnit.Framework;
 
     [TestFixture]
@@ -45,10 +47,26 @@ namespace Existential.Test
 
             // Act
             Maybe<int> theResult = from theText in theMaybe
+                                   where theText.Contains('1', StringComparison.Ordinal)
                                    select theText.Length;
 
             // Assert
             Assert.That(theResult.ValueOr(0), Is.EqualTo(1));
+        }
+
+        [Test]
+        public static void Where_WithNoValue_ReturnsCorrectValue()
+        {
+            // Arrange
+            Maybe<string> theMaybe = "2";
+
+            // Act
+            Maybe<int> theResult = from theText in theMaybe
+                                   where theText.Contains('1', StringComparison.Ordinal)
+                                   select theText.Length;
+
+            // Assert
+            Assert.That(theResult.ValueOr(0), Is.EqualTo(0));
         }
 
         [Test]
