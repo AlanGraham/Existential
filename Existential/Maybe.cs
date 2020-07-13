@@ -21,15 +21,15 @@ namespace Existential
         private readonly bool myValueExists;
 
         /// <summary>Initialises a new instance of the <see cref="Maybe{T}" /> struct.</summary>
-        /// <param name="value">The value for the maybe to contain.</param>
+        /// <param name="inValue">The value for the maybe to contain.</param>
         /// <remarks>
         /// Private so that it can only be used by methods within the class that check for null
         /// before construction. If the provided value is null, they will use the default
         /// constructor instead.
         /// </remarks>
-        private Maybe(T value)
+        private Maybe(T inValue)
         {
-            myValue = value;
+            myValue = inValue;
             myValueExists = true;
         }
 
@@ -43,45 +43,19 @@ namespace Existential
         public static implicit operator Maybe<T>(T inValue)
             => (inValue == null) ? default(Maybe<T>) : new Maybe<T>(inValue);
 
-        /*
-        /// <summary>
-        /// Performs an implicit conversion from <see cref="Maybe.MaybeNone"/> to <see cref="Maybe{T}"/>.
-        /// </summary>
-        /// <param name="_">The value, which will be ignored. Its type alone is used to select this method.</param>
-        /// <returns>The result of the conversion.</returns>
-        //// Bridge.NET doesn't support simplifying this use of "default" (2020/03/22).
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "StyleCop.CSharp.NamingRules",
-            "SA1313:Parameter names should begin with lower-case letter",
-            Justification = "The underscore is a conventional name for values that will be discarded.")]
-        public static implicit operator Maybe<T>(Maybe.MaybeNone _)
-            => default(Maybe<T>);
-        */
-
         /// <summary>Implements the == operator.</summary>
-        /// <param name="left">The left.</param>
-        /// <param name="right">The right.</param>
+        /// <param name="inLeft">The left.</param>
+        /// <param name="inRight">The right.</param>
         /// <returns>The result of the operator.</returns>
-        public static bool operator ==(Maybe<T> left, Maybe<T> right)
-            => left.Equals(right);
+        public static bool operator ==(Maybe<T> inLeft, Maybe<T> inRight)
+            => inLeft.Equals(inRight);
 
         /// <summary>Implements the != operator.</summary>
-        /// <param name="left">The left.</param>
-        /// <param name="right">The right.</param>
+        /// <param name="inLeft">The left.</param>
+        /// <param name="inRight">The right.</param>
         /// <returns>The result of the operator.</returns>
-        public static bool operator !=(Maybe<T> left, Maybe<T> right)
-            => !left.Equals(right);
-
-        /// <summary>
-        /// Performs an explicit conversion from a <typeparamref name="T"/> to <see cref="Maybe{T}"/>.
-        /// </summary>
-        /// <param name="inValue">The value.</param>
-        /// <returns>The value, contained in a <see cref="Maybe{T}"/>.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
-            "Design",
-            "CA1000:Do not declare static members on generic types",
-            Justification = "This static method helps with readability in some cases.")]
-        public static Maybe<T> Some(T inValue) => inValue;
+        public static bool operator !=(Maybe<T> inLeft, Maybe<T> inRight)
+            => !inLeft.Equals(inRight);
 
         /// <summary>
         /// Performs a conversion from a <typeparamref name="T"/> to a <see cref="Maybe{T}"/>.

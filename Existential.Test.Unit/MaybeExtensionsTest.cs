@@ -219,5 +219,160 @@ namespace Existential.Test
             // Assert
             Assert.That(theResult.ValueOr(() => null), Is.EqualTo(null));
         }
+
+        [Test]
+        public static void FirstOrNone_WithNullCollection_ReturnsNoValue()
+        {
+            // Act
+            // Need to test extension method on a null.
+            Maybe<string> theResult = ((List<string>)null).MaybeFirst();
+
+            // Assert
+            Assert.That(theResult.ValueOrEmpty(), Is.EqualTo(string.Empty));
+        }
+
+        [Test]
+        public static void FirstOrNone_WithNullFirst_ReturnsNoValue()
+        {
+            // Arrange
+            var theCollection = new List<string>
+            {
+                null,
+                "A test string",
+            };
+
+            // Act
+            Maybe<string> theResult = theCollection.MaybeFirst();
+
+            // Assert
+            Assert.That(theResult.ValueOrEmpty(), Is.EqualTo(string.Empty));
+        }
+
+        [Test]
+        public static void FirstOrNone_WithValueFirst_ReturnsExpectedValue()
+        {
+            // Arrange
+            var theCollection = new List<string>
+            {
+                "A test string",
+                null,
+            };
+
+            // Act
+            Maybe<string> theResult = theCollection.MaybeFirst();
+
+            // Assert
+            Assert.That(theResult.ValueOrEmpty(), Is.EqualTo("A test string"));
+        }
+
+        [Test]
+        public static void FirstThatExists_WithNullCollection_ReturnsNoValue()
+        {
+            // Act
+            // Need to test extension method on a null.
+            Maybe<string> theResult = ((List<string>)null).MaybeFirstThatExists();
+
+            // Assert
+            Assert.That(theResult.ValueOrEmpty(), Is.EqualTo(string.Empty));
+        }
+
+        [Test]
+        public static void FirstThatExists_WithNullFirst_ReturnsNoValue()
+        {
+            // Arrange
+            var theCollection = new List<string>
+            {
+                null,
+                "A test string",
+            };
+
+            // Act
+            Maybe<string> theResult = theCollection.MaybeFirstThatExists();
+
+            // Assert
+            Assert.That(theResult.ValueOrEmpty(), Is.EqualTo("A test string"));
+        }
+
+        [Test]
+        public static void FirstThatExists_WithValueFirst_ReturnsExpectedValue()
+        {
+            // Arrange
+            var theCollection = new List<string>
+            {
+                "A test string",
+                null,
+            };
+
+            // Act
+            Maybe<string> theResult = theCollection.MaybeFirstThatExists();
+
+            // Assert
+            Assert.That(theResult.ValueOrEmpty(), Is.EqualTo("A test string"));
+        }
+
+        [Test]
+        public static void FirstWhere_WithNullCollection_ReturnsNoValue()
+        {
+            // Act
+            // Need to test extension method on a null.
+            Maybe<string> theResult = ((List<string>)null).MaybeFirstWhere((inText) => true);
+
+            // Assert
+            Assert.That(theResult.ValueOrEmpty(), Is.EqualTo(string.Empty));
+        }
+
+        [Test]
+        public static void FirstWhere_WithNoMatch_ReturnsNoValue()
+        {
+            // Arrange
+            var theCollection = new List<string>
+            {
+                null,
+                "A test string",
+            };
+
+            // Act
+            Maybe<string> theResult = theCollection.MaybeFirstWhere(
+                (inText) => inText != null && inText.Contains("elephant", StringComparison.Ordinal));
+
+            // Assert
+            Assert.That(theResult.ValueOrEmpty(), Is.EqualTo(string.Empty));
+        }
+
+        [Test]
+        public static void FirstWhere_WithNullFirst_ReturnsCorrectValue()
+        {
+            // Arrange
+            var theCollection = new List<string>
+            {
+                null,
+                "A test string",
+            };
+
+            // Act
+            Maybe<string> theResult = theCollection.MaybeFirstWhere(
+                (inText) => inText != null && inText.Contains("test", StringComparison.Ordinal));
+
+            // Assert
+            Assert.That(theResult.ValueOrEmpty(), Is.EqualTo("A test string"));
+        }
+
+        [Test]
+        public static void FirstWhere_WithValueFirst_ReturnsExpectedValue()
+        {
+            // Arrange
+            var theCollection = new List<string>
+            {
+                "A test string",
+                null,
+            };
+
+            // Act
+            Maybe<string> theResult = theCollection.MaybeFirstWhere(
+                (inText) => inText.Contains("test", StringComparison.Ordinal));
+
+            // Assert
+            Assert.That(theResult.ValueOrEmpty(), Is.EqualTo("A test string"));
+        }
     }
 }
