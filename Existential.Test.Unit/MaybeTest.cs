@@ -5,7 +5,7 @@
 namespace Existential.Test
 {
     using System;
-    using System.Security.Cryptography.X509Certificates;
+
     using NUnit.Framework;
 
     [TestFixture]
@@ -301,6 +301,38 @@ namespace Existential.Test
 
             // Assert
             Assert.That(theResult, Is.EqualTo(0));
+        }
+
+        [Test]
+        public static void Match_WithActionAndEmpty_AppliesAlternativeAction()
+        {
+            // Arrange
+            Maybe<string> theMaybe = "A test string";
+            bool isActionApplied = false;
+            void Action(string inText) => isActionApplied = inText == "A test string";
+            void AlternativeAction() => isActionApplied = false;
+
+            // Act
+            theMaybe.Match(Action, AlternativeAction);
+
+            // Assert
+            Assert.That(isActionApplied, Is.True);
+        }
+
+        [Test]
+        public static void Match_WithActionAndValue_AppliesExpectedAction()
+        {
+            // Arrange
+            Maybe<string> theMaybe = null;
+            bool isAlternativeActionApplied = false;
+            void Action(string inText) => isAlternativeActionApplied = inText == "A test string";
+            void AlternativeAction() => isAlternativeActionApplied = true;
+
+            // Act
+            theMaybe.Match(Action, AlternativeAction);
+
+            // Assert
+            Assert.That(isAlternativeActionApplied, Is.True);
         }
 
         [Test]

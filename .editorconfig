@@ -145,10 +145,11 @@ csharp_preferred_modifier_order = public,private,protected,internal,static,exter
 # Prefer method-like and property-like constructs to have a block body
 csharp_style_expression_bodied_methods = when_on_single_line:suggestion
 csharp_style_expression_bodied_constructors = when_on_single_line:suggestion
-csharp_style_expression_bodied_operators = true:suggestion
+csharp_style_expression_bodied_operators = when_on_single_line:suggestion
 csharp_style_expression_bodied_properties = when_on_single_line:suggestion
 csharp_style_expression_bodied_indexers = when_on_single_line:suggestion
 csharp_style_expression_bodied_accessors = when_on_single_line:suggestion
+csharp_style_expression_bodied_local_functions = when_on_single_line:suggestion
 
 # Suggest more modern pattern matching features when available
 csharp_style_pattern_matching_over_is_with_cast_check = true:suggestion
