@@ -5,7 +5,7 @@
 namespace Existential.Test
 {
     using System;
-
+    using System.Security.Cryptography.X509Certificates;
     using NUnit.Framework;
 
     [TestFixture]
@@ -262,6 +262,45 @@ namespace Existential.Test
 
             // Assert
             Assert.That(theResult, Is.InstanceOf<Maybe<string>>());
+        }
+
+        [Test]
+        public static void Match_WithFuncAndEmpty_AppliesAlternativeFunc()
+        {
+            // Arrange
+            Maybe<string> theMaybe = null;
+
+            // Act
+            int theResult = theMaybe.Match(inText => inText.Length, () => -1);
+
+            // Assert
+            Assert.That(theResult, Is.EqualTo(-1));
+        }
+
+        [Test]
+        public static void Match_WithFuncAndValue_AppliesExpectedFunc()
+        {
+            // Arrange
+            Maybe<string> theMaybe = "A test string";
+
+            // Act
+            int theResult = theMaybe.Match(inText => inText.Length, () => -1);
+
+            // Assert
+            Assert.That(theResult, Is.EqualTo(13));
+        }
+
+        [Test]
+        public static void Match_WithFuncAndEdgeCase_AppliesExpectedFunc()
+        {
+            // Arrange
+            Maybe<string> theMaybe = string.Empty;
+
+            // Act
+            int theResult = theMaybe.Match(inText => inText.Length, () => -1);
+
+            // Assert
+            Assert.That(theResult, Is.EqualTo(0));
         }
 
         [Test]

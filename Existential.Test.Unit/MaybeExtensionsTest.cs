@@ -221,7 +221,7 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void FirstOrNone_WithNullCollection_ReturnsNoValue()
+        public static void MaybeFirst_WithNullCollection_ReturnsNoValue()
         {
             // Act
             // Need to test extension method on a null.
@@ -232,7 +232,7 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void FirstOrNone_WithNullFirst_ReturnsNoValue()
+        public static void MaybeFirst_WithNullFirst_ReturnsNoValue()
         {
             // Arrange
             var theCollection = new List<string>
@@ -249,7 +249,7 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void FirstOrNone_WithValueFirst_ReturnsExpectedValue()
+        public static void MaybeFirst_WithValueFirst_ReturnsExpectedValue()
         {
             // Arrange
             var theCollection = new List<string>
@@ -266,7 +266,20 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void FirstThatExists_WithNullCollection_ReturnsNoValue()
+        public static void MaybeFirst_WithEmptyList_ReturnsExpectedValue()
+        {
+            // Arrange
+            var theCollection = new List<string>();
+
+            // Act
+            Maybe<string> theResult = theCollection.MaybeFirst();
+
+            // Assert
+            Assert.That(theResult.ValueOrEmpty(), Is.EqualTo(string.Empty));
+        }
+
+        [Test]
+        public static void MaybeFirstThatExists_WithNullCollection_ReturnsNoValue()
         {
             // Act
             // Need to test extension method on a null.
@@ -277,7 +290,7 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void FirstThatExists_WithNullFirst_ReturnsNoValue()
+        public static void MaybeFirstThatExists_WithNullFirst_ReturnsNoValue()
         {
             // Arrange
             var theCollection = new List<string>
@@ -294,7 +307,7 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void FirstThatExists_WithValueFirst_ReturnsExpectedValue()
+        public static void MaybeFirstThatExists_WithValueFirst_ReturnsExpectedValue()
         {
             // Arrange
             var theCollection = new List<string>
@@ -311,7 +324,7 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void FirstWhere_WithNullCollection_ReturnsNoValue()
+        public static void MaybeFirstWhere_WithNullCollection_ReturnsNoValue()
         {
             // Act
             // Need to test extension method on a null.
@@ -322,7 +335,7 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void FirstWhere_WithNoMatch_ReturnsNoValue()
+        public static void MaybeFirstWhere_WithNoMatch_ReturnsNoValue()
         {
             // Arrange
             var theCollection = new List<string>
@@ -340,7 +353,7 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void FirstWhere_WithNullFirst_ReturnsCorrectValue()
+        public static void MaybeFirstWhere_WithNullFirst_ReturnsCorrectValue()
         {
             // Arrange
             var theCollection = new List<string>
@@ -358,7 +371,7 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void FirstWhere_WithValueFirst_ReturnsExpectedValue()
+        public static void MaybeFirstWhere_WithValueFirst_ReturnsExpectedValue()
         {
             // Arrange
             var theCollection = new List<string>
