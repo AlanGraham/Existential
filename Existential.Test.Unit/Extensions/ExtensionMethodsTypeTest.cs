@@ -2,7 +2,7 @@
 //   Copyright (c) Dr. Gavin T.D. Greig, 2020.
 // </copyright>
 
-namespace Existential.Extension.Tests
+namespace Existential.Extensions.Test
 {
     using System;
     using System.Collections.Generic;

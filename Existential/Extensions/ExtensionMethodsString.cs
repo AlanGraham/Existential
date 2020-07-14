@@ -4,13 +4,20 @@
 
 namespace Existential.Extensions
 {
-    using System.Text.RegularExpressions;
+    // using System.Text.RegularExpressions;
 
     /// <summary>Contains string extension methods.</summary>
     public static class ExtensionMethodsString
     {
+        /*
+        // TODO: Fix broken methods
+        // TODO: Consider adding Snake Case
+        // TODO: Consider adding CamelCase
+        // TODO: Consider adding Kebab-Case
+        // TODO: Consider adding Title Case
+
         /// <summary>A Regex that identifies word termination characters.</summary>
-        private const string WordTerminationRegex = "[a-z][A-TOutput]|[&\\-_][A-TOutput]|[a-z][&\\-_]";
+        private const string WordTerminationRegex = "[a-z][A-Z]|[&\\-_][A-Z]|[a-z][&\\-_]";
 
         /// <summary>Converts the string to Sentence Case.</summary>
         /// <param name="inText">The string to convert to Sentence Case.</param>
@@ -22,13 +29,13 @@ namespace Existential.Extensions
             MessageId = "System.Char.ToLower(System.Char)",
             Justification = "Although the Culture sensitive version of ToLower would be better, it's not portable.")]
         public static string ToSentenceCase(this string inText)
-            => inText.ApplyCasingMethod(x => x.Value[0] + " " + char.ToLower(x.Value[1] /*, CultureInfo.CurrentCulture*/));
+            => inText.ApplyCasingMethod(inMatch => inMatch.Value[0] + " " + char.ToLower(inMatch.Value[1] , CultureInfo.CurrentCulture));
 
         /// <summary>Converts the string to Start Case.</summary>
         /// <param name="inText">The string to convert to Start Case.</param>
         /// <returns>The converted text.</returns>
         public static string ToStartCase(this string inText)
-            => inText.ApplyCasingMethod(x => x.Value[0] + " " + x.Value[1]);
+            => inText.ApplyCasingMethod(inMatch => inMatch.Value[0] + " " + inMatch.Value[1]);
 
 #if JavaScript
 #else
@@ -58,5 +65,6 @@ namespace Existential.Extensions
             inText = Regex.Replace(inText, WordTerminationRegex, inCasingMethod);
             return Regex.Replace(inText, WordTerminationRegex, inCasingMethod);
         }
+        */
     }
 }
