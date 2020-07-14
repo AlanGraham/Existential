@@ -18,18 +18,23 @@ namespace Existential
         /// <remarks>Method documented here: https://stackoverflow.com/a/263416.</remarks>
         public static int CalculateHashCode(params object[] inFieldValues)
         {
-            // Overflow is fine, just wrap
-            unchecked
+            int theHashCode = 0;
+
+            if (inFieldValues.Length != 0)
             {
-                int theHashCode = PrimeNumberA;
-
-                foreach (object aFieldValue in inFieldValues)
+                // Overflow is fine, just wrap
+                unchecked
                 {
-                    theHashCode = (theHashCode * PrimeNumberB) + (aFieldValue?.GetHashCode()).GetValueOrDefault(0);
-                }
+                    theHashCode = PrimeNumberA;
 
-                return theHashCode;
+                    foreach (object aFieldValue in inFieldValues)
+                    {
+                        theHashCode = (theHashCode * PrimeNumberB) + (aFieldValue?.GetHashCode()).GetValueOrDefault(0);
+                    }
+                }
             }
+
+            return theHashCode;
         }
     }
 }

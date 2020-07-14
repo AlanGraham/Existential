@@ -6,8 +6,6 @@ namespace Existential.Test
 {
     using System.Linq;
 
-    using FsCheck;
-
     using NUnit.Framework;
 
     using AssertPropertyThat = FsCheck.Prop;
@@ -17,23 +15,39 @@ namespace Existential.Test
     public static class HashCodeHelperTest
     {
         [Property]
-        public static void HashCodeRepeatable()
-        {
+        public static void HashCodeRepeatable() =>
             AssertPropertyThat.ForAll<int[]>(
-                (x) =>
+                inNumber =>
                 {
-                    return HashCodeHelper.CalculateHashCode(x) == HashCodeHelper.CalculateHashCode(x);
+                    int theFirstHashCode = HashCodeHelper.CalculateHashCode(inNumber);
+                    int theSecondHashCode = HashCodeHelper.CalculateHashCode(inNumber);
+                    return theFirstHashCode == theSecondHashCode;
                 });
-        }
 
         [Property]
-        public static void ReorderedValuesGiveDifferentHashCode()
-        {
+        public static void ReorderedValuesGiveDifferentHashCode() =>
             AssertPropertyThat.ForAll<int[]>(
-                (x) =>
-                {
-                    return HashCodeHelper.CalculateHashCode(x) != HashCodeHelper.CalculateHashCode(x.Reverse());
-                });
+                (inNumber) =>
+                    HashCodeHelper.CalculateHashCode(inNumber) != HashCodeHelper.CalculateHashCode(inNumber.Reverse()));
+
+        [Test]
+        public static void HashCode_WithNothing_IsZero()
+        {
+            // Act
+            int theResult = HashCodeHelper.CalculateHashCode();
+
+            // Assert
+            Assert.That(theResult, Is.EqualTo(0));
+        }
+
+        [Test]
+        public static void HashCode_HasExpectedValue()
+        {
+            // Act
+            int theResult = HashCodeHelper.CalculateHashCode(1, 1, 1);
+
+            // Assert
+            Assert.That(theResult, Is.EqualTo(207392));
         }
     }
 }

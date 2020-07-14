@@ -51,11 +51,16 @@ namespace Existential.Extensions
         }
 
         /// <summary>Determines whether this type is of the expected type.</summary>
-        /// <param name="inType">This type.</param>
+        /// <typeparam name="T">The type being extended.</typeparam>
+        /// <param name="inInstance">The instance to compare with the expected type.</param>
         /// <param name="inExpectedType">The expected type.</param>
         /// <returns>True if the types are same; otherwise false.</returns>
-        public static bool IsInstanceOfType(this Type inType, Type inExpectedType)
-            => inType == inExpectedType;
+        public static bool IsInstanceOfType<T>(this T inInstance, Type inExpectedType)
+        {
+            _ = Validate.ThrowIfNull(inInstance, "inInstance");
+            Type theType = typeof(T);
+            return theType == inExpectedType;
+        }
 
         /// <summary>Gets the name of the type, including any generic type parameters.</summary>
         /// <param name="inType">The type for which to get the name.</param>
@@ -85,6 +90,6 @@ namespace Existential.Extensions
         /// <param name="inType">The type for which to get the type parameters.</param>
         /// <returns>The generic type parameters as an array of strings.</returns>
         private static string[] GetTypeParameters(this Type inType)
-            => inType.GetGenericArguments().Select(t => GetGenericAwareTypeName(t)).ToArray();
+            => inType.GetGenericArguments().Select(GetGenericAwareTypeName).ToArray();
     }
 }

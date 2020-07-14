@@ -24,13 +24,12 @@ namespace Existential.Test
         /// <summary>
         /// Checks that validation fails when an IEnumerable collection is non-null but empty.
         /// </summary>
-        /// <param name="assert">Required for compatibility with QUnit's assert instances.</param>
         [Test]
         public static void EnsureCollectionNotEmpty_Fails_WhenIEnumerableIsEmpty()
         {
             // Arrange
-            string theExpectedMessage = "The collection \"theCollection\" is empty";
-            IEnumerable theCollection = new List<int> { };
+            const string ExpectedMessage = "The collection \"theCollection\" is empty";
+            IEnumerable theCollection = new List<int>();
 
             // Assert
             Assert.That(
@@ -40,17 +39,16 @@ namespace Existential.Test
                     Validate.ThrowIfNullOrEmpty(theCollection, nameof(theCollection));
                 },
                 Throws.ArgumentException
-                    .With.Message.Contains(theExpectedMessage)
+                    .With.Message.Contains(ExpectedMessage)
                     .And.Message.Contains(nameof(theCollection)));
         }
 
         /// <summary>Checks that validation fails when an IEnumerable collection is null.</summary>
-        /// <param name="assert">Required for compatibility with QUnit's assert instances.</param>
         [Test]
         public static void EnsureCollectionNotEmpty_Fails_WhenIEnumerableIsNull()
         {
             // Arrange
-            string theExpectedMessage = "The collection \"theCollection\" is null";
+            const string ExpectedMessage = "The collection \"theCollection\" is null";
             IEnumerable theCollection = null;
 
             // Assert
@@ -61,20 +59,19 @@ namespace Existential.Test
                     Validate.ThrowIfNullOrEmpty(theCollection, nameof(theCollection));
                 },
                 Throws.ArgumentNullException
-                    .With.Message.Contains(theExpectedMessage)
+                    .With.Message.Contains(ExpectedMessage)
                     .And.Message.Contains(nameof(theCollection)));
         }
 
         /// <summary>
         /// Checks that validation fails when an IEnumerable{T} collection is non-null but empty.
         /// </summary>
-        /// <param name="assert">Required for compatibility with QUnit's assert instances.</param>
         [Test]
         public static void EnsureCollectionNotEmpty_Fails_WhenIEnumerableTIsEmpty()
         {
             // Arrange
-            string theExpectedMessage = "The collection \"theCollection\" is empty";
-            IEnumerable<int> theCollection = new List<int> { };
+            const string ExpectedMessage = "The collection \"theCollection\" is empty";
+            IEnumerable<int> theCollection = new List<int>();
 
             // Assert
             Assert.That(
@@ -84,17 +81,16 @@ namespace Existential.Test
                     Validate.ThrowIfNullOrEmpty(theCollection, nameof(theCollection));
                 },
                 Throws.ArgumentException
-                    .With.Message.Contains(theExpectedMessage)
+                    .With.Message.Contains(ExpectedMessage)
                     .And.Message.Contains(nameof(theCollection)));
         }
 
         /// <summary>Checks that validation fails when an IEnumerable{T} collection is null.</summary>
-        /// <param name="assert">Required for compatibility with QUnit's assert instances.</param>
         [Test]
         public static void EnsureCollectionNotEmpty_Fails_WhenIENumerableTIsNull()
         {
             // Arrange
-            string theExpectedMessage = "The collection \"theCollection\" is null";
+            const string ExpectedMessage = "The collection \"theCollection\" is null";
             IEnumerable<int> theCollection = null;
 
             // Assert
@@ -105,18 +101,17 @@ namespace Existential.Test
                     Validate.ThrowIfNullOrEmpty(theCollection, nameof(theCollection));
                 },
                 Throws.ArgumentNullException
-                    .With.Message.Contains(theExpectedMessage)
+                    .With.Message.Contains(ExpectedMessage)
                     .And.Message.Contains(nameof(theCollection)));
         }
 
         /// <summary>Checks that validation fails when a List{T} collection is non-null but empty.</summary>
-        /// <param name="assert">Required for compatibility with QUnit's assert instances.</param>
         [Test]
         public static void EnsureCollectionNotEmpty_Fails_WhenListTIsEmpty()
         {
             // Arrange
-            string theExpectedMessage = "The collection \"theCollection\" is empty";
-            var theCollection = new List<int> { };
+            const string ExpectedMessage = "The collection \"theCollection\" is empty";
+            var theCollection = new List<int>();
 
             // Assert
             Assert.That(
@@ -126,17 +121,16 @@ namespace Existential.Test
                     Validate.ThrowIfNullOrEmpty(theCollection, nameof(theCollection));
                 },
                 Throws.ArgumentException
-                    .With.Message.Contains(theExpectedMessage)
+                    .With.Message.Contains(ExpectedMessage)
                     .And.Message.Contains(nameof(theCollection)));
         }
 
         /// <summary>Checks that validation fails when a List{T} collection is null.</summary>
-        /// <param name="assert">Required for compatibility with QUnit's assert instances.</param>
         [Test]
         public static void EnsureCollectionNotEmpty_Fails_WhenListTIsNull()
         {
             // Arrange
-            string theExpectedMessage = "The collection \"theCollection\" is null";
+            const string ExpectedMessage = "The collection \"theCollection\" is null";
             List<int> theCollection = null;
 
             // Assert
@@ -147,12 +141,11 @@ namespace Existential.Test
                     Validate.ThrowIfNullOrEmpty(theCollection, nameof(theCollection));
                 },
                 Throws.ArgumentNullException
-                    .With.Message.Contains(theExpectedMessage)
+                    .With.Message.Contains(ExpectedMessage)
                     .And.Message.Contains(nameof(theCollection)));
         }
 
         /// <summary>Checks that validation succeeds when an IEnumerable collection has content.</summary>
-        /// <param name="assert">Required for compatibility with QUnit's assert instances.</param>
         [Test]
         public static void EnsureCollectionNotEmpty_ReturnsCorrectType_WhenIEnumerableIsPopulated()
         {
@@ -167,7 +160,6 @@ namespace Existential.Test
         }
 
         /// <summary>Checks that validation succeeds when an IEnumerable{T} collection has content.</summary>
-        /// <param name="assert">Required for compatibility with QUnit's assert instances.</param>
         [Test]
         public static void EnsureCollectionNotEmpty_ReturnsCorrectType_WhenIEnumerableTIsPopulated()
         {
@@ -182,7 +174,6 @@ namespace Existential.Test
         }
 
         /// <summary>Checks that validation succeeds when a List{T} collection has content.</summary>
-        /// <param name="assert">Required for compatibility with QUnit's assert instances.</param>
         [Test]
         public static void EnsureCollectionNotEmpty_ReturnsCorrectType_WhenListTIsPopulated()
         {
@@ -197,7 +188,6 @@ namespace Existential.Test
         }
 
         /// <summary>Checks that validation fails when a GUID is empty.</summary>
-        /// <param name="assert">Required for compatibility with QUnit's assert instances.</param>
         [Test]
         public static void EnsureGuidNotEmpty_WithEmptyGuid_ThrowsException()
         {
@@ -218,7 +208,6 @@ namespace Existential.Test
         }
 
         /// <summary>Checks that validation succeeds when a GUID is not-empty.</summary>
-        /// <param name="assert">Required for compatibility with QUnit's assert instances.</param>
         [Test]
         public static void EnsureGuidNotEmpty_WithValidGuid_ReturnsValue()
         {
@@ -233,14 +222,13 @@ namespace Existential.Test
         }
 
         [Property]
-        public static Property EnsureNotNull_WithNonWhiteSpaceString_ReturnsValue(NonEmptyString x, bool y)
+        public static Property EnsureNotNull_WithNonWhiteSpaceString_ReturnsValue(NonEmptyString inText, bool inTrim)
         {
-            Func<bool> theProperty = () => Validate.ThrowIfNullOrEmpty(x.Get, nameof(x), y) == x.Get;
-            return theProperty.When(!string.IsNullOrWhiteSpace(x.Get));
+            Func<bool> theProperty = () => Validate.ThrowIfNullOrEmpty(inText.Get, nameof(inText), inTrim) == inText.Get;
+            return theProperty.When(!string.IsNullOrWhiteSpace(inText.Get));
         }
 
         /// <summary>Checks that validation fails when a string is null.</summary>
-        /// <param name="assert">Required for compatibility with QUnit's assert instances.</param>
         [Test]
         public static void EnsureNotNull_WithNullData_ThrowsException()
         {
@@ -388,16 +376,17 @@ namespace Existential.Test
             string theResult = Validate.ThrowIfNullOrEmpty(
                 theWhiteSpaceText,
                 nameof(theWhiteSpaceText),
-                trim: false);
+                inTrim: false);
 
             // Assert
             Assert.AreSame(theResult, theWhiteSpaceText);
         }
 
+        [Test]
         public static void EnsureStringNotNullOrEmpty_WithWhiteSpaceStringAndTrim_ThrowsException()
         {
             // Arrange
-            string theExpectedMessage = "Value cannot be empty.";
+            string theExpectedMessage = "String cannot be empty.";
             string theWhiteSpaceText = "    ";
 
             // Assert
@@ -405,17 +394,18 @@ namespace Existential.Test
                 () =>
                 {
                     // Act
-                    _ = Validate.ThrowIfNullOrEmpty(theWhiteSpaceText, nameof(theWhiteSpaceText), trim: true);
+                    _ = Validate.ThrowIfNullOrEmpty(theWhiteSpaceText, nameof(theWhiteSpaceText), inTrim: true);
                 },
-                Throws.ArgumentNullException
+                Throws.ArgumentException
                     .With.Message.Contains(theExpectedMessage)
                     .And.Message.Contains(nameof(theWhiteSpaceText)));
         }
 
+        [Test]
         public static void EnsureStringNotNullOrEmpty_WithWhiteSpaceStringAndUnspecifiedTrim_ThrowsException()
         {
             // Arrange
-            string theExpectedMessage = "Value cannot be empty.";
+            string theExpectedMessage = "String cannot be empty.";
             string theWhiteSpaceText = "    ";
 
             // Assert
@@ -425,7 +415,7 @@ namespace Existential.Test
                     // Act
                     Validate.ThrowIfNullOrEmpty(theWhiteSpaceText, nameof(theWhiteSpaceText));
                 },
-                Throws.ArgumentNullException
+                Throws.ArgumentException
                     .With.Message.Contains(theExpectedMessage)
                     .And.Message.Contains(nameof(theWhiteSpaceText)));
         }

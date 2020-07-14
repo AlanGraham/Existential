@@ -9,6 +9,8 @@ namespace Existential
 
     using Existential.Extensions;
 
+    using Existential.Properties;
+
     /// <summary>Contains validation methods.</summary>
     public static class Validate
     {
@@ -25,8 +27,8 @@ namespace Existential
         {
             if (inValue == Guid.Empty)
             {
-                const string Message = "The GUID has the empty value, {00000000-0000-0000-0000-000000000000}.";
-                throw new ArgumentException(Message, inName);
+                string theMessage = Resources.GuidHasTheEmptyValue;
+                throw new ArgumentException(theMessage, inName);
             }
 
             return inValue;
@@ -43,7 +45,7 @@ namespace Existential
         public static T ThrowIfNotOfType<T>([ValidatedOfType] object inActual, string inName)
             where T : class
         {
-            if (!(inActual is T))
+            if (!(inActual is T theReturnValue))
             {
                 string theMessage = string.Format(
                     CultureInfo.CurrentCulture,
@@ -54,7 +56,7 @@ namespace Existential
                 throw new ArgumentTypeException(theMessage, inName);
             }
 
-            return inActual as T;
+            return theReturnValue;
         }
 
         /// <summary>Ensures the specified value is not null; otherwise throws an ArgumentNullException.</summary>
@@ -106,20 +108,20 @@ namespace Existential
         /// <summary>Throws an ArgumentNullException if the specified string is null or empty.</summary>
         /// <param name="inValue">The parameter being checked for null.</param>
         /// <param name="inName">The name of the parameter.</param>
-        /// <param name="trim">Trim string before check.</param>
+        /// <param name="inTrim">Trim string before check.</param>
         /// <returns>The validated value.</returns>
         /// <exception cref="ArgumentNullException">Thrown if the string is null or empty.</exception>
-        public static string ThrowIfNullOrEmpty([ValidatedNotNull] string inValue, string inName, bool trim)
+        public static string ThrowIfNullOrEmpty([ValidatedNotNull] string inValue, string inName, bool inTrim)
         {
             if (inValue == null)
             {
                 throw new ArgumentNullException(inName);
             }
 
-            string theTestValue = trim ? inValue.Trim() : inValue;
+            string theTestValue = inTrim ? inValue.Trim() : inValue;
             if (string.IsNullOrEmpty(theTestValue))
             {
-                throw new ArgumentException("String cannot be empty.", inName);
+                throw new ArgumentException(Resources.StringCannotBeEmpty, inName);
             }
 
             return inValue;
@@ -131,7 +133,7 @@ namespace Existential
         /// <returns>The validated value.</returns>
         /// <exception cref="ArgumentNullException">Thrown if the string is null or empty.</exception>
         public static string ThrowIfNullOrEmpty([ValidatedNotNull] string inValue, string inName)
-            => ThrowIfNullOrEmpty(inValue, inName, trim: true);
+            => ThrowIfNullOrEmpty(inValue, inName, inTrim: true);
 
         /// <summary>Inserts a name into an exception message.</summary>
         /// <param name="inMessage">The message into which the name should be inserted.</param>
@@ -145,21 +147,5 @@ namespace Existential
                 inArgumentName);
             return theEmptyErrorMessage;
         }
-
-        /*
-        /// <summary>Determines whether the specified value is of the expected type.</summary>
-        /// <param name="inExpectedType">The expected type of the value..</param>
-        /// <param name="inActual">The value to check for an expected type.</param>
-        /// <returns>
-        /// Value is <see langword="true" /> if the specified value is of the expected type;
-        /// otherwise <see langword="false" />.
-        /// </returns>
-        private static bool IsOfType(System.Type inExpectedType, object inActual)
-        {
-            ParameterValidation.EnsureNotNull(inActual, nameof(inActual));
-
-            return inActual.GetType().IsInstanceOfType(inExpectedType);
-        }
-        */
     }
 }
