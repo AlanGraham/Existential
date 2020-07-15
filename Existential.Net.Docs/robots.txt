@@ -1,0 +1,3 @@
+﻿; Disallow all agents - temporary while building and testing.
+User-agent: *
+Disallow: /

@@ -7,8 +7,9 @@ exists in the desired form. It can be used to detect whether a value
 exists or not and act on that or, even better, it can just help you not 
 to care!
 
-The two main classes for this are [Validate](xref:using_validate.md) and 
-[Maybe&lt;T&gt;](xref:using_maybe.md).
+The two main classes for this are [Validate](xref:using_validate.md) 
+(which will help you check) and 
+[Maybe&lt;T&gt;](xref:using_maybe.md) which will help you not to care.
 
 ## About the icon
 Existential's icon consists of two symbols from 

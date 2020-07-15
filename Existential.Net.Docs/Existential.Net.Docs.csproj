@@ -21,4 +21,10 @@
     <ProjectReference Include="..\Existential\Existential.Net.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="robots.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
