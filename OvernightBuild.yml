@@ -77,10 +77,9 @@ steps:
   inputs:
     command: custom
     custom: stryker
-    arguments: '--project-file "Existential.Test.Unit/Existential.Test.Unit.csproj" --reporters "[''html'']" --threshold-high 90 --threshold-low 75'
 #    arguments: '--solution-path $(Build.SourcesDirectory)/Existential.sln --reporters "[''html'']" --threshold-high 90 --threshold-low 75'
-#    arguments: '-s $(Build.Repository.LocalPath)/Existential.sln --reporters "[''html'']" --threshold-high 90 --threshold-low 75'
-#    workingDirectory: 'Existential.Test.Unit'
+    arguments: '-s $(Build.Repository.LocalPath)/Existential.sln --reporters "[''html'']" --threshold-high 90 --threshold-low 75'
+    workingDirectory: 'Existential.Test.Unit'
 
 - task: PublishMutationReport@0
   displayName: 'Publish Mutation Test Results'
