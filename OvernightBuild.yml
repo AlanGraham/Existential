@@ -77,7 +77,7 @@ steps:
   inputs:
     command: custom
     custom: stryker
-    arguments: '-s Existential.sln --reporters "[''html'']" --threshold-high 90 --threshold-low 75'
+    arguments: '-s ../Existential.sln --reporters "[''html'']" --threshold-high 90 --threshold-low 75'
 #    arguments: '-s $(Build.SourcesDirectory)/Existential.sln --reporters "[''html'']" --threshold-high 90 --threshold-low 75'
 #    arguments: '-s $(Build.Repository.LocalPath)/Existential.sln --reporters "[''html'']" --threshold-high 90 --threshold-low 75'
     workingDirectory: 'Existential.Test.Unit'
