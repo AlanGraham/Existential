@@ -79,4 +79,4 @@ steps:
   displayName: 'Publish web site as artifact'
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
-    artifactName: 'myWebsiteName'
+    artifactName: 'ggreig.com.Existential'
