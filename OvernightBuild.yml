@@ -71,18 +71,17 @@ steps:
 #    command: custom
 #    custom: tool
 #    arguments: install dotnet-stryker
-#
+
 #- task: DotNetCoreCLI@2
 #  displayName: 'Mutation Testing'
 #  inputs:
 #    command: custom
 #    custom: stryker
-#    arguments: '-s $(Build.SourcesDirectory)/Existential.sln --reporters "[''html'']" --threshold-high 90 --threshold-low 75'
-##    arguments: '-s $(Build.Repository.LocalPath)/Existential.sln --reporters "[''html'']" --threshold-high 90 --threshold-low 75'
+#    arguments: '--solution-path $(Build.SourcesDirectory)/Existential.sln --reporters "[''html'']" --threshold-high 90 --threshold-low 75'
+#    arguments: '-s $(Build.Repository.LocalPath)/Existential.sln --reporters "[''html'']" --threshold-high 90 --threshold-low 75'
 #    workingDirectory: 'Existential.Test.Unit'
-#
+
 #- task: PublishMutationReport@0
 #  displayName: 'Publish Mutation Test Results'
 #  inputs:
 #    reportPattern: '**/mutation-report.html'
-#
