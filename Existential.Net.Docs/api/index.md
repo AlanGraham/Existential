@@ -1,2 +1,2 @@
-# PLACEHOLDER
-TODO: Add .NET projects to the *src* folder and run `docfx` to generate **REAL** *API Documentation*!
+﻿# API Documentation
+Use the menu to the left to browse the documentation of the Existential API.

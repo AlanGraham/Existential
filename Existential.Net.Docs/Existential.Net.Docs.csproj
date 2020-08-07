@@ -5,6 +5,10 @@
     <LogLevel>Warning</LogLevel>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="docfx.console" Version="2.51.0">
       <PrivateAssets>all</PrivateAssets>
