@@ -101,6 +101,7 @@
 
   <PropertyGroup>
     <!-- Settings for Source Link. -->
+    <!-- Documented here: https://stackoverflow.com/a/54980908 -->
 
     <!-- Define our VSTS repo's Account and Project -->
     <VstsAccount>ggreig</VstsAccount>
@@ -109,7 +110,7 @@
     <SourceLink>$(BaseIntermediateOutputPath)source_link.json</SourceLink>
 
     <!-- Optional: Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
-    <PublishRepositoryUrl>false</PublishRepositoryUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
 
     <!-- Optional: Embed source files that are not tracked by the source control manager in the PDB -->
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
@@ -121,7 +122,10 @@
 
   <ItemGroup>
     <!-- Reference the package for my source control provider. This is a build-time-only dependency. -->
-    <PackageReference Include="Microsoft.SourceLink.AzureRepos.Git" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.AzureDevOpsServer.Git" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
