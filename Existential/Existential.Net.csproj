@@ -14,11 +14,13 @@
     <!-- Project settings for Source Link. -->
 
     <!-- Determine the root of the repository and ensure its \'s are escaped -->
+    <!--
     <SrcRootDirectory>$([System.IO.Directory]::GetParent($(MSBuildThisFileDirectory.TrimEnd("\"))))</SrcRootDirectory>
     <SourceLinkRoot>$(SrcRootDirectory.Replace("\", "\\"))</SourceLinkRoot>
 
     <VstsProject>Existential</VstsProject>
     <VstsRepo>Existential</VstsRepo>
+    -->
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
