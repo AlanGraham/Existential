@@ -2,12 +2,10 @@
   <Target Name="CleanStryker" BeforeTargets="Clean;Rebuild">
     <RemoveDir Directories="StrykerOutput" />
   </Target>
-  <!--
-  <Target Name="AddBuildRevisionToFileVersion" AfterTargets="MinVer">
-    <PropertyGroup>
-      <Rev Condition="'$(Rev)' == ''">0</Rev>
-      <FileVersion>$(MinVerMajor).$(MinVerMinor).$(MinVerPatch).$(Rev:r)</FileVersion>
-    </PropertyGroup>
+  <Target Name="CleanPackages" BeforeTargets="Clean;Rebuild">
+    <ItemGroup>
+      <Packages Include="$(ProjectDir)$(BaseOutputPath)$(Configuration)\**\*.*nupkg"/>
+    </ItemGroup>
+    <Delete Files="@(Packages)" />
   </Target>
-  -->
 </Project>
