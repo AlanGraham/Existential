@@ -5,6 +5,7 @@
   <Target Name="CleanPackages" BeforeTargets="Clean;Rebuild">
     <ItemGroup>
       <Packages Include="$(ProjectDir)$(BaseOutputPath)$(Configuration)\**\*.*nupkg"/>
+      <Packages Include="$(ProjectDir)$(BaseIntermediateOutputPath)$(Configuration)\**\*.*nuspec"/>
     </ItemGroup>
     <Delete Files="@(Packages)" />
   </Target>
