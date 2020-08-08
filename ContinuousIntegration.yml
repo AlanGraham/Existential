@@ -67,14 +67,17 @@ steps:
     summaryFileLocation: $(Build.SourcesDirectory)/coverlet/reports/Cobertura.xml
 
 - task: DotNetCoreCLI@2
+  displayName: 'Pack NuGet Package'
   inputs:
     command: 'pack'
     packagesToPack: '**/Existential.Net.csproj'
     nobuild: true
     includesymbols: true
     versioningScheme: 'off'
+    verbosityPack: 'Normal'
 
 - task: DotNetCoreCLI@2
+  displayName: 'Publish NuGet package to internal feed'
   inputs:
     command: 'push'
     packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
