@@ -13,7 +13,7 @@ schedules:
   displayName: 'Overnight Build'
   always: true
   branches:
-    include: [master]
+    include: [main]
     exclude: []
 
 pool:
