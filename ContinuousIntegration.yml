@@ -67,6 +67,21 @@ steps:
     summaryFileLocation: $(Build.SourcesDirectory)/coverlet/reports/Cobertura.xml
 
 - task: DotNetCoreCLI@2
+  inputs:
+    command: 'pack'
+    packagesToPack: '**/Existential.Net.csproj'
+    nobuild: true
+    includesymbols: true
+    versioningScheme: 'off'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: '9c4fc971-bef3-428a-ab81-cf30a24bea74/b2d0adc6-2924-4761-b868-ab5cfdc8d329'
+
+- task: DotNetCoreCLI@2
   displayName: 'Publish web site to staging directory'
   inputs:
     command: publish
