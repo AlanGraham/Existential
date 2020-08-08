@@ -11,7 +11,7 @@
 #  displayName: "Project Build"
   
 trigger:
-- master
+- main
 
 pool:
   vmImage:  'ubuntu-latest'
