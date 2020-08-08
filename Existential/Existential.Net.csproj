@@ -3,11 +3,12 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Existential</RootNamespace>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <AssemblyTitle>Existential.Net</AssemblyTitle>
     <Description>A library for things that may or may not exist.</Description>
-    <PackageProjectUrl>https://dev.azure.com/ggreig/Existential</PackageProjectUrl>
+    <PackageProjectUrl>https://ggreig.azurewebsites.net/Existential/</PackageProjectUrl>
     <RepositoryUrl>https://dev.azure.com/ggreig/_git/Existential</RepositoryUrl>
+    <PackageIcon>Existential256.png</PackageIcon>
   </PropertyGroup>
   
   <PropertyGroup>
@@ -27,6 +28,14 @@
     <DebugType>portable</DebugType>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <None Remove="..\.sharedFiles\GRune128.png" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="..\Existential.Images\Existential256.png" Link="Properties\Existential256.png" Pack="true" PackagePath="" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.0.0">

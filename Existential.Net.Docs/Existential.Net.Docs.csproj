@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="images\" />
     <Folder Include="templates\existential\pdf\" />
   </ItemGroup>
 

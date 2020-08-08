@@ -52,7 +52,7 @@
     "dest": "wwwroot",
     "globalMetadata": {
       "_appTitle": "Existential.Net",
-      "_appFooter": "Copyright © 2020 Dr. Gavin T.D. Greig."
+      "_appFooter": "Copyright © 2020 <a href=\"http://www.ggreig.com/\">Dr. Gavin T.D. Greig</a>."
     },
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
