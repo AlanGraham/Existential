@@ -84,6 +84,13 @@ steps:
     nuGetFeedType: 'internal'
     publishVstsFeed: '9c4fc971-bef3-428a-ab81-cf30a24bea74/b2d0adc6-2924-4761-b868-ab5cfdc8d329'
 
+# Push all NuGet packages from a build to external Feed
+#- task: DotNetCoreCLI@2
+#  inputs:
+#    command: 'push'
+#    nugetFeedType: 'external'
+#    externalEndPoint: 'MyNuGetServiceConnection'
+
 - task: DotNetCoreCLI@2
   displayName: 'Publish web site to staging directory'
   inputs:
