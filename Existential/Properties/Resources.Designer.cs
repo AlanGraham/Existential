@@ -61,6 +61,15 @@ namespace Existential.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The collection contained a member of an unexpected type ({0})..
+        /// </summary>
+        internal static string CollectionContainedAnUnexpectedType {
+            get {
+                return ResourceManager.GetString("CollectionContainedAnUnexpectedType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The GUID has the empty value, {00000000-0000-0000-0000-000000000000}..
         /// </summary>
         internal static string GuidHasTheEmptyValue {

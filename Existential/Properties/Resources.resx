@@ -104,4 +104,7 @@
   <data name="StringCannotBeEmpty" xml:space="preserve">
     <value>String cannot be empty.</value>
   </data>
+  <data name="CollectionContainedAnUnexpectedType" xml:space="preserve">
+    <value>The collection contained a member of an unexpected type ({0}).</value>
+  </data>
 </root>
