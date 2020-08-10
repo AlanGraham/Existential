@@ -7,6 +7,7 @@ namespace Existential.Test
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
 
     using Existential.Extensions;
 
@@ -19,13 +20,14 @@ namespace Existential.Test
 
     /// <summary>Unit tests for parameter validation methods.</summary>
     [TestFixture]
+    [SuppressMessage("ReSharper", "StyleCop.SA1600", Justification = "Tests don't need doc comments.")]
     public static class ValidateTest
     {
         /// <summary>
         /// Checks that validation fails when an IEnumerable collection is non-null but empty.
         /// </summary>
         [Test]
-        public static void EnsureCollectionNotEmpty_Fails_WhenIEnumerableIsEmpty()
+        public static void ThrowIfNullOrEmpty_Fails_WhenIEnumerableIsEmpty()
         {
             // Arrange
             const string ExpectedMessage = "The collection \"theCollection\" is empty";
@@ -45,7 +47,7 @@ namespace Existential.Test
 
         /// <summary>Checks that validation fails when an IEnumerable collection is null.</summary>
         [Test]
-        public static void EnsureCollectionNotEmpty_Fails_WhenIEnumerableIsNull()
+        public static void ThrowIfnullOrEmpty_Fails_WhenIEnumerableIsNull()
         {
             // Arrange
             const string ExpectedMessage = "The collection \"theCollection\" is null";
@@ -67,7 +69,7 @@ namespace Existential.Test
         /// Checks that validation fails when an IEnumerable{T} collection is non-null but empty.
         /// </summary>
         [Test]
-        public static void EnsureCollectionNotEmpty_Fails_WhenIEnumerableTIsEmpty()
+        public static void ThrowIfNullOrEmpty_Fails_WhenIEnumerableTIsEmpty()
         {
             // Arrange
             const string ExpectedMessage = "The collection \"theCollection\" is empty";
@@ -87,7 +89,7 @@ namespace Existential.Test
 
         /// <summary>Checks that validation fails when an IEnumerable{T} collection is null.</summary>
         [Test]
-        public static void EnsureCollectionNotEmpty_Fails_WhenIENumerableTIsNull()
+        public static void ThrowIfNullOrEmpty_Fails_WhenIENumerableTIsNull()
         {
             // Arrange
             const string ExpectedMessage = "The collection \"theCollection\" is null";
@@ -107,7 +109,7 @@ namespace Existential.Test
 
         /// <summary>Checks that validation fails when a List{T} collection is non-null but empty.</summary>
         [Test]
-        public static void EnsureCollectionNotEmpty_Fails_WhenListTIsEmpty()
+        public static void ThrowIfNullOrEmpty_Fails_WhenListTIsEmpty()
         {
             // Arrange
             const string ExpectedMessage = "The collection \"theCollection\" is empty";
@@ -127,7 +129,7 @@ namespace Existential.Test
 
         /// <summary>Checks that validation fails when a List{T} collection is null.</summary>
         [Test]
-        public static void EnsureCollectionNotEmpty_Fails_WhenListTIsNull()
+        public static void ThrowIfNullOrEmpty_Fails_WhenListTIsNull()
         {
             // Arrange
             const string ExpectedMessage = "The collection \"theCollection\" is null";
@@ -147,7 +149,7 @@ namespace Existential.Test
 
         /// <summary>Checks that validation succeeds when an IEnumerable collection has content.</summary>
         [Test]
-        public static void EnsureCollectionNotEmpty_ReturnsCorrectType_WhenIEnumerableIsPopulated()
+        public static void ThrowIfNullOrEmpty_ReturnsCorrectType_WhenIEnumerableIsPopulated()
         {
             // Arrange
             IEnumerable theCollection = new List<int> { 1 };
@@ -161,7 +163,7 @@ namespace Existential.Test
 
         /// <summary>Checks that validation succeeds when an IEnumerable{T} collection has content.</summary>
         [Test]
-        public static void EnsureCollectionNotEmpty_ReturnsCorrectType_WhenIEnumerableTIsPopulated()
+        public static void ThrowIfNullOrEmpty_ReturnsCorrectType_WhenIEnumerableTIsPopulated()
         {
             // Arrange
             IEnumerable<int> theCollection = new List<int> { 1 };
@@ -175,7 +177,7 @@ namespace Existential.Test
 
         /// <summary>Checks that validation succeeds when a List{T} collection has content.</summary>
         [Test]
-        public static void EnsureCollectionNotEmpty_ReturnsCorrectType_WhenListTIsPopulated()
+        public static void ThrowIfNullOrEmpty_ReturnsCorrectType_WhenListTIsPopulated()
         {
             // Arrange
             var theCollection = new List<int> { 1 };
@@ -189,7 +191,7 @@ namespace Existential.Test
 
         /// <summary>Checks that validation fails when a GUID is empty.</summary>
         [Test]
-        public static void EnsureGuidNotEmpty_WithEmptyGuid_ThrowsException()
+        public static void ThrowIfEmptyGuid_WithEmptyGuid_ThrowsException()
         {
             // Arrange
             Guid theGuid = Guid.Empty;
@@ -209,7 +211,7 @@ namespace Existential.Test
 
         /// <summary>Checks that validation succeeds when a GUID is not-empty.</summary>
         [Test]
-        public static void EnsureGuidNotEmpty_WithValidGuid_ReturnsValue()
+        public static void ThrowIfEmptyGuid_WithValidGuid_ReturnsValue()
         {
             // Arrange
             var theGuid = new Guid("1d572f1a-c8e9-4ff8-8ec6-9e585aa64e74");
@@ -222,7 +224,7 @@ namespace Existential.Test
         }
 
         [Property]
-        public static Property EnsureNotNull_WithNonWhiteSpaceString_ReturnsValue(NonEmptyString inText, bool inTrim)
+        public static Property ThrowIfNullOrEmpty_WithNonWhiteSpaceString_ReturnsValue(NonEmptyString inText, bool inTrim)
         {
             Func<bool> theProperty = () => Validate.ThrowIfNullOrEmpty(inText.Get, nameof(inText), inTrim) == inText.Get;
             return theProperty.When(!string.IsNullOrWhiteSpace(inText.Get));
@@ -230,7 +232,7 @@ namespace Existential.Test
 
         /// <summary>Checks that validation fails when a string is null.</summary>
         [Test]
-        public static void EnsureNotNull_WithNullData_ThrowsException()
+        public static void ThrowIfNull_WithNullData_ThrowsException()
         {
             // Arrange
             string theExpectedMessage = "Value cannot be null.";
@@ -249,7 +251,7 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void EnsureOfType_WithDerivedType_ReturnsValue()
+        public static void GenericThrowIfNotOfType_WithDerivedType_ReturnsValue()
         {
             // Arrange
             var theParameter = new DerivedType();
@@ -262,7 +264,7 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void EnsureOfType_WithExpectedType_ReturnsValue()
+        public static void GenericThrowIfNotOfType_WithExpectedType_ReturnsValue()
         {
             // Arrange
             var theParameter = new ExpectedType();
@@ -275,7 +277,7 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void EnsureOfType_WithNull_ThrowsException()
+        public static void GenericThrowIfNotOfType_WithNull_ThrowsException()
         {
             // Arrange
             string theExpectedMessage = "Value cannot be null.";
@@ -294,7 +296,7 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void EnsureOfType_WithOtherType_ThrowsException()
+        public static void GenericThrowIfNotOfType_WithOtherType_ThrowsException()
         {
             // Arrange
             var theUnexpectedType = new UnexpectedType();
@@ -317,10 +319,78 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void EnsureStringNotNullOrEmpty_WithEmptyString_ThrowsException()
+        public static void ThrowIfNotOfType_WithDerivedType_ReturnsValue()
         {
             // Arrange
-            string theExpectedMessage = "String cannot be empty.";
+            var theParameter = new DerivedType();
+
+            // Act
+            object theResult = Validate.ThrowIfNotOfType(typeof(ExpectedType), theParameter, nameof(theParameter));
+
+            // Assert
+            Assert.AreSame(theResult, theParameter);
+        }
+
+        [Test]
+        public static void ThrowIfNotOfType_WithExpectedType_ReturnsValue()
+        {
+            // Arrange
+            var theParameter = new ExpectedType();
+
+            // Act
+            object theResult = Validate.ThrowIfNotOfType(typeof(ExpectedType), theParameter, nameof(theParameter));
+
+            // Assert
+            Assert.AreSame(theResult, theParameter);
+        }
+
+        [Test]
+        public static void ThrowIfNotOfType_WithNull_ThrowsException()
+        {
+            // Arrange
+            string theExpectedMessage = "Value cannot be null.";
+            ExpectedType theNullReference = null;
+
+            // Assert
+            Assert.That(
+                () =>
+                {
+                    // Act
+                    Validate.ThrowIfNotOfType(typeof(ExpectedType), theNullReference, nameof(theNullReference));
+                },
+                Throws.ArgumentNullException
+                    .With.Message.Contains(theExpectedMessage)
+                    .And.Message.Contains(nameof(theNullReference)));
+        }
+
+        [Test]
+        public static void ThrowIfNotOfType_WithOtherType_ThrowsException()
+        {
+            // Arrange
+            var theUnexpectedType = new UnexpectedType();
+            string theExpectedMessage = "An argument of type " +
+                theUnexpectedType.GetGenericAwareTypeName() +
+                " was provided (expected " +
+                new ExpectedType().GetGenericAwareTypeName() +
+                ").";
+
+            // Assert
+            Assert.That(
+                () =>
+                {
+                    // Act
+                    Validate.ThrowIfNotOfType(typeof(ExpectedType), theUnexpectedType, nameof(theUnexpectedType));
+                },
+                Throws.Exception.TypeOf<ArgumentTypeException>()
+                    .With.Message.Contains(theExpectedMessage)
+                    .And.Message.Contains(nameof(theUnexpectedType)));
+        }
+
+        [Test]
+        public static void ThrowIfNullOrEmpty_WithEmptyString_ThrowsException()
+        {
+            // Arrange
+            string theExpectedMessage = "The string cannot be empty.";
             string theEmptyString = string.Empty;
 
             // Assert
@@ -336,7 +406,7 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void EnsureStringNotNullOrEmpty_WithNull_ThrowsException()
+        public static void ThrowIfNullOrEmpty_WithNull_ThrowsException()
         {
             // Arrange
             string theExpectedMessage = "Value cannot be null.";
@@ -355,7 +425,7 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void EnsureStringNotNullOrEmpty_WithString_ReturnsValue()
+        public static void ThrowIfNullOrEmpty_WithString_ReturnsValue()
         {
             // Arrange
             const string ExpectedValue = "Test";
@@ -368,7 +438,7 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void EnsureStringNotNullOrEmpty_WithWhiteSpaceStringAndNoTrim_ReturnsValue()
+        public static void ThrowIfNullOrEmpty_WithWhiteSpaceStringAndNoTrim_ReturnsValue()
         {
             string theWhiteSpaceText = "    ";
 
@@ -383,10 +453,10 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void EnsureStringNotNullOrEmpty_WithWhiteSpaceStringAndTrim_ThrowsException()
+        public static void ThrowIfNullOrEmpty_WithWhiteSpaceStringAndTrim_ThrowsException()
         {
             // Arrange
-            string theExpectedMessage = "String cannot be empty.";
+            string theExpectedMessage = "The string cannot be empty (or contain only whitespace characters when the inTrim parameter is true).";
             string theWhiteSpaceText = "    ";
 
             // Assert
@@ -402,22 +472,16 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void EnsureStringNotNullOrEmpty_WithWhiteSpaceStringAndUnspecifiedTrim_ThrowsException()
+        public static void ThrowIfNullOrEmpty_WithWhiteSpaceStringAndUnspecifiedTrim_ReturnsValue()
         {
             // Arrange
-            string theExpectedMessage = "String cannot be empty.";
             string theWhiteSpaceText = "    ";
 
             // Assert
-            Assert.That(
-                () =>
-                {
-                    // Act
-                    Validate.ThrowIfNullOrEmpty(theWhiteSpaceText, nameof(theWhiteSpaceText));
-                },
-                Throws.ArgumentException
-                    .With.Message.Contains(theExpectedMessage)
-                    .And.Message.Contains(nameof(theWhiteSpaceText)));
+            string theResult = Validate.ThrowIfNullOrEmpty(theWhiteSpaceText, nameof(theWhiteSpaceText));
+
+            // Assert
+            Assert.AreSame(theResult, theWhiteSpaceText);
         }
 
         private class DerivedType : ExpectedType

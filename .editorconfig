@@ -261,3 +261,6 @@ dotnet_diagnostic.CA1303.severity = none
 
 # Permit ignoring return values - particularly common when testing for throws.
 dotnet_diagnostic.IDE0058.severity = none
+
+# Tests don't require doc comments.
+dotnet_diagnostic.SA1600.severity = none

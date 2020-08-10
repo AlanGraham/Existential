@@ -79,11 +79,29 @@ namespace Existential.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to String cannot be empty..
+        ///   Looks up a localized string similar to The string cannot be empty..
         /// </summary>
         internal static string StringCannotBeEmpty {
             get {
                 return ResourceManager.GetString("StringCannotBeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The string cannot be empty or contain only whitespace characters..
+        /// </summary>
+        internal static string StringCannotBeEmptyOrWhiteSpace {
+            get {
+                return ResourceManager.GetString("StringCannotBeEmptyOrWhiteSpace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The string cannot be empty (or contain only whitespace characters when the inTrim parameter is true)..
+        /// </summary>
+        internal static string StringCannotBeEmptyOrWhiteSpaceWithTrim {
+            get {
+                return ResourceManager.GetString("StringCannotBeEmptyOrWhiteSpaceWithTrim", resourceCulture);
             }
         }
     }
