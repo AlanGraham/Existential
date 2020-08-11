@@ -52,8 +52,8 @@ namespace Existential
         ///     (<see cref="Guid.Empty" />) as the parameter <paramref name="inValue" />.
         /// </summary>
         /// <param name="inValue">
-        ///     A value of type <see cref="Guid" /> to be checked for equality with the empty value
-        ///     <see cref="Guid.Empty" />. The name of the variable containing it should be passed as the
+        ///     A value of type <see cref="Guid" /> to be checked for equality with the empty value <see cref="Guid.Empty" />. The
+        ///     name of the variable containing the value should be passed to this method as the
         ///     <paramref name="inName" /> parameter.
         /// </param>
         /// <param name="inName">
@@ -63,10 +63,14 @@ namespace Existential
         /// </param>
         /// <returns>The value passed as parameter <paramref name="inValue" /> will be returned if it's not the empty Guid.</returns>
         /// <exception cref="ArgumentException">
-        ///     A <see cref="ArgumentException" /> will be thrown if the GUID <paramref name="inValue" /> has the value
-        ///     <see cref="Guid.Empty" />.
-        ///     If the parameter <paramref name="inName" /> has been correctly populated, the name of the value that was
-        ///     unexpectedly found to be empty will be included in the exception message.
+        ///     <para>
+        ///         A <see cref="ArgumentException" /> will be thrown if the GUID <paramref name="inValue" /> has the value
+        ///         <see cref="Guid.Empty" />.
+        ///     </para>
+        ///     <para>
+        ///         If the parameter <paramref name="inName" /> has been correctly populated, the name of the value that was
+        ///         unexpectedly found to be empty will be included in the exception message.
+        ///     </para>
         /// </exception>
         [SuppressMessage(
             "Globalization",
@@ -99,7 +103,7 @@ namespace Existential
         /// </typeparam>
         /// <param name="inActual">
         ///     An object that should be of type <typeparamref name="T" /> or a type derived from it. The name of the variable
-        ///     containing it should be passed as the
+        ///     containing the object should be passed to this method as the
         ///     <paramref name="inName" /> parameter.
         /// </param>
         /// <param name="inName">
@@ -116,10 +120,15 @@ namespace Existential
         ///     derived one.
         /// </returns>
         /// <exception cref="ArgumentTypeException">
-        ///     A <see cref="ArgumentTypeException" /> will be thrown if the object <paramref name="inActual" /> is neither of the
-        ///     type <typeparamref name="T" /> nor of a type derived from it.
-        ///     If the parameter <paramref name="inName" /> has been correctly populated, the name of the value that was
-        ///     found to be of an unexpected type will be included in the exception message.
+        ///     <para>
+        ///         A <see cref="ArgumentTypeException" /> will be thrown if the object <paramref name="inActual" /> is neither of
+        ///         the
+        ///         type <typeparamref name="T" /> nor of a type derived from it.
+        ///     </para>
+        ///     <para>
+        ///         If the parameter <paramref name="inName" /> has been correctly populated, the name of the value that was
+        ///         found to be of an unexpected type will be included in the exception message.
+        ///     </para>
         /// </exception>
         public static T ThrowIfNotOfType<T>([ValidatedOfType] object inActual, string inName)
             where T : class
@@ -153,8 +162,7 @@ namespace Existential
         /// </param>
         /// <param name="inActual">
         ///     An object that should be of type <paramref name="inType" /> or a type derived from it. The name of the variable
-        ///     containing it should be passed as the
-        ///     <paramref name="inName" /> parameter.
+        ///     containing the object should be passed to this method as the <paramref name="inName" /> parameter.
         /// </param>
         /// <param name="inName">
         ///     The name of the variable passed to the <paramref name="inActual" /> parameter. Since C# 6.0, the
@@ -162,18 +170,23 @@ namespace Existential
         ///     can be used to retrieve a value to pass as this parameter.
         /// </param>
         /// <remarks>
-        ///     If the type of <paramref name="inType"/> is known at compile time, then the generic version of
-        ///     this method, <see cref="ThrowIfNotOfType{T}"/> may be preferred.
+        ///     If the type of <paramref name="inType" /> is known at compile time, then the generic version of
+        ///     this method, <see cref="ThrowIfNotOfType{T}" /> may be preferred.
         /// </remarks>
         /// <returns>
         ///     The object passed as parameter <paramref name="inActual" /> will be returned if it's of the expected type or a
         ///     derived one.
         /// </returns>
         /// <exception cref="ArgumentTypeException">
-        ///     A <see cref="ArgumentTypeException" /> will be thrown if the object <paramref name="inActual" /> is neither of the
-        ///     type <paramref name="inType" /> nor of a type derived from it.
-        ///     If the parameter <paramref name="inName" /> has been correctly populated, the name of the value that was
-        ///     found to be of an unexpected type will be included in the exception message.
+        ///     <para>
+        ///         A <see cref="ArgumentTypeException" /> will be thrown if the object <paramref name="inActual" /> is neither of
+        ///         the
+        ///         type <paramref name="inType" /> nor of a type derived from it.
+        ///     </para>
+        ///     <para>
+        ///         If the parameter <paramref name="inName" /> has been correctly populated, the name of the value that was
+        ///         found to be of an unexpected type will be included in the exception message.
+        ///     </para>
         /// </exception>
         public static object ThrowIfNotOfType(Type inType, [ValidatedOfType] object inActual, string inName)
         {
@@ -191,26 +204,96 @@ namespace Existential
             return inActual;
         }
 
-        /// <summary>Ensures the specified value is not null; otherwise throws an ArgumentNullException.</summary>
-        /// <typeparam name="T">The type of the value being checked for null.</typeparam>
-        /// <param name="inValue">The value to check for null.</param>
-        /// <param name="inName">The name of the value being checked, as a string.</param>
-        /// <returns>The validated value.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if the object value is null.</exception>
+        // ReSharper disable once StyleCop.SA1650 - 'nameof' is correctly spelled in the documentation header.
+
+        /// <summary>
+        ///     <em>
+        ///         <see cref="ThrowIfNull{T}" />
+        ///     </em>
+        ///     will throw an <see cref="ArgumentNullException" /> if the value passed as the parameter <paramref name="inValue" />
+        ///     is null.
+        /// </summary>
+        /// <typeparam name="T">
+        ///     The type parameter <typeparamref name="T" /> captures the type of the parameter
+        ///     <paramref name="inValue" /> so that the value can be returned as the same type if it validates as not being null.
+        ///     The type should not have to be specified explicitly when calling the method.
+        /// </typeparam>
+        /// <param name="inValue">
+        ///     A value that will be validated to ensure that it's non-null. The name of the variable containing the value should
+        ///     be passed to this method as the
+        ///     <paramref name="inName" /> parameter.
+        /// </param>
+        /// <param name="inName">
+        ///     The name of the variable passed to the <paramref name="inValue" /> parameter. Since C# 6.0, the
+        ///     <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/nameof">nameof</a> operator
+        ///     can be used to retrieve a value to pass as this parameter.
+        /// </param>
+        /// <returns>
+        ///     The value passed as parameter <paramref name="inValue" /> will be returned if it validates as non-null.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        ///     <para>
+        ///         A <see cref="ArgumentNullException" /> will be thrown if the object <paramref name="inValue" /> is null.
+        ///     </para>
+        ///     <para>
+        ///         If the parameter <paramref name="inName" /> has been correctly populated, the name of the value that was
+        ///         found to be unexpectedly null will be included in the exception message.
+        ///     </para>
+        /// </exception>
         public static T ThrowIfNull<T>([ValidatedNotNull] T inValue, string inName) =>
             inValue == null ? throw new ArgumentNullException(inName) : inValue;
 
+        // ReSharper disable once StyleCop.SA1650 - 'nameof' is correctly spelled in the documentation header.
+
         /// <summary>
-        ///     Throws an ArgumentNullException if the collection is null, or an ArgumentException if it
-        ///     exists but is empty.
+        ///     <em>
+        ///         <see cref="ThrowIfNullOrEmpty{T}" />
+        ///     </em>
+        ///     will throw an <see cref="ArgumentNullException" /> if a null value is passed as the parameter
+        ///     <paramref name="inCollection" />, or an <see cref="ArgumentException" /> if the collection exists but is empty.
         /// </summary>
-        /// <typeparam name="T">Type of object in the collection.</typeparam>
-        /// <param name="inCollection">The collection to check.</param>
-        /// <param name="inName">The name of the parameter.</param>
-        /// <returns>The validated value.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if the collection is null.</exception>
-        /// <exception cref="ArgumentException">Thrown if the collection exists but is empty.</exception>
-        public static T ThrowIfNullOrEmpty<T>(T inCollection, string inName)
+        /// <typeparam name="T">
+        ///     The type parameter <typeparamref name="T" /> captures the type of the collection passed to the
+        ///     parameter <paramref name="inCollection" /> so that the value can be returned as exactly the same type if it
+        ///     validates successfully. The type should not have to be specified explicitly when calling the method. There are few
+        ///     constraints on the type <typeparamref name="T"/>; it must be a class that implements the interface
+        ///     <see cref="IEnumerable" />.
+        /// </typeparam>
+        /// <param name="inCollection">
+        ///     A collection that will be validated to ensure that it's neither null nor empty. The name of the variable containing
+        ///     the collection should be passed to this method as the
+        ///     <paramref name="inName" /> parameter.
+        /// </param>
+        /// <param name="inName">
+        ///     The name of the variable passed to the <paramref name="inCollection" /> parameter. Since C# 6.0, the
+        ///     <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/nameof">nameof</a> operator
+        ///     can be used to retrieve a value to pass as this parameter.
+        /// </param>
+        /// <returns>
+        ///     The collection passed as parameter <paramref name="inCollection" /> will be returned if it validates as being
+        ///     neither null nor empty.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        ///     <para>
+        ///         A <see cref="ArgumentNullException" /> will be thrown if the value of parameter
+        ///         <paramref name="inCollection" /> is null.
+        ///     </para>
+        ///     <para>
+        ///         If the parameter <paramref name="inName" /> has been correctly populated, the name of the collection that was
+        ///         found to be unexpectedly null will be included in the exception message.
+        ///     </para>
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///     <para>
+        ///         A <see cref="ArgumentException" /> will be thrown if the collection passed as parameter
+        ///         <paramref name="inCollection" /> is empty.
+        ///     </para>
+        ///     <para>
+        ///         If the parameter <paramref name="inName" /> has been correctly populated, the name of the collection that was
+        ///         found to be unexpectedly empty will be included in the exception message.
+        ///     </para>
+        /// </exception>
+        public static T ThrowIfNullOrEmpty<T>([ValidatedNotNull] T inCollection, string inName)
             where T : class, IEnumerable =>
             inCollection == null
                 ?
