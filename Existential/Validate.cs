@@ -12,8 +12,6 @@ namespace Existential
     using Existential.Extensions;
     using Existential.Properties;
 
-    // ReSharper disable once StyleCop.SA1650 - 'nameof' is correctly spelled in the documentation header.
-
     /// <summary>
     ///     <para>
     ///         The static <see cref="Validate" /> class contains a collection of methods for validating arguments; mainly to
@@ -40,10 +38,12 @@ namespace Existential
     ///         When using older versions of C#, it was necessary to pass an explicit string value.
     ///     </para>
     /// </summary>
+    [SuppressMessage(
+        "StyleCop.CSharp.DocumentationRules",
+        "SA1650:ElementDocumentationMustBeSpelledCorrectly",
+        Justification = "Spelling was reviewed. Suppression is required because of keywords (e.g. 'nameof').")]
     public static class Validate
     {
-        // ReSharper disable once StyleCop.SA1650 - 'nameof' and 'Guid' are correctly spelled in the documentation header.
-
         /// <summary>
         ///     <em>
         ///         <see cref="ThrowIfEmptyGuid" />
@@ -59,7 +59,7 @@ namespace Existential
         /// <param name="inName">
         ///     The name of the variable passed to the <paramref name="inValue" /> parameter. Since C# 6.0, the
         ///     <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/nameof">nameof</a> operator
-        ///     can be used to retrieve a value to pass as this parameter.
+        ///     can be used to retrieve a value to pass here.
         /// </param>
         /// <returns>The value passed as parameter <paramref name="inValue" /> will be returned if it's not the empty Guid.</returns>
         /// <exception cref="ArgumentException">
@@ -87,8 +87,6 @@ namespace Existential
             return inValue;
         }
 
-        // ReSharper disable once StyleCop.SA1650 - 'nameof' is correctly spelled in the documentation header.
-
         /// <summary>
         ///     <em>
         ///         <see cref="ThrowIfNotOfType{T}" />
@@ -109,7 +107,7 @@ namespace Existential
         /// <param name="inName">
         ///     The name of the variable passed to the <paramref name="inActual" /> parameter. Since C# 6.0, the
         ///     <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/nameof">nameof</a> operator
-        ///     can be used to retrieve a value to pass as this parameter.
+        ///     can be used to retrieve a value to pass here.
         /// </param>
         /// <remarks>
         ///     If a type such as <typeparamref name="T" /> is not known at compile time, then the more dynamic version of
@@ -146,8 +144,6 @@ namespace Existential
             return theReturnValue;
         }
 
-        // ReSharper disable once StyleCop.SA1650 - 'nameof' is correctly spelled in the documentation header.
-
         /// <summary>
         ///     <em>
         ///         <see cref="ThrowIfNotOfType{T}" />
@@ -167,7 +163,7 @@ namespace Existential
         /// <param name="inName">
         ///     The name of the variable passed to the <paramref name="inActual" /> parameter. Since C# 6.0, the
         ///     <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/nameof">nameof</a> operator
-        ///     can be used to retrieve a value to pass as this parameter.
+        ///     can be used to retrieve a value to pass here.
         /// </param>
         /// <remarks>
         ///     If the type of <paramref name="inType" /> is known at compile time, then the generic version of
@@ -204,8 +200,6 @@ namespace Existential
             return inActual;
         }
 
-        // ReSharper disable once StyleCop.SA1650 - 'nameof' is correctly spelled in the documentation header.
-
         /// <summary>
         ///     <em>
         ///         <see cref="ThrowIfNull{T}" />
@@ -226,7 +220,7 @@ namespace Existential
         /// <param name="inName">
         ///     The name of the variable passed to the <paramref name="inValue" /> parameter. Since C# 6.0, the
         ///     <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/nameof">nameof</a> operator
-        ///     can be used to retrieve a value to pass as this parameter.
+        ///     can be used to retrieve a value to pass here.
         /// </param>
         /// <returns>
         ///     The value passed as parameter <paramref name="inValue" /> will be returned if it validates as non-null.
@@ -243,8 +237,6 @@ namespace Existential
         public static T ThrowIfNull<T>([ValidatedNotNull] T inValue, string inName) =>
             inValue == null ? throw new ArgumentNullException(inName) : inValue;
 
-        // ReSharper disable once StyleCop.SA1650 - 'nameof' is correctly spelled in the documentation header.
-
         /// <summary>
         ///     <em>
         ///         <see cref="ThrowIfNullOrEmpty{T}" />
@@ -256,7 +248,7 @@ namespace Existential
         ///     The type parameter <typeparamref name="T" /> captures the type of the collection passed to the
         ///     parameter <paramref name="inCollection" /> so that the value can be returned as exactly the same type if it
         ///     validates successfully. The type should not have to be specified explicitly when calling the method. There are few
-        ///     constraints on the type <typeparamref name="T"/>; it must be a class that implements the interface
+        ///     constraints on the type <typeparamref name="T" />; it must be a class that implements the interface
         ///     <see cref="IEnumerable" />.
         /// </typeparam>
         /// <param name="inCollection">
@@ -267,7 +259,7 @@ namespace Existential
         /// <param name="inName">
         ///     The name of the variable passed to the <paramref name="inCollection" /> parameter. Since C# 6.0, the
         ///     <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/nameof">nameof</a> operator
-        ///     can be used to retrieve a value to pass as this parameter.
+        ///     can be used to retrieve a value to pass here.
         /// </param>
         /// <returns>
         ///     The collection passed as parameter <paramref name="inCollection" /> will be returned if it validates as being
@@ -304,12 +296,97 @@ namespace Existential
                           inName)
                     : inCollection;
 
-        /// <summary>Throws an ArgumentNullException if the specified string is null or empty.</summary>
-        /// <param name="inValue">The parameter being checked for null.</param>
-        /// <param name="inName">The name of the parameter.</param>
-        /// <param name="inTrim">Trim string before check.</param>
-        /// <returns>The validated value.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if the string is null or empty.</exception>
+        /// <summary>
+        ///     <em>ThrowIfNullOrEmpty</em>
+        ///     will throw an <see cref="ArgumentNullException" /> if a null value is passed as the parameter
+        ///     <paramref name="inValue" />, or an <see cref="ArgumentException" /> if the string exists but is empty.
+        /// </summary>
+        /// <param name="inValue">
+        ///     A string that will be validated to ensure that it's neither null nor empty. The name of the variable containing
+        ///     the string should be passed to this method as the
+        ///     <paramref name="inName" /> parameter.
+        /// </param>
+        /// <param name="inName">
+        ///     The name of the variable passed to the <paramref name="inValue" /> parameter. Since C# 6.0, the
+        ///     <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/nameof">nameof</a> operator
+        ///     can be used to retrieve a value to pass here.
+        /// </param>
+        /// <returns>
+        ///     The string passed as parameter <paramref name="inValue" /> will be returned if it validates as being
+        ///     neither null nor empty.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        ///     <para>
+        ///         A <see cref="ArgumentNullException" /> will be thrown if the value of parameter
+        ///         <paramref name="inValue" /> is null.
+        ///     </para>
+        ///     <para>
+        ///         If the parameter <paramref name="inName" /> has been correctly populated, the name of the string that was
+        ///         found to be unexpectedly null will be included in the exception message.
+        ///     </para>
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///     <para>
+        ///         A <see cref="ArgumentException" /> will be thrown if the string passed as parameter
+        ///         <paramref name="inValue" /> is empty.
+        ///     </para>
+        ///     <para>
+        ///         If the parameter <paramref name="inName" /> has been correctly populated, the name of the string that was
+        ///         found to be unexpectedly empty will be included in the exception message.
+        ///     </para>
+        /// </exception>
+        /// <seealso cref="ThrowIfNullOrWhiteSpace" />
+        public static string ThrowIfNullOrEmpty([ValidatedNotNull] string inValue, string inName) =>
+            ThrowIfNullOrEmpty(inValue, inName, false);
+
+        /// <summary>
+        ///     <em>ThrowIfNullOrEmpty</em>
+        ///     will throw an <see cref="ArgumentNullException" /> if a null value is passed as the parameter
+        ///     <paramref name="inValue" />, or an <see cref="ArgumentException" /> if the string exists but is empty.
+        /// </summary>
+        /// <param name="inValue">
+        ///     A string that will be validated to ensure that it's neither null nor empty. The name of the variable containing
+        ///     the string should be passed to this method as the
+        ///     <paramref name="inName" /> parameter.
+        /// </param>
+        /// <param name="inName">
+        ///     The name of the variable passed to the <paramref name="inValue" /> parameter. Since C# 6.0, the
+        ///     <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/nameof">nameof</a> operator
+        ///     can be used to retrieve a value to pass here.
+        /// </param>
+        /// <param name="inTrim">
+        ///     A Boolean value indicating whether or not white space should be trimmed from each end of the string. This can
+        ///     result in a string that contains <em>only</em> white space characters being treated as empty. However the behaviour
+        ///     of this method is not identical to <see cref="ThrowIfNullOrWhiteSpace" />. This method can change the value of the
+        ///     string passed as <paramref name="inValue" /> before returning it, while <see cref="ThrowIfNullOrWhiteSpace" /> has
+        ///     no side-effects.
+        /// </param>
+        /// <returns>
+        ///     The string passed as parameter <paramref name="inValue" /> will be returned if it validates as being
+        ///     neither null nor empty. If the value of <paramref name="inTrim" /> was <c>true</c>, then white space characters
+        ///     will be trimmed from either end of the string before it is returned.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        ///     <para>
+        ///         A <see cref="ArgumentNullException" /> will be thrown if the value of parameter
+        ///         <paramref name="inValue" /> is null.
+        ///     </para>
+        ///     <para>
+        ///         If the parameter <paramref name="inName" /> has been correctly populated, the name of the string that was
+        ///         found to be unexpectedly null will be included in the exception message.
+        ///     </para>
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///     <para>
+        ///         A <see cref="ArgumentException" /> will be thrown if the string passed as parameter
+        ///         <paramref name="inValue" /> is empty.
+        ///     </para>
+        ///     <para>
+        ///         If the parameter <paramref name="inName" /> has been correctly populated, the name of the string that was
+        ///         found to be unexpectedly empty will be included in the exception message.
+        ///     </para>
+        /// </exception>
+        /// <seealso cref="ThrowIfNullOrWhiteSpace" />
         public static string ThrowIfNullOrEmpty([ValidatedNotNull] string inValue, string inName, bool inTrim)
         {
             if (inValue == null)
@@ -326,19 +403,48 @@ namespace Existential
                        : inValue;
         }
 
-        /// <summary>Throws an ArgumentNullException if the specified string is null or empty.</summary>
-        /// <param name="inValue">The parameter being checked for null.</param>
-        /// <param name="inName">The name of the parameter.</param>
-        /// <returns>The validated value.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if the string is null or empty.</exception>
-        public static string ThrowIfNullOrEmpty([ValidatedNotNull] string inValue, string inName) =>
-            ThrowIfNullOrEmpty(inValue, inName, false);
-
-        /// <summary>Throws an ArgumentNullException if the specified string is null or empty.</summary>
-        /// <param name="inValue">The parameter being checked for null.</param>
-        /// <param name="inName">The name of the parameter.</param>
-        /// <returns>The validated value.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if the string is null or empty.</exception>
+        /// <summary>
+        ///     <em>
+        ///         <see cref="ThrowIfNullOrWhiteSpace" />
+        ///     </em>
+        ///     will throw an <see cref="ArgumentNullException" /> if a null value is passed as the parameter
+        ///     <paramref name="inValue" />, or an <see cref="ArgumentException" /> if the string exists but is either empty or
+        ///     contains only white space characters.
+        /// </summary>
+        /// <param name="inValue">
+        ///     A string that will be validated to ensure that it's neither null nor empty, nor contains only white space
+        ///     characters. The name of the variable containing the string should be passed to this method as the
+        ///     <paramref name="inName" /> parameter.
+        /// </param>
+        /// <param name="inName">
+        ///     The name of the variable passed to the <paramref name="inValue" /> parameter. Since C# 6.0, the
+        ///     <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/nameof">nameof</a> operator
+        ///     can be used to retrieve a value to pass here.
+        /// </param>
+        /// <returns>
+        ///     The string passed as parameter <paramref name="inValue" /> will be returned if it validates as being
+        ///     neither null nor empty, nor containing only whitespace characters.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        ///     <para>
+        ///         A <see cref="ArgumentNullException" /> will be thrown if the value of parameter
+        ///         <paramref name="inValue" /> is null.
+        ///     </para>
+        ///     <para>
+        ///         If the parameter <paramref name="inName" /> has been correctly populated, the name of the string that was
+        ///         found to be unexpectedly null will be included in the exception message.
+        ///     </para>
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///     <para>
+        ///         A <see cref="ArgumentException" /> will be thrown if the string passed as parameter
+        ///         <paramref name="inValue" /> is empty or contains only white space characters.
+        ///     </para>
+        ///     <para>
+        ///         If the parameter <paramref name="inName" /> has been correctly populated, the name of the string that was
+        ///         found to be unexpectedly empty or containing only white space will be included in the exception message.
+        ///     </para>
+        /// </exception>
         public static string ThrowIfNullOrWhiteSpace([ValidatedNotNull] string inValue, string inName)
         {
             if (inValue == null)
