@@ -112,7 +112,7 @@
     <!-- Optional: Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
 
-    <!-- Optional: Embed source files that are not tracked by the source control manager in the PDB -->
+    <!-- Optional: Embed source files that are not tracked by the source control manager in the PDB (e.g. auto-generated AssemblyInfo.cs) -->
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
 
     <!-- Optional: Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
@@ -122,6 +122,7 @@
 
   <ItemGroup>
     <!-- Reference the package for my source control provider. This is a build-time-only dependency. -->
+    <SourceRoot Include="$(MSBuildThisFileDirectory)"/>
     <PackageReference Include="Microsoft.SourceLink.AzureRepos.Git" Version="1.0.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
