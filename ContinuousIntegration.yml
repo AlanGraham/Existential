@@ -82,13 +82,13 @@ steps:
 #    custom: pack
 #    arguments: '''
     
-- task: DotNetCoreCLI@2
-  displayName: 'Pack NuGet package'
-  inputs:
-    command: 'custom'
-    projects: '**/Existential.Net.csproj'
-    custom: 'pack'
-    arguments: '--include-symbols -v d -c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)'
+#- task: DotNetCoreCLI@2
+#  displayName: 'Pack NuGet package'
+#  inputs:
+#    command: 'custom'
+#    projects: '**/Existential.Net.csproj'
+#    custom: 'pack'
+#    arguments: '--include-symbols -v d -c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)'
 
 #- task: DotNetCoreCLI@2
 #  displayName: 'Pack NuGet Package'
@@ -104,7 +104,8 @@ steps:
   displayName: 'Publish NuGet package to internal feed'
   inputs:
     command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.*nupkg'
+    packagesToPush: '$(Build.SourcesDirectory)/**/*.*nupkg'
+#    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.*nupkg'
     nuGetFeedType: 'internal'
     publishVstsFeed: '9c4fc971-bef3-428a-ab81-cf30a24bea74/b2d0adc6-2924-4761-b868-ab5cfdc8d329'
 
