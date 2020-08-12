@@ -66,12 +66,20 @@ steps:
     codeCoverageTool: Cobertura
     summaryFileLocation: $(Build.SourcesDirectory)/coverlet/reports/Cobertura.xml
 
+#- task: DotNetCoreCLI@2
+#  displayName: 'Pack NuGet Package'
+#  inputs:
+#    command: custom
+#    custom: pack
+#    arguments: '''
+    
 - task: DotNetCoreCLI@2
-  displayName: 'Pack NuGet Package'
+  displayName: 'Pack NuGet package'
   inputs:
-    command: custom
-    custom: pack
-    arguments: '--include-symbols -v d -c $(buildConfiguration)'
+    command: 'custom'
+    projects: '**/Existential.Net.csproj'
+    custom: 'pack'
+    arguments: '--include-symbols -v n -c $(buildConfiguration)'
 
 #- task: DotNetCoreCLI@2
 #  displayName: 'Pack NuGet Package'
