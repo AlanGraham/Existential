@@ -66,15 +66,22 @@ steps:
     codeCoverageTool: Cobertura
     summaryFileLocation: $(Build.SourcesDirectory)/coverlet/reports/Cobertura.xml
 
-- task: DotNetCoreCLI@2
+-task: DotNetCoreCLI@2
   displayName: 'Pack NuGet Package'
   inputs:
-    command: 'pack'
-    packagesToPack: '**/Existential.Net.csproj'
-    nobuild: true
-    includesymbols: true
-    versioningScheme: 'off'
-    verbosityPack: 'Normal'
+    command: custom
+    tool: pack
+    arguments: '--include-symbols -v d -c $(buildConfiguration)'
+
+#- task: DotNetCoreCLI@2
+#  displayName: 'Pack NuGet Package'
+#  inputs:
+#    command: 'pack'
+#    packagesToPack: '**/Existential.Net.csproj'
+#    nobuild: true
+#    includesymbols: true
+#    versioningScheme: 'off'
+#    verbosityPack: 'Normal'
 
 - task: DotNetCoreCLI@2
   displayName: 'Publish NuGet package to internal feed'
