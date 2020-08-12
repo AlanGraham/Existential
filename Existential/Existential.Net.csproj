@@ -18,6 +18,9 @@
 
     <PackageTags>standard,validation</PackageTags>
 
+    <!-- Include Source Link. -->
+    <SourceLink>$(BaseIntermediateOutputPath)source_link.json</SourceLink>
+
     <!-- Determine the root of the repository and ensure its \'s are escaped -->
     <!--
     <SrcRootDirectory>$([System.IO.Directory]::GetParent($(MSBuildThisFileDirectory.TrimEnd("\"))))</SrcRootDirectory>
