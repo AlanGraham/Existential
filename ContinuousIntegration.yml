@@ -37,7 +37,7 @@ steps:
       # Write your PowerShell commands here.
       
       Write-Host "Hello World"
-      ls
+      ls ./Existential/bin.net/$(buildConfiguration)
 
 # Begin testing:
 # https://stackoverflow.com/a/61481951
