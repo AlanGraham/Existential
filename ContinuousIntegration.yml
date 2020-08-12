@@ -70,7 +70,7 @@ steps:
   displayName: 'Pack NuGet Package'
   inputs:
     command: custom
-    tool: pack
+    custom: pack
     arguments: '--include-symbols -v d -c $(buildConfiguration)'
 
 #- task: DotNetCoreCLI@2
