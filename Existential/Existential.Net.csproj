@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Existential</RootNamespace>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AssemblyTitle>Existential.Net</AssemblyTitle>
     <Description>A library for things that may or may not exist.</Description>
     <PackageProjectUrl>https://ggreig.azurewebsites.net/Existential/</PackageProjectUrl>
@@ -15,6 +15,8 @@
     <!-- Project settings for Source Link. -->
 
     <IsPackable>true</IsPackable>
+
+    <PackageTags>standard,validation</PackageTags>
 
     <!-- Determine the root of the repository and ensure its \'s are escaped -->
     <!--
@@ -49,6 +51,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.NetCore.Analyzers" Version="3.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.SourceLink.AzureRepos.Git" Version="1.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
