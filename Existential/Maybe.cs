@@ -41,7 +41,7 @@ namespace Existential
         //// Bridge.NET doesn't support simplifying this use of "default" (2020/03/22).
         //// https://github.com/bridgedotnet/Bridge/issues/4046
         public static implicit operator Maybe<T>(T inValue)
-            => (inValue == null) ? default(Maybe<T>) : new Maybe<T>(inValue);
+            => inValue == null ? default(Maybe<T>) : new Maybe<T>(inValue);
 
         /// <summary>Implements the == operator.</summary>
         /// <param name="inLeft">The left.</param>
@@ -75,17 +75,17 @@ namespace Existential
         public Maybe<T> ToMaybe(Maybe<T> inValue) => inValue;
 
         /// <summary>Indicates whether this instance and a specified object are equal.</summary>
-        /// <param name="obj">The object to compare with the current instance.</param>
+        /// <param name="inObj">The object to compare with the current instance.</param>
         /// <returns>
-        /// true if <paramref name="obj" /> and this instance are the same type and represent the
+        /// true if <paramref name="inObj" /> and this instance are the same type and represent the
         /// same value; otherwise, false.
         /// </returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Naming",
             "CA1725:Parameter names should match base declaration",
             Justification = "Base declaration is inconsistent between .NET and Bridge.")]
-        public override bool Equals(object obj)
-            => obj is Maybe<T> other && Equals(other);
+        public override bool Equals(object inObj)
+            => inObj is Maybe<T> theOther && Equals(theOther);
 
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
@@ -135,57 +135,57 @@ namespace Existential
             => myValueExists ?
                 myValue.ToString() :
                 default(T) != null ?
-                    default(T).ToString() :
+                    default(T)?.ToString() :
                     string.Empty;
 
         /// <summary>Applies different functions depending on whether the value exists.</summary>
         /// <typeparam name="TResult">The type of the result.</typeparam>
-        /// <param name="some">The function to apply if a value exists.</param>
-        /// <param name="none">The function to apply if no value exists.</param>
+        /// <param name="inSome">The function to apply if a value exists.</param>
+        /// <param name="inNone">The function to apply if no value exists.</param>
         /// <returns>The result of the function that was applied.</returns>
-        public TResult Match<TResult>(Func<T, TResult> some, Func<TResult> none)
+        public TResult Match<TResult>(Func<T, TResult> inSome, Func<TResult> inNone)
         {
-            _ = Validate.ThrowIfNull(some, nameof(some));
-            _ = Validate.ThrowIfNull(none, nameof(none));
+            _ = Validate.ThrowIfNull(inSome, nameof(inSome));
+            _ = Validate.ThrowIfNull(inNone, nameof(inNone));
 
             return myValueExists
-                       ? some(myValue)
-                       : none();
+                       ? inSome(myValue)
+                       : inNone();
         }
 
         /// <summary>Applies different actions depending on whether the value exists.</summary>
-        /// <param name="some">The action to apply if a value exists.</param>
-        /// <param name="none">The action to apply if no value exists.</param>
-        public void Match(Action<T> some, Action none)
+        /// <param name="inSome">The action to apply if a value exists.</param>
+        /// <param name="inNone">The action to apply if no value exists.</param>
+        public void Match(Action<T> inSome, Action inNone)
         {
-            _ = Validate.ThrowIfNull(some, nameof(some));
-            _ = Validate.ThrowIfNull(none, nameof(none));
+            _ = Validate.ThrowIfNull(inSome, nameof(inSome));
+            _ = Validate.ThrowIfNull(inNone, nameof(inNone));
 
             if (myValueExists)
             {
-                some(myValue);
+                inSome(myValue);
             }
             else
             {
-                none();
+                inNone();
             }
         }
 
         /// <summary>
-        /// Puts the actual value into <paramref name="value" />, if it exists, otherwise the
+        /// Puts the actual value into <paramref name="inValue" />, if it exists, otherwise the
         /// default value. Returns a Boolean indicating whether a value was found.
         /// </summary>
-        /// <param name="value">The value, if it exists, or the default for that type.</param>
+        /// <param name="inValue">The value, if it exists, or the default for that type.</param>
         /// <returns>A Boolean indicating whether a value was found.</returns>
-        public bool TryGetValue(out T value)
+        public bool TryGetValue(out T inValue)
         {
             if (myValueExists)
             {
-                value = myValue;
+                inValue = myValue;
                 return true;
             }
 
-            value = default;
+            inValue = default;
             return false;
         }
 
@@ -193,38 +193,38 @@ namespace Existential
         /// Returns the result of applying the function to the value, or the default if no value exists.
         /// </summary>
         /// <typeparam name="TResult">The underlying type of the result.</typeparam>
-        /// <param name="convert">The function to apply to the value.</param>
+        /// <param name="inConvert">The function to apply to the value.</param>
         /// <returns>A container representing a result that may or may not exist.</returns>
         /// <remarks>Equivalent to Select; this is effectively an alias for comfort.</remarks>
-        public Maybe<TResult> Map<TResult>(Func<T, TResult> convert) => Select(convert);
+        public Maybe<TResult> Map<TResult>(Func<T, TResult> inConvert) => Select(inConvert);
 
         /// <summary>
         /// Returns the result of applying the function to the value, or the default if no value exists.
         /// </summary>
         /// <typeparam name="TResult">The underlying type of the result.</typeparam>
-        /// <param name="convert">The function to apply to the value.</param>
+        /// <param name="inConvert">The function to apply to the value.</param>
         /// <returns>A container representing a result that may or may not exist.</returns>
         /// <remarks>Equivalent to Map. Required for Linq compatibility.</remarks>
-        public Maybe<TResult> Select<TResult>(Func<T, TResult> convert)
+        public Maybe<TResult> Select<TResult>(Func<T, TResult> inConvert)
         {
-            _ = Validate.ThrowIfNull(convert, nameof(convert));
+            _ = Validate.ThrowIfNull(inConvert, nameof(inConvert));
 
-            return !myValueExists ? default(Maybe<TResult>) : convert(myValue);
+            return !myValueExists ? default(Maybe<TResult>) : inConvert(myValue);
         }
 
         /// <summary>
         /// Returns the result of applying the function to the value, or the default if no value exists.
         /// </summary>
         /// <typeparam name="TResult">The underlying type of the result.</typeparam>
-        /// <param name="convert">The function to apply to the value.</param>
+        /// <param name="inConvert">The function to apply to the value.</param>
         /// <returns>A container representing a result that may or may not exist.</returns>
         /// <remarks>Required Monad method.</remarks>
-        public Maybe<TResult> Bind<TResult>(Func<T, Maybe<TResult>> convert)
+        public Maybe<TResult> Bind<TResult>(Func<T, Maybe<TResult>> inConvert)
         {
-            _ = Validate.ThrowIfNull(convert, nameof(convert));
+            _ = Validate.ThrowIfNull(inConvert, nameof(inConvert));
 
             // Bridge.NET doesn't support simplifying this use of "default" (2020/03/22).
-            return !myValueExists ? default(Maybe<TResult>) : convert(myValue);
+            return !myValueExists ? default(Maybe<TResult>) : inConvert(myValue);
         }
 
         /// <summary>
@@ -233,16 +233,16 @@ namespace Existential
         /// </summary>
         /// <typeparam name="T2">The type of the intermediate result.</typeparam>
         /// <typeparam name="TResult">The type of the final result.</typeparam>
-        /// <param name="convert">
+        /// <param name="inConvert">
         /// A function that converts <typeparamref name="T" /> to an intermediate type.
         /// </param>
-        /// <param name="finalSelect">
+        /// <param name="inFinalSelect">
         /// A function that produces a result using the original value and any value of the
         /// intermediate type.
         /// </param>
         /// <returns>A container representing a result that may or may not exist.</returns>
         /// <remarks>Unlikely to be used directly, but required to support Linq usage.</remarks>
-        public Maybe<TResult> SelectMany<T2, TResult>(Func<T, Maybe<T2>> convert, Func<T, T2, TResult> finalSelect)
+        public Maybe<TResult> SelectMany<T2, TResult>(Func<T, Maybe<T2>> inConvert, Func<T, T2, TResult> inFinalSelect)
         {
             if (!myValueExists)
             {
@@ -250,20 +250,20 @@ namespace Existential
                 return default(Maybe<TResult>);
             }
 
-            _ = Validate.ThrowIfNull(convert, nameof(convert));
-            _ = Validate.ThrowIfNull(finalSelect, nameof(finalSelect));
-            Maybe<T2> converted = convert(myValue);
+            _ = Validate.ThrowIfNull(inConvert, nameof(inConvert));
+            _ = Validate.ThrowIfNull(inFinalSelect, nameof(inFinalSelect));
+            Maybe<T2> theConverted = inConvert(myValue);
 
             // Bridge.NET doesn't support simplifying this use of "default" (2020/03/22).
-            return !converted.myValueExists
+            return !theConverted.myValueExists
                        ? default(Maybe<TResult>)
-                       : finalSelect(myValue, converted.myValue);
+                       : inFinalSelect(myValue, theConverted.myValue);
         }
 
         /// <summary>Returns the value if the predicate applies, otherwise the default.</summary>
-        /// <param name="predicate">A predicate applying to any value that exists.</param>
+        /// <param name="inPredicate">A predicate applying to any value that exists.</param>
         /// <returns>A container representing a result that may or may not exist.</returns>
-        public Maybe<T> Where(Func<T, bool> predicate)
+        public Maybe<T> Where(Func<T, bool> inPredicate)
         {
             if (!myValueExists)
             {
@@ -271,61 +271,53 @@ namespace Existential
                 return default(Maybe<T>);
             }
 
-            _ = Validate.ThrowIfNull(predicate, nameof(predicate));
+            _ = Validate.ThrowIfNull(inPredicate, nameof(inPredicate));
 
             //// Bridge.NET doesn't support simplifying this use of "default" (2020/03/22).
-            return predicate(myValue)
+            return inPredicate(myValue)
                        ? this
                        : default(Maybe<T>);
         }
 
         /// <summary>Returns the value, if it exists, or the specified default value.</summary>
-        /// <param name="defaultValue">The default value to return if no value exists.</param>
+        /// <param name="inDefaultValue">The default value to return if no value exists.</param>
         /// <returns>The value, if it exists, or the specified default value.</returns>
-        public T ValueOr(T defaultValue) => myValueExists ? myValue : defaultValue;
+        public T ValueOr(T inDefaultValue) => myValueExists ? myValue : inDefaultValue;
 
         /// <summary>Returns the value, if it exists, or the value provided by a factory function.</summary>
-        /// <param name="defaultValueFactory">A factory function that will provide a default value.</param>
+        /// <param name="inDefaultValueFactory">A factory function that will provide a default value.</param>
         /// <returns>The value, if it exists, or the value provided by a factory function.</returns>
-        public T ValueOr(Func<T> defaultValueFactory)
+        public T ValueOr(Func<T> inDefaultValueFactory)
         {
-            _ = Validate.ThrowIfNull(defaultValueFactory, nameof(defaultValueFactory));
-            return myValueExists ? myValue : defaultValueFactory();
+            _ = Validate.ThrowIfNull(inDefaultValueFactory, nameof(inDefaultValueFactory));
+            return myValueExists ? myValue : inDefaultValueFactory();
         }
 
         /// <summary>Returns the value, if it exists, or the specified alternative value.</summary>
-        /// <param name="alternativeValue">The alternative value.</param>
+        /// <param name="inAlternativeValue">The alternative value.</param>
         /// <returns>
         /// A container holding the value, if it exists, or the specified alternative value.
         /// </returns>
-        public Maybe<T> ValueOrMaybe(Maybe<T> alternativeValue) => myValueExists ? this : alternativeValue;
+        public Maybe<T> ValueOrMaybe(Maybe<T> inAlternativeValue) => myValueExists ? this : inAlternativeValue;
 
         /// <summary>Returns the value, if it exists, or the value provided by a factory function.</summary>
-        /// <param name="alternativeValueFactory">
+        /// <param name="inAlternativeValueFactory">
         /// A factory function that will provide an alternative value.
         /// </param>
         /// <returns>
         /// A container holding the value, if it exists, or the value provided by a factory function.
         /// </returns>
-        public Maybe<T> ValueOrMaybe(Func<Maybe<T>> alternativeValueFactory)
+        public Maybe<T> ValueOrMaybe(Func<Maybe<T>> inAlternativeValueFactory)
         {
-            _ = Validate.ThrowIfNull(alternativeValueFactory, nameof(alternativeValueFactory));
-            return myValueExists ? this : alternativeValueFactory();
+            _ = Validate.ThrowIfNull(inAlternativeValueFactory, nameof(inAlternativeValueFactory));
+            return myValueExists ? this : inAlternativeValueFactory();
         }
 
         /// <summary>Returns the value, if it exists, or throws an exception.</summary>
-        /// <param name="errorMessage">The error message to include in any exception thrown.</param>
+        /// <param name="inErrorMessage">The error message to include in any exception thrown.</param>
         /// <returns>The value, if it exists.</returns>
         /// <exception cref="InvalidOperationException">Thrown if no value exists.</exception>
-        public T ValueOrThrow(string errorMessage)
-        {
-            if (myValueExists)
-            {
-                return myValue;
-            }
-
-            throw new InvalidOperationException(errorMessage);
-        }
+        public T ValueOrThrow(string inErrorMessage) => myValueExists ? myValue : throw new InvalidOperationException(inErrorMessage);
     }
 
     /// <summary>Class Maybe.</summary>
@@ -335,16 +327,16 @@ namespace Existential
         /// Converts the provided value of type <typeparamref name="T" /> to a <see cref="Maybe{T}" />.
         /// </summary>
         /// <typeparam name="T">The type of the value to be converted.</typeparam>
-        /// <param name="value">The value to be converted.</param>
+        /// <param name="inValue">The value to be converted.</param>
         /// <returns>A container holding the value, if it exists.</returns>
-        public static Maybe<T> Some<T>(T value) => value ?? default(Maybe<T>);
+        public static Maybe<T> Some<T>(T inValue) => inValue ?? default(Maybe<T>);
 
         /// <summary>
         /// Ensures that a <see cref="Maybe{T}" /> doesn't get double-wrapped to become a Maybe{Maybe{T}}.
         /// </summary>
         /// <typeparam name="T">The type of the value.</typeparam>
-        /// <param name="value">The <see cref="Maybe{T}" />.</param>
+        /// <param name="inValue">The <see cref="Maybe{T}" />.</param>
         /// <returns>The value.</returns>
-        public static Maybe<T> Some<T>(Maybe<T> value) => value;
+        public static Maybe<T> Some<T>(Maybe<T> inValue) => inValue;
     }
 }

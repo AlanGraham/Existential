@@ -2,6 +2,7 @@
 //     Copyright (c) Dr. Gavin T.D. Greig, 2020.
 // </copyright>
 
+// ReSharper disable StyleCop.SA1600
 namespace Existential.Test
 {
     using System.Linq;
