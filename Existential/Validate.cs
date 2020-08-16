@@ -128,7 +128,7 @@ namespace Existential
         ///         found to be of an unexpected type will be included in the exception message.
         ///     </para>
         /// </exception>
-        public static T ThrowIfNotOfType<T>([ValidatedOfType] object inActual, string inName)
+        public static T ThrowIfNotOfType<T>(object inActual, string inName)
             where T : class
         {
             if (!(inActual is T theReturnValue))
@@ -184,7 +184,7 @@ namespace Existential
         ///         found to be of an unexpected type will be included in the exception message.
         ///     </para>
         /// </exception>
-        public static object ThrowIfNotOfType(Type inType, [ValidatedOfType] object inActual, string inName)
+        public static object ThrowIfNotOfType(Type inType, object inActual, string inName)
         {
             // ReSharper disable once UseMethodIsInstanceOfType - can't be directly substituted.
             if (!ThrowIfNull(inType, nameof(inType)).IsAssignableFrom(ThrowIfNull(inActual, inName).GetType()))
