@@ -13,9 +13,15 @@ namespace Existential
         /// <summary>Converts one or more items to an IEnumerable of the same type.</summary>
         /// <typeparam name="T">The type of the items to be converted to an IEnumerable.</typeparam>
         /// <param name="inItems">The item or items to be converted to an IEnumerable.</param>
-        /// <returns>An IEnumerable containing the items.</returns>
+        /// <returns>An <see cref="IEnumerable{T}"/> containing the items.</returns>
         public static IEnumerable<T> From<T>(params T[] inItems) => inItems;
 
+        /// <summary>
+        /// Converts an <see cref="IEnumerable"/> to an <see cref="IEnumerable{T}"/> (if possible).
+        /// </summary>
+        /// <typeparam name="T">The expected type of collection members.</typeparam>
+        /// <param name="inEnumerable">A non-generic collection.</param>
+        /// <returns>An <see cref="IEnumerable{T}"/> containing the items.</returns>
         public static IEnumerable<T> From<T>(IEnumerable inEnumerable) => new EnumerableOf<T>(inEnumerable);
     }
 }
