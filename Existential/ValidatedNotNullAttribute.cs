@@ -4,12 +4,21 @@
 
 namespace Existential
 {
+    using System;
+
     /// <summary>
-    /// An attribute that indicates to Code Analysis that a parameter is validated as not null, and
-    /// does not need to be checked.
+    ///     <para>
+    ///         This attribute indicates to Code Analysis that the value of the parameter it's associated with will be
+    ///         validated as
+    ///         non-null within the body of the method, and therefore it does not need additional validation outside that
+    ///         method.
+    ///     </para>
+    ///     <para>
+    ///         This attribute can only be applied to method parameters.
+    ///     </para>
     /// </summary>
-    [System.AttributeUsage(System.AttributeTargets.Parameter, AllowMultiple = false)]
-    internal sealed class ValidatedNotNullAttribute : System.Attribute
+    [AttributeUsage(AttributeTargets.Parameter)]
+    internal sealed class ValidatedNotNullAttribute : Attribute
     {
     }
 }

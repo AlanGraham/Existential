@@ -1,4 +1,4 @@
-﻿// <copyright file="GenericEnumerable.cs" company="Gavin Greig">
+﻿// <copyright file="EnumerableOf.cs" company="Gavin Greig">
 //     Copyright (c) Dr. Gavin T.D. Greig, 2020.
 // </copyright>
 
@@ -16,15 +16,15 @@ namespace Existential
     /// A class for converting an <see cref="IEnumerable" /> to an <see cref="IEnumerable{T}" />.
     /// </summary>
     /// <typeparam name="T">The underlying type of the collection.</typeparam>
-    public class GenericEnumerable<T> : IEnumerable<T>
+    public class EnumerableOf<T> : IEnumerable<T>
     {
         /// <summary>
-        /// Initialises a new instance of the <see cref="GenericEnumerable{T}" /> class.
+        /// Initialises a new instance of the <see cref="EnumerableOf{T}" /> class.
         /// </summary>
         /// <param name="inEnumerable">
         /// The <see cref="IEnumerable" /> to be converted to an <see cref="IEnumerable{T}" />.
         /// </param>
-        public GenericEnumerable(IEnumerable inEnumerable)
+        public EnumerableOf(IEnumerable inEnumerable)
         {
             // Avoid multiple enumerations by converting to array.
             IEnumerable theObjects = inEnumerable as object[] ?? inEnumerable.Cast<object>().ToArray();
@@ -35,7 +35,10 @@ namespace Existential
                 {
                     // Call GetType first to ensure we have the most derived type of the object.
                     string theUnexpectedType = aMember.GetType().GetGenericAwareTypeName();
-                    string theMessage = string.Format(CultureInfo.CurrentCulture, Resources.CollectionContainedAnUnexpectedType, theUnexpectedType);
+                    string theMessage = string.Format(
+                        CultureInfo.CurrentCulture,
+                        Resources.CollectionContainedAnUnexpectedType,
+                        theUnexpectedType);
                     throw new ArgumentTypeException(theMessage, nameof(inEnumerable));
                 }
             }

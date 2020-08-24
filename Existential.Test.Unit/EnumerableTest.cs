@@ -1,5 +1,5 @@
-﻿// <copyright file="EnumerableHelperTest.cs" company="Gavin Greig">
-//     Copyright (c) Dr. Gavin T.D. Greig, 2020.
+﻿// <copyright file="EnumerableTest.cs" company="Gavin Greig">
+//   Copyright (c) Dr. Gavin T.D. Greig, 2020.
 // </copyright>
 
 namespace Existential.Test
@@ -8,29 +8,28 @@ namespace Existential.Test
 
     using NUnit.Framework;
 
-    [TestFixture]
-    public static class EnumerableHelperTest
+    public static class EnumerableTest
     {
         [Test]
-        public static void EnumerableHelper_WithNull_ReturnsCollection()
+        public static void From_Null_ReturnsCollection()
         {
             // Arrange
             string theNull = null;
 
             // Act
-            IEnumerable<string> theResult = EnumerableHelper.ToEnumerable(theNull);
+            IEnumerable<string> theResult = Enumerable.From(theNull);
 
             // Assert
             Assert.That(theResult, Is.InstanceOf<IEnumerable<string>>()
-                  .With.Length.EqualTo(1)
-                  .And.Contains(null));
+                .With.Length.EqualTo(1)
+                .And.Contains(null));
         }
 
         [Test]
-        public static void EnumerableHelper_WithSingleInt_ReturnsCollection()
+        public static void From_SingleInt_ReturnsCollection()
         {
             // Act
-            IEnumerable<int> theResult = EnumerableHelper.ToEnumerable(1);
+            IEnumerable<int> theResult = Enumerable.From(1);
 
             // Assert
             Assert.That(theResult, Is.InstanceOf<IEnumerable<int>>()
@@ -39,10 +38,10 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void EnumerableHelper_WithSingleString_ReturnsCollection()
+        public static void From_SingleString_ReturnsCollection()
         {
             // Act
-            IEnumerable<string> theResult = EnumerableHelper.ToEnumerable("Test");
+            IEnumerable<string> theResult = Enumerable.From("Test");
 
             // Assert
             Assert.That(theResult, Is.InstanceOf<IEnumerable<string>>()
@@ -51,10 +50,10 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void EnumerableHelper_WithTwoInts_ReturnsCollection()
+        public static void From_TwoIntegers_ReturnsCollection()
         {
             // Act
-            IEnumerable<int> theResult = EnumerableHelper.ToEnumerable(1, 2);
+            IEnumerable<int> theResult = Enumerable.From(1, 2);
 
             // Assert
             Assert.That(theResult, Is.InstanceOf<IEnumerable<int>>()

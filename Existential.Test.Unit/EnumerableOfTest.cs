@@ -1,4 +1,4 @@
-﻿// <copyright file="GenericEnumerableTest.cs" company="Gavin Greig">
+﻿// <copyright file="EnumerableOfTest.cs" company="Gavin Greig">
 //   Copyright (c) Dr. Gavin T.D. Greig, 2020.
 // </copyright>
 
@@ -7,7 +7,7 @@ namespace Existential.Test
     using NUnit.Framework;
 
     [TestFixture]
-    public static class GenericEnumerableTest
+    public static class EnumerableOfTest
     {
         [Test]
         public static void Constructor_WithValidCollection_ReturnsIEnumerableWithCorrectMembers()
@@ -16,7 +16,7 @@ namespace Existential.Test
             object[] theObjects = { 1, 2 };
 
             // Act
-            var theResult = new GenericEnumerable<int>(theObjects);
+            var theResult = new EnumerableOf<int>(theObjects);
 
             // Assert
             Assert.That(theResult, Has.Member(1).And.Member(2));
@@ -33,7 +33,7 @@ namespace Existential.Test
                 () =>
                     {
                         // Act
-                        _ = new GenericEnumerable<int>(theObjects);
+                        _ = new EnumerableOf<int>(theObjects);
                     },
                 Throws.TypeOf<ArgumentTypeException>()
                     .With.Message.Contains("The collection contained a member of an unexpected type (String)."));
@@ -50,7 +50,7 @@ namespace Existential.Test
                 () =>
                     {
                         // Act
-                        _ = new GenericEnumerable<string>(theObjects);
+                        _ = new EnumerableOf<string>(theObjects);
                     },
                 Throws.TypeOf<ArgumentTypeException>()
                     .With.Message.Contains("The collection contained a member of an unexpected type (Int32)."));
