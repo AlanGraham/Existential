@@ -47,6 +47,10 @@ namespace Existential
         /// <remarks>Implemented as an extension method to keep it type-specific to generic collections of T.</remarks>
         /// <remarks>Wanted to make the type of collection generic (where IEnumerable, new()), but type constraints do not form
         /// part of a signature and so type parameters had to be specified explicitly, which removed the usefulness.</remarks>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Design",
+            "CA1002:Do not expose generic lists",
+            Justification = "We're not really exposing a list, we're making sure we can return the same type by creating an empty one.")]
         public static List<T> ValueOrEmpty<T>(this Maybe<List<T>> inMaybe)
             => inMaybe.ValueOr(new List<T>());
 

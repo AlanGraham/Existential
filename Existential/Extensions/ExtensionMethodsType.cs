@@ -78,11 +78,11 @@ namespace Existential.Extensions
 
             System.Text.StringBuilder theTypeNameBuilder = new System.Text.StringBuilder()
                 .Append(theTypeNameRoot.Substring(0, theTypeNameRoot.IndexOf('`')))
-                .Append("<")
+                .Append('<')
                 .Append(string.Join(
                     ", ",
                     GetTypeParameters(inType)))
-                .Append(">");
+                .Append('>');
             return theTypeNameBuilder.ToString();
         }
 
