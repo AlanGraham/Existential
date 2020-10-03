@@ -6,7 +6,7 @@
 
 
 ## Introduction
-Existential is a utility library for dealing with very basic issues
+Existential is a utility library for dealing with issues
 such as whether a value exists or not, or whether it exists in the desired form.
 
 It reduces the code you need to write for basic null check by providing [validation
