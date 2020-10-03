@@ -117,11 +117,20 @@ steps:
 #    externalEndPoint: 'MyNuGetServiceConnection'
 
 - task: DotNetCoreCLI@2
-  displayName: 'Publish web site to staging directory'
+  displayName: 'Publish web site to staging as folder'
+  inputs:
+    command: 'publish'
+    publishWebProjects: true
+    arguments: '--configuration $(buildConfiguration) --output "$(Build.ArtifactStagingDirectory)/Folder" /p:PublishProfile=FolderProfile'
+    zipAfterPublish: false
+    modifyOutputPath: false
+
+- task: DotNetCoreCLI@2
+  displayName: 'Publish web site to staging as package'
   inputs:
     command: publish
     publishWebProjects: True
-    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    arguments: '--configuration $(buildConfiguration) --output "$(Build.ArtifactStagingDirectory)/Package" /p:PublishProfile=AzureDeploy'
     zipAfterPublish: True
 
 # this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
