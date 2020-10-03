@@ -119,10 +119,19 @@ steps:
 - task: DotNetCoreCLI@2
   displayName: 'Publish web site to staging directory'
   inputs:
-    command: publish
-    publishWebProjects: True
-    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-    zipAfterPublish: True
+    command: 'publish'
+    publishWebProjects: true
+    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory) /p:PublishProfile=FolderProfile'
+    zipAfterPublish: false
+    modifyOutputPath: false
+
+#- task: DotNetCoreCLI@2
+#  displayName: 'Publish web site to staging directory'
+#  inputs:
+#    command: publish
+#    publishWebProjects: True
+#    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+#    zipAfterPublish: True
 
 # this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
 - task: PublishBuildArtifacts@1
