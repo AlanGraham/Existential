@@ -5,10 +5,6 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 # https://docs.microsoft.com/en-us/azure/devops/pipelines/ecosystems/dotnet-core?view=azure-devops
-
-#jobs:
-#- job: build
-#  displayName: "Project Build"
   
 trigger:
 - main
