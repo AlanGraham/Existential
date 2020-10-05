@@ -110,14 +110,14 @@ steps:
 #    externalEndPoint: 'MyNuGetServiceConnection'
 
 - task: CopyFiles@2
-  displayName: 'Publish NuGet packages to staging'
+  displayName: 'Stage NuGet packages'
   inputs:
     contents: '**/*.*nupkg'
     targetFolder: $(Build.ArtifactStagingDirectory)/NuGet
     flattenFolders: true
 
 - task: DotNetCoreCLI@2
-  displayName: 'Publish docs as zip for Azure'
+  displayName: 'Stage docs as zip for Azure'
   inputs:
     command: publish
     publishWebProjects: True
@@ -125,7 +125,7 @@ steps:
     zipAfterPublish: True
 
 - task: DotNetCoreCLI@2
-  displayName: 'Publish docs as folder for hosting'
+  displayName: 'Stage docs as folder for hosting'
   inputs:
     command: 'publish'
     publishWebProjects: true
@@ -135,7 +135,7 @@ steps:
 
 # this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
 - task: PublishBuildArtifacts@1
-  displayName: 'Publish artifacts'
+  displayName: 'Publish staged artifacts'
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
     artifactName: 'ggreig.com.Existential'
