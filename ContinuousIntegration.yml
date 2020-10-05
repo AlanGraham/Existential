@@ -17,6 +17,8 @@ pool:
   vmImage:  'ubuntu-latest'
 
 variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
   buildConfiguration: 'Debug'
 
 steps:
@@ -29,15 +31,6 @@ steps:
   inputs:
     command: 'build'
     arguments: '--configuration $(buildConfiguration)'
-
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: |
-      # Write your PowerShell commands here.
-      
-      Write-Host "Hello World"
-      ls ./Existential/bin.net/$(buildConfiguration)
 
 # Begin testing:
 # https://stackoverflow.com/a/61481951
@@ -100,14 +93,14 @@ steps:
 #    versioningScheme: 'off'
 #    verbosityPack: 'Normal'
 
-- task: DotNetCoreCLI@2
-  displayName: 'Publish NuGet package to internal feed'
-  inputs:
-    command: 'push'
-    packagesToPush: '$(Build.SourcesDirectory)/**/*.*nupkg'
-#    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.*nupkg'
-    nuGetFeedType: 'internal'
-    publishVstsFeed: '9c4fc971-bef3-428a-ab81-cf30a24bea74/b2d0adc6-2924-4761-b868-ab5cfdc8d329'
+#- task: DotNetCoreCLI@2
+#  displayName: 'Publish NuGet package to internal feed'
+#  inputs:
+#    command: 'push'
+#    packagesToPush: '$(Build.SourcesDirectory)/**/*.*nupkg'
+##    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.*nupkg'
+#    nuGetFeedType: 'internal'
+#    publishVstsFeed: '9c4fc971-bef3-428a-ab81-cf30a24bea74/b2d0adc6-2924-4761-b868-ab5cfdc8d329'
 
 # Push all NuGet packages from a build to external Feed
 #- task: DotNetCoreCLI@2
@@ -116,8 +109,22 @@ steps:
 #    nugetFeedType: 'external'
 #    externalEndPoint: 'MyNuGetServiceConnection'
 
+- task: CopyFiles@2
+  displayName: 'Publish NuGet packages to staging'
+  inputs:
+    contents: **\*.*nupkg
+    targetFolder: $(Build.ArtifactStagingDirectory)/NuGet
+
 - task: DotNetCoreCLI@2
-  displayName: 'Publish web site to staging as folder'
+  displayName: 'Publish docs as zip for Azure'
+  inputs:
+    command: publish
+    publishWebProjects: True
+    arguments: '--configuration $(buildConfiguration) --output "$(Build.ArtifactStagingDirectory)/Package" /p:PublishProfile=FolderProfile'
+    zipAfterPublish: True
+
+- task: DotNetCoreCLI@2
+  displayName: 'Publish docs as folder for hosting'
   inputs:
     command: 'publish'
     publishWebProjects: true
@@ -125,17 +132,9 @@ steps:
     zipAfterPublish: false
     modifyOutputPath: false
 
-#- task: DotNetCoreCLI@2
-#  displayName: 'Publish web site to staging as package'
-#  inputs:
-#    command: publish
-#    publishWebProjects: True
-#    arguments: '--configuration $(buildConfiguration) --output "$(Build.ArtifactStagingDirectory)/Package" /p:PublishProfile=IISProfile'
-#    zipAfterPublish: True
-
 # this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
 - task: PublishBuildArtifacts@1
-  displayName: 'Publish web site as artifact'
+  displayName: 'Publish artifacts'
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
     artifactName: 'ggreig.com.Existential'
