@@ -112,7 +112,7 @@ steps:
 - task: CopyFiles@2
   displayName: 'Publish NuGet packages to staging'
   inputs:
-    contents: **\*.*nupkg
+    contents: '**/*.*nupkg'
     targetFolder: $(Build.ArtifactStagingDirectory)/NuGet
 
 - task: DotNetCoreCLI@2
