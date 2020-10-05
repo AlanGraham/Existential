@@ -114,6 +114,7 @@ steps:
   inputs:
     contents: '**/*.*nupkg'
     targetFolder: $(Build.ArtifactStagingDirectory)/NuGet
+    flattenFolders: true
 
 - task: DotNetCoreCLI@2
   displayName: 'Publish docs as zip for Azure'
