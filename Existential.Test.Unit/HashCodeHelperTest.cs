@@ -5,6 +5,8 @@
 // ReSharper disable StyleCop.SA1600
 namespace Existential.Test
 {
+    using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     using NUnit.Framework;
@@ -32,13 +34,33 @@ namespace Existential.Test
                     HashCodeHelper.CalculateHashCode(inNumber) != HashCodeHelper.CalculateHashCode(inNumber.Reverse()));
 
         [Test]
-        public static void HashCode_WithNothing_IsZero()
+        public static void HashCode_ForEmptyArray_IsZero()
         {
             // Act
             int theResult = HashCodeHelper.CalculateHashCode();
 
             // Assert
             Assert.That(theResult, Is.EqualTo(0));
+        }
+
+        [Test]
+        public static void HashCode_ForExplicitEmptyArray_IsZero()
+        {
+            // Act
+            int theResult = HashCodeHelper.CalculateHashCode(Array.Empty<object>());
+
+            // Assert
+            Assert.That(theResult, Is.EqualTo(0));
+        }
+
+        [Test]
+        public static void HashCode_ForOtherEmptyCollection_IsNonZero()
+        {
+            // Act
+            int theResult = HashCodeHelper.CalculateHashCode(new List<object>());
+
+            // Assert
+            Assert.That(theResult, Is.Not.EqualTo(0));
         }
 
         [Test]
@@ -49,6 +71,36 @@ namespace Existential.Test
 
             // Assert
             Assert.That(theResult, Is.EqualTo(207392));
+        }
+
+        [Test]
+        public static void HashCode_ForNull_IsZero()
+        {
+            // Act
+            int theResult = HashCodeHelper.CalculateHashCode(null);
+
+            // Assert
+            Assert.That(theResult, Is.EqualTo(0));
+        }
+
+        [Test]
+        public static void HashCode_WithAnInvalidValueInCollection_UsesDefault()
+        {
+            // Act
+            int theResult = HashCodeHelper.CalculateHashCode(1, null);
+
+            // Assert
+            Assert.That(theResult, Is.EqualTo(9016));
+        }
+
+        [Test]
+        public static void HashCode_WithAllInvalidValueInCollection_UsesDefault()
+        {
+            // Act
+            int theResult = HashCodeHelper.CalculateHashCode(null, null);
+
+            // Assert
+            Assert.That(theResult, Is.EqualTo(8993));
         }
     }
 }

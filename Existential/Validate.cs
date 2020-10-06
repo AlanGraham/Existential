@@ -445,17 +445,12 @@ namespace Existential
         ///         found to be unexpectedly empty or containing only white space will be included in the exception message.
         ///     </para>
         /// </exception>
-        public static string ThrowIfNullOrWhiteSpace([ValidatedNotNull] string inValue, string inName)
-        {
-            if (inValue == null)
-            {
-                throw new ArgumentNullException(inName);
-            }
-
-            return string.IsNullOrWhiteSpace(inValue)
-                       ? throw new ArgumentException(Resources.StringCannotBeEmptyOrWhiteSpace, inName)
-                       : inValue;
-        }
+        public static string ThrowIfNullOrWhiteSpace([ValidatedNotNull] string inValue, string inName) =>
+            inValue == null
+                ? throw new ArgumentNullException(inName)
+                : string.IsNullOrWhiteSpace(inValue)
+                    ? throw new ArgumentException(Resources.StringCannotBeEmptyOrWhiteSpace, inName)
+                    : inValue;
 
         /// <summary>Inserts a name into an exception message.</summary>
         /// <param name="inMessage">The message into which the name should be inserted.</param>

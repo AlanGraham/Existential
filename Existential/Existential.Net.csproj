@@ -21,7 +21,7 @@
     <!-- Include Source Link. -->
     <SourceLink>$(BaseIntermediateOutputPath)source_link.json</SourceLink>
     <PackageLicenseExpression>MS-PL</PackageLicenseExpression>
-    <PackageReleaseNotes>First alpha release; establishing a place on NuGet.org to allow development for distribution.</PackageReleaseNotes>
+    <PackageReleaseNotes>Fixed a bug in HashCodeHelper (discovered by Alan Graham) and extended testing.</PackageReleaseNotes>
 
     <!-- Determine the root of the repository and ensure its \'s are escaped -->
     <!--

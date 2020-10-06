@@ -20,7 +20,7 @@ namespace Existential
         {
             int theHashCode = 0;
 
-            if (inFieldValues.Length != 0)
+            if (inFieldValues != null && inFieldValues.Length != 0)
             {
                 // Overflow is fine, just wrap
                 unchecked

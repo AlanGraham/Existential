@@ -1,28 +1,25 @@
-﻿# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+﻿# About Existential.NET 
+<img alt="Azure DevOps builds (branch)" src="https://img.shields.io/azure-devops/build/ggreig/Existential/1/main">
+<img alt="Azure DevOps releases" src="https://img.shields.io/azure-devops/release/ggreig/9c4fc971-bef3-428a-ab81-cf30a24bea74/1/1">
+<a href="https://www.nuget.org/packages/Existential.Net"><img alt="Nuget (with prereleases)" src="https://img.shields.io/nuget/vpre/Existential.Net"></a>
 
-<table><tr><td>CI build:</td><td>
-
-[![Build Status](https://dev.azure.com/ggreig/Existential/_apis/build/status/Existential?branchName=master)](https://dev.azure.com/ggreig/Existential/_build?definitionId=1)
-</td></tr><tr> <td>Overnight build:</td><td>
-
-[![Build Status](https://dev.azure.com/ggreig/Existential/_apis/build/status/Overnight%20Build?branchName=master)](https://dev.azure.com/ggreig/Existential/_build?definitionId=2)
-</td></tr></table>
+Existential is a utility library, published as a NuGet package,
+for dealing with issues such as whether a value exists or not, 
+or whether it exists in the desired form.
 
 # Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+Install the [NuGet package](https://www.nuget.org/packages/Existential.Net) into any library where you want to use it, and read the 
+[user/API documentation](https://existential.ggreig.com/)
+for what you can do with it. It has no other dependencies.
 
 # Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+You can build this library using Visual Studio 2019. So long as you have an SDK installed
+that can target .NET Standard 2.0 you can build the library itself. The documentation
+and test projects also require support for .NET Core 3.1.
 
 # Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
-
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+If you can successfully fork the code from Azure DevOps please feel free to submit a 
+pull request, but at the time of writing some problems have been experienced with that 
+route. Hopefully that will be fixed at a future date. In the meantime, if you're unable
+to do that, please submit any bugs or feature requests through the "Contact owners" form 
+[on NuGet.org](https://www.nuget.org/packages/Existential.Net).

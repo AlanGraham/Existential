@@ -6,6 +6,10 @@
 
 
 ## Introduction
+<img alt="Azure DevOps builds (branch)" src="https://img.shields.io/azure-devops/build/ggreig/Existential/1/main">
+<img alt="Azure DevOps releases" src="https://img.shields.io/azure-devops/release/ggreig/9c4fc971-bef3-428a-ab81-cf30a24bea74/1/1">
+<img alt="Nuget (with prereleases)" src="https://img.shields.io/nuget/vpre/Existential.Net">
+
 Existential is a utility library for dealing with issues
 such as whether a value exists or not, or whether it exists in the desired form.
 
