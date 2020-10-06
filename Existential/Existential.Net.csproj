@@ -6,7 +6,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AssemblyTitle>Existential.Net</AssemblyTitle>
     <Description>A library for things that may or may not exist.</Description>
-    <PackageProjectUrl>https://ggreig.azurewebsites.net/Existential/</PackageProjectUrl>
+    <PackageProjectUrl>https://existential.ggreig.com/</PackageProjectUrl>
     <RepositoryUrl>https://dev.azure.com/ggreig/_git/Existential</RepositoryUrl>
     <PackageIcon>Existential256.png</PackageIcon>
   </PropertyGroup>
@@ -20,6 +20,8 @@
 
     <!-- Include Source Link. -->
     <SourceLink>$(BaseIntermediateOutputPath)source_link.json</SourceLink>
+    <PackageLicenseExpression>MS-PL</PackageLicenseExpression>
+    <PackageReleaseNotes>First alpha release; establishing a place on NuGet.org to allow developemnt for distribution.</PackageReleaseNotes>
 
     <!-- Determine the root of the repository and ensure its \'s are escaped -->
     <!--
