@@ -11,9 +11,10 @@
 <img alt="Nuget (with prereleases)" src="https://img.shields.io/nuget/vpre/Existential.Net">
 
 Existential is a utility library for dealing with issues
-such as whether a value exists or not, or whether it exists in the desired form.
+such as whether a value exists or not, or whether it exists in the desired form. It
+contains validation methods, a Maybe monad, and more.
 
-It reduces the code you need to write for basic null check by providing [validation
+It reduces the code you need to write for basic null checks by providing [validation
 techniques](xref:using_validate.md) or - even better - using the 
 [Maybe&lt;T&gt;](xref:using_maybe.md) monad can just help you not to care!
 

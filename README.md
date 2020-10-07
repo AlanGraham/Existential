@@ -1,11 +1,12 @@
-﻿# About Existential.NET 
+﻿# About Existential&#46;NET
 <img alt="Azure DevOps builds (branch)" src="https://img.shields.io/azure-devops/build/ggreig/Existential/1/main">
 <img alt="Azure DevOps releases" src="https://img.shields.io/azure-devops/release/ggreig/9c4fc971-bef3-428a-ab81-cf30a24bea74/1/1">
 <a href="https://www.nuget.org/packages/Existential.Net"><img alt="Nuget (with prereleases)" src="https://img.shields.io/nuget/vpre/Existential.Net"></a>
 
 Existential is a utility library, published as a NuGet package,
 for dealing with issues such as whether a value exists or not, 
-or whether it exists in the desired form.
+or whether it exists in the desired form. It contains validation methods,
+a Maybe monad, and more.
 
 # Getting Started
 Install the [NuGet package](https://www.nuget.org/packages/Existential.Net) into any library where you want to use it, and read the 

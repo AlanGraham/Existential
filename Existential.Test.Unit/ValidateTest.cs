@@ -47,7 +47,7 @@ namespace Existential.Test
 
         /// <summary>Checks that validation fails when an IEnumerable collection is null.</summary>
         [Test]
-        public static void ThrowIfnullOrEmpty_Fails_WhenIEnumerableIsNull()
+        public static void ThrowIfNullOrEmpty_Fails_WhenIEnumerableIsNull()
         {
             // Arrange
             const string ExpectedMessage = "The collection \"theCollection\" is null";
@@ -482,6 +482,82 @@ namespace Existential.Test
 
             // Assert
             Assert.AreSame(theResult, theWhiteSpaceText);
+        }
+
+        [Test]
+        public static void ThrowIfNullOrWhiteSpace_WithEmptyString_ThrowsException()
+        {
+            // Arrange
+            string theExpectedMessage = "The string cannot be empty or contain only whitespace characters.";
+            string theEmptyString = string.Empty;
+
+            // Assert
+            Assert.That(
+                () =>
+                {
+                    // Act
+                    Validate.ThrowIfNullOrWhiteSpace(theEmptyString, nameof(theEmptyString));
+                },
+                Throws.ArgumentException
+                    .With.Message.Contains(theExpectedMessage)
+                    .And.Message.Contains(nameof(theEmptyString)));
+        }
+
+        [Test]
+        public static void ThrowIfNullOrWhiteSpace_WithNull_ThrowsException()
+        {
+            // Arrange
+            string theExpectedMessage = "Value cannot be null.";
+            string theNullString = null;
+
+            // Assert
+            Assert.That(
+                () =>
+                {
+                    // Act
+                    Validate.ThrowIfNullOrWhiteSpace(theNullString, nameof(theNullString));
+                },
+                Throws.ArgumentNullException
+                    .With.Message.Contains(theExpectedMessage)
+                    .And.Message.Contains(nameof(theNullString)));
+        }
+
+        [Test]
+        public static void ThrowIfNullOrWhiteSpace_WithNonWhiteSpaceString_ReturnsValue()
+        {
+            // Arrange
+            const string ExpectedValue = "Test";
+
+            // Act
+            string theResult = Validate.ThrowIfNullOrWhiteSpace(ExpectedValue, nameof(ExpectedValue));
+
+            // Assert
+            Assert.AreSame(theResult, ExpectedValue);
+        }
+
+        [Test]
+        public static void ThrowIfNullOrWhiteSpace_WithWhiteSpaceString_ThrowsException()
+        {
+            // Arrange
+            string theExpectedMessage = "The string cannot be empty or contain only whitespace characters.";
+            string theWhiteSpaceText = "    ";
+
+            // Act
+            string theResult = Validate.ThrowIfNullOrEmpty(
+                theWhiteSpaceText,
+                nameof(theWhiteSpaceText),
+                inTrim: false);
+
+            // Assert
+            Assert.That(
+                () =>
+                {
+                    // Act
+                    Validate.ThrowIfNullOrWhiteSpace(theWhiteSpaceText, nameof(theWhiteSpaceText));
+                },
+                Throws.ArgumentException
+                    .With.Message.Contains(theExpectedMessage)
+                    .And.Message.Contains(nameof(theWhiteSpaceText)));
         }
 
         private class DerivedType : ExpectedType
