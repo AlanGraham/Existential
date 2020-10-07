@@ -4,13 +4,15 @@
 
 namespace Existential
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
 
-    using Existential.Extensions;
-    using Existential.Properties;
+    using Extensions;
+
+    using Properties;
 
     /// <summary>
     /// A class for converting an <see cref="IEnumerable" /> to an <see cref="IEnumerable{T}" />.
@@ -18,12 +20,18 @@ namespace Existential
     /// <typeparam name="T">The underlying type of the collection.</typeparam>
     public class EnumerableOf<T> : IEnumerable<T>
     {
+        private readonly Lazy<int> myLength;
+
         /// <summary>
-        /// Initialises a new instance of the <see cref="EnumerableOf{T}" /> class.
+        ///     Initialises a new instance of the <see cref="EnumerableOf{T}" /> class.
         /// </summary>
         /// <param name="inEnumerable">
-        /// The <see cref="IEnumerable" /> to be converted to an <see cref="IEnumerable{T}" />.
+        ///     The <see cref="IEnumerable" /> to be converted to an <see cref="IEnumerable{T}" />.
         /// </param>
+        /// <exception cref="ArgumentTypeException">
+        ///     Thrown if the <see cref="IEnumerable" /> collection contains one or member
+        ///     that is not of type <typeparamref name="T" />.
+        /// </exception>
         public EnumerableOf(IEnumerable inEnumerable)
         {
             // Avoid multiple enumerations by converting to array.
@@ -31,7 +39,7 @@ namespace Existential
 
             foreach (object aMember in theObjects)
             {
-                if (!(aMember is T))
+                if (aMember != null && !(aMember is T))
                 {
                     // Call GetType first to ensure we have the most derived type of the object.
                     string theUnexpectedType = aMember.GetType().GetGenericAwareTypeName();
@@ -44,7 +52,11 @@ namespace Existential
             }
 
             Collection = theObjects;
+            myLength = new Lazy<int>(() => new List<T>(this).Count);
         }
+
+        /// <summary>Gets the number of members of the collection.</summary>
+        public int Length => myLength.Value;
 
         /// <summary>Gets the <see cref="IEnumerable" /> collection.</summary>
         private IEnumerable Collection { get; }

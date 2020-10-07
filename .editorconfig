@@ -121,6 +121,9 @@ dotnet_analyzer_diagnostic.severity = error
 dotnet_analyzer_diagnostic.category-<category>.severity = unset
 dotnet_diagnostic.<rule_id>.severity = unset
 dotnet_diagnostic.SA1101.severity = none
+# SA1135: Using directives should be qualified
+dotnet_diagnostic.SA1135.severity = none
+
 
 # C# Code Style Settings
 # See https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference

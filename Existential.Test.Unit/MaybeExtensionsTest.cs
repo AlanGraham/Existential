@@ -221,6 +221,21 @@ namespace Existential.Test
         }
 
         [Test]
+        public static void WhereAllExist_IsNull_ReturnsNoCollection()
+        {
+            // Arrange
+            List<Maybe<string>> theCollection = null;
+
+            // Act
+            // ReSharper disable once ExpressionIsAlwaysNull
+            Maybe<IEnumerable<string>> theResult = theCollection.WhereAllExist();
+
+            // Assert
+            // ReSharper disable once PossiblyMistakenUseOfParamsMethod
+            Assert.That(theResult.ValueOr(() => CreateEnumerable.From("default")), Contains.Item("default"));
+        }
+
+        [Test]
         public static void MaybeFirst_WithNullCollection_ReturnsNoValue()
         {
             // Act

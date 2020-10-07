@@ -21,7 +21,7 @@
     <!-- Include Source Link. -->
     <SourceLink>$(BaseIntermediateOutputPath)source_link.json</SourceLink>
     <PackageLicenseExpression>MS-PL</PackageLicenseExpression>
-    <PackageReleaseNotes>Fixed a bug in HashCodeHelper (discovered by Alan Graham) and extended testing.</PackageReleaseNotes>
+    <PackageReleaseNotes>Fixed Enumerable bugs (discovered by Alan Graham), changed a class name to avoid a clash with Linq, and extended testing.</PackageReleaseNotes>
 
     <!-- Determine the root of the repository and ensure its \'s are escaped -->
     <!--
