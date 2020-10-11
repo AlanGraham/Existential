@@ -5,6 +5,7 @@
 namespace Existential
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>A container representing a value that may or may not exist.</summary>
     /// <typeparam name="T">The type of the object that may exist.</typeparam>
@@ -58,21 +59,21 @@ namespace Existential
             => !inLeft.Equals(inRight);
 
         /// <summary>
-        /// Performs a conversion from a <typeparamref name="T"/> to a <see cref="Maybe{T}"/>.
+        ///     Performs a conversion from a <typeparamref name="T" /> to a <see cref="Maybe{T}" />.
         /// </summary>
         /// <param name="inValue">The value.</param>
         /// <returns>The result of the conversion.</returns>
         /// <remarks>Required by Framework Design Guidelines as an alternate for the implicit operator.</remarks>
         //// Bridge.NET doesn't support simplifying this use of "default" (2020/03/22).
-        public Maybe<T> ToMaybe(T inValue) => inValue == null // || inValue is Maybe.MaybeNone
-               ? default(Maybe<T>)
-                 : new Maybe<T>(inValue);
+        public Maybe<T> ToMaybe([ValidatedNotNull] T inValue) => inValue == null // || inValue is Maybe.MaybeNone
+            ? default
+            : new Maybe<T>(inValue);
 
         /// <summary>Returns a <see cref="Maybe{T}" /> when given one, to avoid double-wrapping.</summary>
         /// <param name="inValue">The value.</param>
         /// <returns>The original value, passed through.</returns>
         /// <remarks>Complements the method <see cref="ToMaybe(T)" />.</remarks>
-        public Maybe<T> ToMaybe(Maybe<T> inValue) => inValue;
+        public Maybe<T> ToMaybe([ValidatedNotNull] Maybe<T> inValue) => inValue;
 
         /// <summary>Indicates whether this instance and a specified object are equal.</summary>
         /// <param name="inObj">The object to compare with the current instance.</param>
@@ -80,7 +81,7 @@ namespace Existential
         /// true if <paramref name="inObj" /> and this instance are the same type and represent the
         /// same value; otherwise, false.
         /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Naming",
             "CA1725:Parameter names should match base declaration",
             Justification = "Base declaration is inconsistent between .NET and Bridge.")]
@@ -324,19 +325,19 @@ namespace Existential
     public static class Maybe
     {
         /// <summary>
-        /// Converts the provided value of type <typeparamref name="T" /> to a <see cref="Maybe{T}" />.
+        ///     Converts the provided value of type <typeparamref name="T" /> to a <see cref="Maybe{T}" />.
         /// </summary>
         /// <typeparam name="T">The type of the value to be converted.</typeparam>
         /// <param name="inValue">The value to be converted.</param>
         /// <returns>A container holding the value, if it exists.</returns>
-        public static Maybe<T> Some<T>(T inValue) => inValue ?? default(Maybe<T>);
+        public static Maybe<T> Some<T>([ValidatedNotNull] T inValue) => inValue ?? default(Maybe<T>);
 
         /// <summary>
-        /// Ensures that a <see cref="Maybe{T}" /> doesn't get double-wrapped to become a Maybe{Maybe{T}}.
+        ///     Ensures that a <see cref="Maybe{T}" /> doesn't get double-wrapped to become a Maybe{Maybe{T}}.
         /// </summary>
         /// <typeparam name="T">The type of the value.</typeparam>
         /// <param name="inValue">The <see cref="Maybe{T}" />.</param>
         /// <returns>The value.</returns>
-        public static Maybe<T> Some<T>(Maybe<T> inValue) => inValue;
+        public static Maybe<T> Some<T>([ValidatedNotNull] Maybe<T> inValue) => inValue;
     }
 }

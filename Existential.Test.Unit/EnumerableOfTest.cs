@@ -31,10 +31,10 @@ namespace Existential.Test
             // Assert
             Assert.That(
                 () =>
-                    {
-                        // Act
-                        _ = new EnumerableOf<int>(theObjects);
-                    },
+                {
+                    // Act
+                    _ = new EnumerableOf<int>(theObjects);
+                },
                 Throws.TypeOf<ArgumentTypeException>()
                     .With.Message.Contains("The collection contained a member of an unexpected type (String)."));
         }
@@ -48,10 +48,10 @@ namespace Existential.Test
             // Assert (ensure that there isn't an unexpected "ToString" operation.)
             Assert.That(
                 () =>
-                    {
-                        // Act
-                        _ = new EnumerableOf<string>(theObjects);
-                    },
+                {
+                    // Act
+                    _ = new EnumerableOf<string>(theObjects);
+                },
                 Throws.TypeOf<ArgumentTypeException>()
                     .With.Message.Contains("The collection contained a member of an unexpected type (Int32)."));
         }

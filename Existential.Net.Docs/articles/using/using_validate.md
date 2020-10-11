@@ -21,3 +21,13 @@ Until cross-assembly checking becomes standard in Roslyn analysers you
 will need to add them to your
 [null_check_validation_methods](https://docs.microsoft.com/en-gb/visualstudio/code-quality/ca1062)
 setting in editor.config.
+
+
+---
+* Enable cross-assembly checking of Code Analysis CA1062
+* https://docs.microsoft.com/en-us/dotnet/api/microsoft.validatednotnullattribute
+* https://github.com/dotnet/roslyn/issues/35104
+* https://github.com/dotnet/roslyn-analyzers/blob/master/docs/Analyzer%20Configuration.md#null-check-validation-methods
+* dotnet_code_qualityRe.null_check_validation_methods = ThrowIfNull|ThrowIfNullOrEmpty|ThrowIfNullOrWhiteSpace|ToMaybe|Some
+* [CA1062: Validate arguments of public methods](https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/ca1062)
+* [Using Maybe&lt;T&gt;](xref:using_maybe.md)
