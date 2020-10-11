@@ -6,6 +6,7 @@ namespace Existential
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     /// <summary>
@@ -14,45 +15,50 @@ namespace Existential
     public static class MaybeExtensions
     {
         /// <summary>
-        /// Returns the value, if it exists, or the empty string.
+        ///     Returns the value, if it exists, or the empty string.
         /// </summary>
-        /// <param name="inMaybe">The <see cref="Maybe{T}"/> (where T is <see cref="string"/>) that may or may not contain a value.</param>
+        /// <param name="inMaybe">
+        ///     The <see cref="Maybe{T}" /> (where T is <see cref="string" />) that may or may not contain a
+        ///     value.
+        /// </param>
         /// <returns>The value, if it exists, or the empty string.</returns>
         /// <remarks>Implemented as an extension method to keep it type-specific to strings.</remarks>
-        public static string ValueOrEmpty(this Maybe<string> inMaybe) => inMaybe.ValueOr(string.Empty);
+        public static string ValueOrEmpty(this Maybe<string> inMaybe) => inMaybe.GetValueOr(string.Empty);
 
         /// <summary>
-        /// Returns the value, if it exists, or <see cref="Guid.Empty"/>.
+        ///     Returns the value, if it exists, or <see cref="Guid.Empty" />.
         /// </summary>
-        /// <param name="inMaybe">The <see cref="Maybe{T}"/> (where T is <see cref="Guid"/>) that may or may not contain a value.</param>
-        /// <returns>The value, if it exists, or <see cref="Guid.Empty"/>.</returns>
+        /// <param name="inMaybe">The <see cref="Maybe{T}" /> (where T is <see cref="Guid" />) that may or may not contain a value.</param>
+        /// <returns>The value, if it exists, or <see cref="Guid.Empty" />.</returns>
         /// <remarks>Implemented as an extension method to keep it type-specific to GUIDs.</remarks>
-        public static Guid ValueOrEmpty(this Maybe<Guid> inMaybe) => inMaybe.ValueOr(Guid.Empty);
+        public static Guid ValueOrEmpty(this Maybe<Guid> inMaybe) => inMaybe.GetValueOr(Guid.Empty);
 
         /// <summary>
-        /// Returns the value, if it exists, or an empty array of the same type.
+        ///     Returns the value, if it exists, or an empty array of the same type.
         /// </summary>
         /// <typeparam name="T">The type contained by the array.</typeparam>
-        /// <param name="inMaybe">The <see cref="Maybe{T}"/> that may or may not contain an array.</param>
+        /// <param name="inMaybe">The <see cref="Maybe{T}" /> that may or may not contain an array.</param>
         /// <returns>The value, if it exists, or an empty array of the same type.</returns>
         /// <remarks>Implemented as an extension method to keep it type-specific to arrays of T.</remarks>
-        public static T[] ValueOrEmpty<T>(this Maybe<T[]> inMaybe) => inMaybe.ValueOr(Array.Empty<T>());
+        public static T[] ValueOrEmpty<T>(this Maybe<T[]> inMaybe) => inMaybe.GetValueOr(Array.Empty<T>());
 
         /// <summary>
-        /// Returns the value, if it exists, or an empty collection of the same type.
+        ///     Returns the value, if it exists, or an empty collection of the same type.
         /// </summary>
         /// <typeparam name="T">The type contained by the collection.</typeparam>
-        /// <param name="inMaybe">The <see cref="Maybe{T}"/> that may or may not contain a generic collection.</param>
+        /// <param name="inMaybe">The <see cref="Maybe{T}" /> that may or may not contain a generic collection.</param>
         /// <returns>The value, if it exists, or an empty collection of the same type.</returns>
         /// <remarks>Implemented as an extension method to keep it type-specific to generic collections of T.</remarks>
-        /// <remarks>Wanted to make the type of collection generic (where IEnumerable, new()), but type constraints do not form
-        /// part of a signature and so type parameters had to be specified explicitly, which removed the usefulness.</remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        /// <remarks>
+        ///     Wanted to make the type of collection generic (where IEnumerable, new()), but type constraints do not form
+        ///     part of a signature and so type parameters had to be specified explicitly, which removed the usefulness.
+        /// </remarks>
+        [SuppressMessage(
             "Design",
             "CA1002:Do not expose generic lists",
-            Justification = "We're not really exposing a list, we're making sure we can return the same type by creating an empty one.")]
+            Justification = "The default value must be of the same type as the input.")]
         public static List<T> ValueOrEmpty<T>(this Maybe<List<T>> inMaybe)
-            => inMaybe.ValueOr(new List<T>());
+            => inMaybe.GetValueOr(default(List<T>));
 
         /// <summary>
         /// Gets a <see cref="Maybe{T}"/> containing the first matching member of the collection, if it exists.

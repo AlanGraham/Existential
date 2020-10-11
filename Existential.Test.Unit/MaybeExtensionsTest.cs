@@ -199,8 +199,8 @@ namespace Existential.Test
             Maybe<IEnumerable<string>> theResult = theCollection.WhereAllExist();
 
             // Assert
-            Assert.That(theResult.ValueOr(() => null), Contains.Item("Test string 1"));
-            Assert.That(theResult.ValueOr(() => null), Contains.Item("Test string 2"));
+            Assert.That(theResult.GetValueOr(() => null), Contains.Item("Test string 1"));
+            Assert.That(theResult.GetValueOr(() => null), Contains.Item("Test string 2"));
         }
 
         [Test]
@@ -217,7 +217,7 @@ namespace Existential.Test
             Maybe<IEnumerable<string>> theResult = theCollection.WhereAllExist();
 
             // Assert
-            Assert.That(theResult.ValueOr(() => null), Is.EqualTo(null));
+            Assert.That(theResult.GetValueOr(() => null), Is.EqualTo(null));
         }
 
         [Test]
@@ -232,7 +232,7 @@ namespace Existential.Test
 
             // Assert
             // ReSharper disable once PossiblyMistakenUseOfParamsMethod
-            Assert.That(theResult.ValueOr(() => CreateEnumerable.From("default")), Contains.Item("default"));
+            Assert.That(theResult.GetValueOr(() => CreateEnumerable.From("default")), Contains.Item("default"));
         }
 
         [Test]

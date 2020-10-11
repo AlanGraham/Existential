@@ -26,7 +26,7 @@ namespace Existential.Test
                 });
 
             // Assert
-            Assert.That(theResult.ValueOr(12), Is.EqualTo(12));
+            Assert.That(theResult.GetValueOr(12), Is.EqualTo(12));
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace Existential.Test
                 });
 
             // Assert
-            Assert.That(theResult.ValueOr(0), Is.EqualTo(13));
+            Assert.That(theResult.GetValueOr(0), Is.EqualTo(13));
         }
 
         [Test]
@@ -54,7 +54,7 @@ namespace Existential.Test
             var theResult = default(Maybe<int>);
 
             // Assert
-            Assert.That(theResult.ValueOr(1), Is.EqualTo(1));
+            Assert.That(theResult.GetValueOr(1), Is.EqualTo(1));
         }
 
         [Test]
@@ -74,7 +74,7 @@ namespace Existential.Test
             var theResult = default(Maybe<string>);
 
             // Assert
-            Assert.That(theResult.ValueOr("Default value"), Is.EqualTo("Default value"));
+            Assert.That(theResult.GetValueOr("Default value"), Is.EqualTo("Default value"));
         }
 
         [Test]
@@ -231,7 +231,7 @@ namespace Existential.Test
             Maybe<int> theResult = 1;
 
             // Assert
-            Assert.That(theResult.ValueOr(0), Is.EqualTo(1));
+            Assert.That(theResult.GetValueOr(0), Is.EqualTo(1));
         }
 
         [Test]
@@ -251,7 +251,7 @@ namespace Existential.Test
             Maybe<string> theResult = "Test";
 
             // Assert
-            Assert.That(theResult.ValueOr(string.Empty), Is.EqualTo("Test"));
+            Assert.That(theResult.GetValueOr(string.Empty), Is.EqualTo("Test"));
         }
 
         [Test]
@@ -342,7 +342,7 @@ namespace Existential.Test
             var theResult = Maybe.Some(1);
 
             // Assert
-            Assert.That(theResult.ValueOr(0), Is.EqualTo(1));
+            Assert.That(theResult.GetValueOr(0), Is.EqualTo(1));
         }
 
         [Test]
@@ -362,7 +362,7 @@ namespace Existential.Test
             var theResult = Maybe.Some("Test");
 
             // Assert
-            Assert.That(theResult.ValueOr(string.Empty), Is.EqualTo("Test"));
+            Assert.That(theResult.GetValueOr(string.Empty), Is.EqualTo("Test"));
         }
 
         [Test]
@@ -386,7 +386,7 @@ namespace Existential.Test
             var theResult = Maybe.Some(theMaybe);
 
             // Assert
-            Assert.That(theResult.ValueOr("A default string"), Is.EqualTo("A valid string"));
+            Assert.That(theResult.GetValueOr("A default string"), Is.EqualTo("A valid string"));
         }
 
         [Test]
@@ -399,7 +399,7 @@ namespace Existential.Test
             var theResult = Maybe.Some(theNone);
 
             // Assert
-            Assert.That(theResult.ValueOr("A default string"), Is.EqualTo("A default string"));
+            Assert.That(theResult.GetValueOr("A default string"), Is.EqualTo("A default string"));
         }
 
         [Test]
@@ -409,7 +409,7 @@ namespace Existential.Test
             var theResult = Maybe.Some((string)null);
 
             // Assert
-            Assert.That(theResult.ValueOr("A default string"), Is.EqualTo("A default string"));
+            Assert.That(theResult.GetValueOr("A default string"), Is.EqualTo("A default string"));
         }
 
         [Test]
@@ -422,7 +422,7 @@ namespace Existential.Test
             Maybe<int> theResult = theNullString.Map(inText => inText.Length);
 
             // Assert
-            Assert.That(theResult.ValueOr(17), Is.EqualTo(17));
+            Assert.That(theResult.GetValueOr(17), Is.EqualTo(17));
         }
 
         [Test]
@@ -435,7 +435,7 @@ namespace Existential.Test
             Maybe<int> theResult = theString.Map(inText => inText.Length);
 
             // Assert
-            Assert.That(theResult.ValueOr(0), Is.EqualTo(13));
+            Assert.That(theResult.GetValueOr(0), Is.EqualTo(13));
         }
 
         [Test]
@@ -489,7 +489,7 @@ namespace Existential.Test
             var theResult = theDefaultMaybe.ToMaybe(theTestValue);
 
             // Assert
-            Assert.That(theResult.ValueOr("A default string"), Is.EqualTo(theTestValue));
+            Assert.That(theResult.GetValueOr("A default string"), Is.EqualTo(theTestValue));
         }
 
         [Test]
@@ -577,7 +577,7 @@ namespace Existential.Test
             Maybe<string> theMaybe = null;
 
             // Act
-            string theResult = theMaybe.ValueOr("A default string");
+            string theResult = theMaybe.GetValueOr("A default string");
 
             // Assert
             Assert.That(theResult, Is.EqualTo("A default string"));
@@ -590,7 +590,7 @@ namespace Existential.Test
             Maybe<string> theMaybe = null;
 
             // Act
-            string theResult = theMaybe.ValueOr(() => "A factory string");
+            string theResult = theMaybe.GetValueOr(() => "A factory string");
 
             // Assert
             Assert.That(theResult, Is.EqualTo("A factory string"));
@@ -603,7 +603,7 @@ namespace Existential.Test
             Maybe<string> theMaybe = "A test string";
 
             // Act
-            string theResult = theMaybe.ValueOr("A default string");
+            string theResult = theMaybe.GetValueOr("A default string");
 
             // Assert
             Assert.That(theResult, Is.EqualTo("A test string"));
@@ -616,7 +616,7 @@ namespace Existential.Test
             Maybe<string> theMaybe = "A test string";
 
             // Act
-            string theResult = theMaybe.ValueOr(() => "A factory string");
+            string theResult = theMaybe.GetValueOr(() => "A factory string");
 
             // Assert
             Assert.That(theResult, Is.EqualTo("A test string"));
@@ -630,7 +630,7 @@ namespace Existential.Test
             Maybe<string> theMaybe = null;
 
             // Act
-            Maybe<string> theResult = theMaybe.ValueOrMaybe(theDefault);
+            Maybe<string> theResult = theMaybe.GetValueOrMaybe(theDefault);
 
             // Assert
             Assert.That(theResult, Is.EqualTo(theDefault));
@@ -644,7 +644,7 @@ namespace Existential.Test
             Maybe<string> theMaybe = null;
 
             // Act
-            Maybe<string> theResult = theMaybe.ValueOrMaybe(() => theDefault);
+            Maybe<string> theResult = theMaybe.GetValueOrMaybe(() => theDefault);
 
             // Assert
             Assert.That(theResult, Is.EqualTo(theDefault));
@@ -658,7 +658,7 @@ namespace Existential.Test
             Maybe<string> theMaybe = "A test string";
 
             // Act
-            Maybe<string> theResult = theMaybe.ValueOrMaybe(theDefault);
+            Maybe<string> theResult = theMaybe.GetValueOrMaybe(theDefault);
 
             // Assert
             Assert.That(theResult, Is.EqualTo(theMaybe));
@@ -672,7 +672,7 @@ namespace Existential.Test
             Maybe<string> theMaybe = "A test string";
 
             // Act
-            Maybe<string> theResult = theMaybe.ValueOrMaybe(() => theDefault);
+            Maybe<string> theResult = theMaybe.GetValueOrMaybe(() => theDefault);
 
             // Assert
             Assert.That(theResult, Is.EqualTo(theMaybe));
@@ -689,7 +689,7 @@ namespace Existential.Test
                 () =>
                 {
                     // Act
-                    _ = theMaybe.ValueOrThrow("An error message.");
+                    _ = theMaybe.GetValueOrThrow("An error message.");
                 },
                 Throws.InvalidOperationException.With.Message.Contains("An error message"));
         }
@@ -701,7 +701,7 @@ namespace Existential.Test
             Maybe<string> theMaybe = "A test string";
 
             // Act
-            string theResult = theMaybe.ValueOrThrow("An error message.");
+            string theResult = theMaybe.GetValueOrThrow("An error message.");
 
             // Assert
             Assert.That(theResult, Is.EqualTo("A test string"));

@@ -283,12 +283,12 @@ namespace Existential
         /// <summary>Returns the value, if it exists, or the specified default value.</summary>
         /// <param name="inDefaultValue">The default value to return if no value exists.</param>
         /// <returns>The value, if it exists, or the specified default value.</returns>
-        public T ValueOr(T inDefaultValue) => myValueExists ? myValue : inDefaultValue;
+        public T GetValueOr(T inDefaultValue) => myValueExists ? myValue : inDefaultValue;
 
         /// <summary>Returns the value, if it exists, or the value provided by a factory function.</summary>
         /// <param name="inDefaultValueFactory">A factory function that will provide a default value.</param>
         /// <returns>The value, if it exists, or the value provided by a factory function.</returns>
-        public T ValueOr(Func<T> inDefaultValueFactory)
+        public T GetValueOr(Func<T> inDefaultValueFactory)
         {
             _ = Validate.ThrowIfNull(inDefaultValueFactory, nameof(inDefaultValueFactory));
             return myValueExists ? myValue : inDefaultValueFactory();
@@ -297,18 +297,18 @@ namespace Existential
         /// <summary>Returns the value, if it exists, or the specified alternative value.</summary>
         /// <param name="inAlternativeValue">The alternative value.</param>
         /// <returns>
-        /// A container holding the value, if it exists, or the specified alternative value.
+        ///     A container holding the value, if it exists, or the specified alternative value.
         /// </returns>
-        public Maybe<T> ValueOrMaybe(Maybe<T> inAlternativeValue) => myValueExists ? this : inAlternativeValue;
+        public Maybe<T> GetValueOrMaybe(Maybe<T> inAlternativeValue) => myValueExists ? this : inAlternativeValue;
 
         /// <summary>Returns the value, if it exists, or the value provided by a factory function.</summary>
         /// <param name="inAlternativeValueFactory">
-        /// A factory function that will provide an alternative value.
+        ///     A factory function that will provide an alternative value.
         /// </param>
         /// <returns>
-        /// A container holding the value, if it exists, or the value provided by a factory function.
+        ///     A container holding the value, if it exists, or the value provided by a factory function.
         /// </returns>
-        public Maybe<T> ValueOrMaybe(Func<Maybe<T>> inAlternativeValueFactory)
+        public Maybe<T> GetValueOrMaybe(Func<Maybe<T>> inAlternativeValueFactory)
         {
             _ = Validate.ThrowIfNull(inAlternativeValueFactory, nameof(inAlternativeValueFactory));
             return myValueExists ? this : inAlternativeValueFactory();
@@ -318,7 +318,8 @@ namespace Existential
         /// <param name="inErrorMessage">The error message to include in any exception thrown.</param>
         /// <returns>The value, if it exists.</returns>
         /// <exception cref="InvalidOperationException">Thrown if no value exists.</exception>
-        public T ValueOrThrow(string inErrorMessage) => myValueExists ? myValue : throw new InvalidOperationException(inErrorMessage);
+        public T GetValueOrThrow(string inErrorMessage) =>
+            myValueExists ? myValue : throw new InvalidOperationException(inErrorMessage);
     }
 
     /// <summary>Class Maybe.</summary>

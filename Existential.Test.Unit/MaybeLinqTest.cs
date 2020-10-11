@@ -22,7 +22,7 @@ namespace Existential.Test
                                    select theText.Length;
 
             // Assert
-            Assert.That(theResult.ValueOr(0), Is.EqualTo(1));
+            Assert.That(theResult.GetValueOr(0), Is.EqualTo(1));
         }
 
         [Test]
@@ -36,7 +36,7 @@ namespace Existential.Test
                                    select theText.Length;
 
             // Assert
-            Assert.That(theResult.ValueOr(7), Is.EqualTo(7));
+            Assert.That(theResult.GetValueOr(7), Is.EqualTo(7));
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace Existential.Test
             Maybe<int> theResult = theNullString.Select(inText => inText.Length);
 
             // Assert
-            Assert.That(theResult.ValueOr(17), Is.EqualTo(17));
+            Assert.That(theResult.GetValueOr(17), Is.EqualTo(17));
         }
 
         [Test]
@@ -62,7 +62,7 @@ namespace Existential.Test
             Maybe<int> theResult = theString.Select(inText => inText.Length);
 
             // Assert
-            Assert.That(theResult.ValueOr(0), Is.EqualTo(13));
+            Assert.That(theResult.GetValueOr(0), Is.EqualTo(13));
         }
 
         [Test]
@@ -78,7 +78,7 @@ namespace Existential.Test
                                           select (Length1: theText.Length, Length2: theOtherText.Length);
 
             // Assert
-            Assert.That(theResult.ValueOr((0, 0)), Is.EqualTo((13, 19)));
+            Assert.That(theResult.GetValueOr((0, 0)), Is.EqualTo((13, 19)));
         }
 
         [Test]
@@ -94,7 +94,7 @@ namespace Existential.Test
                                           select (Length1: theText.Length, Length2: theOtherText.Length);
 
             // Assert
-            Assert.That(theResult.ValueOr((0, 0)), Is.EqualTo((0, 0)));
+            Assert.That(theResult.GetValueOr((0, 0)), Is.EqualTo((0, 0)));
         }
 
         [Test]
@@ -110,7 +110,7 @@ namespace Existential.Test
                                           select (Length1: theText.Length, Length2: theOtherText.Length);
 
             // Assert
-            Assert.That(theResult.ValueOr((0, 0)), Is.EqualTo((0, 0)));
+            Assert.That(theResult.GetValueOr((0, 0)), Is.EqualTo((0, 0)));
         }
 
         [Test]
@@ -126,7 +126,7 @@ namespace Existential.Test
                                           select (Length1: theText.Length, Length2: theOtherText.Length);
 
             // Assert
-            Assert.That(theResult.ValueOr((0, 0)), Is.EqualTo((0, 0)));
+            Assert.That(theResult.GetValueOr((0, 0)), Is.EqualTo((0, 0)));
         }
 
         [Test]
@@ -142,7 +142,7 @@ namespace Existential.Test
                 (inText1, inText2) => (Length1: inText1.Length, Length2: inText2.Length));
 
             // Assert
-            Assert.That(theResult.ValueOr((0, 0)), Is.EqualTo((13, 19)));
+            Assert.That(theResult.GetValueOr((0, 0)), Is.EqualTo((13, 19)));
         }
 
         [Test]
@@ -157,7 +157,7 @@ namespace Existential.Test
                                    select theText.Length;
 
             // Assert
-            Assert.That(theResult.ValueOr(0), Is.EqualTo(1));
+            Assert.That(theResult.GetValueOr(0), Is.EqualTo(1));
         }
 
         [Test]
@@ -172,7 +172,7 @@ namespace Existential.Test
                                    select theText.Length;
 
             // Assert
-            Assert.That(theResult.ValueOr(0), Is.EqualTo(0));
+            Assert.That(theResult.GetValueOr(0), Is.EqualTo(0));
         }
 
         [Test]
@@ -187,7 +187,7 @@ namespace Existential.Test
                 .Select(inText => inText.Length);
 
             // Assert
-            Assert.That(theResult.ValueOr(0), Is.EqualTo(1));
+            Assert.That(theResult.GetValueOr(0), Is.EqualTo(1));
         }
 
         [Test]
@@ -202,7 +202,7 @@ namespace Existential.Test
                 .Select(inText => inText.Length);
 
             // Assert
-            Assert.That(theResult.ValueOr(0), Is.EqualTo(0));
+            Assert.That(theResult.GetValueOr(0), Is.EqualTo(0));
         }
     }
 }
