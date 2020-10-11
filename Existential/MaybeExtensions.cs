@@ -58,7 +58,7 @@ namespace Existential
             "CA1002:Do not expose generic lists",
             Justification = "The default value must be of the same type as the input.")]
         public static List<T> ValueOrEmpty<T>(this Maybe<List<T>> inMaybe)
-            => inMaybe.GetValueOr(default(List<T>));
+            => inMaybe.GetValueOr(new List<T>());
 
         /// <summary>
         /// Gets a <see cref="Maybe{T}"/> containing the first matching member of the collection, if it exists.

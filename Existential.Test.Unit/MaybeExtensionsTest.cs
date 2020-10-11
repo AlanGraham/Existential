@@ -92,7 +92,7 @@ namespace Existential.Test
             List<string> theResult = theMaybe.ValueOrEmpty();
 
             // Assert
-            Assert.That(theResult, Has.Count.EqualTo(0));
+            Assert.That(theResult.Count, Is.EqualTo(0));
         }
 
         [Test]

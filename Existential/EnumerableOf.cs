@@ -32,7 +32,7 @@ namespace Existential
         ///     Thrown if the <see cref="IEnumerable" /> collection contains one or member
         ///     that is not of type <typeparamref name="T" />.
         /// </exception>
-        public EnumerableOf(IEnumerable inEnumerable)
+        internal EnumerableOf(IEnumerable inEnumerable)
         {
             // Avoid multiple enumerations by converting to array.
             IEnumerable theObjects = inEnumerable as object[] ?? inEnumerable.Cast<object>().ToArray();
@@ -53,6 +53,13 @@ namespace Existential
 
             Collection = theObjects;
             myLength = new Lazy<int>(() => new List<T>(this).Count);
+        }
+
+        /// <summary>
+        ///     Initialises a new instance of the <see cref="EnumerableOf{T}" /> class.
+        /// </summary>
+        private EnumerableOf()
+        {
         }
 
         /// <summary>Gets the number of members of the collection.</summary>

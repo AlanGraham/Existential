@@ -17,11 +17,25 @@ namespace Existential
         public static IEnumerable<T> From<T>(params T[] inItems) => inItems;
 
         /// <summary>
-        /// Converts an <see cref="IEnumerable"/> to an <see cref="IEnumerable{T}"/> (if possible).
+        ///     Converts an <see cref="IEnumerable" /> to an <see cref="IEnumerable{T}" /> (if possible).
         /// </summary>
         /// <typeparam name="T">The expected type of collection members.</typeparam>
         /// <param name="inEnumerable">A non-generic collection.</param>
-        /// <returns>An <see cref="IEnumerable{T}"/> containing the items.</returns>
-        public static IEnumerable<T> From<T>(IEnumerable inEnumerable) => new EnumerableOf<T>(inEnumerable);
+        /// <returns>An <see cref="IEnumerable{T}" /> containing the items.</returns>
+        public static Maybe<IEnumerable<T>> From<T>(IEnumerable inEnumerable)
+        {
+            Maybe<IEnumerable<T>> theReturnValue;
+
+            try
+            {
+                theReturnValue = new EnumerableOf<T>(inEnumerable);
+            }
+            catch (ArgumentTypeException)
+            {
+                theReturnValue = null;
+            }
+
+            return theReturnValue;
+        }
     }
 }
