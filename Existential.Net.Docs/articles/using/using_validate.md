@@ -3,31 +3,17 @@ uid: using_validate.md
 title: Using Validate
 ---
 # Using Validate
-The static methods in **[Validate](xref:Existential.Validate)** take a 
-simplistic approach to validating whether a value exists or not and will 
-throw an exception if the value doesn't exist at all, or doesn't exist in 
-the expected form. They can be used to perform null-checking in a single line
-of code without repeating the same few lines throughout the codebase.
+The static methods in **[Validate](xref:Existential.Validate)** throw an exception 
+if the value doesn't exist, or sometimes if it doesn't exist in the expected form. 
+They can be used to null-check a parameter in a single line of code without repeating 
+the same few lines throughout your codebase.
 
-If a value does exist, it's passed through - so these methods can be 
-used in situations where you wouldn't want to have to write a few lines
-of validation code at all, such as when passing parameters to a base 
-constructor.
+If the value <em>does</em> exist, Validate's methods return it untouched - so they can be used
+for pass-through validation where you wouldn't want to write lines of code at all, such as when 
+passing arguments to a base or chained constructor.
 
-If you're using Code Analysis to ensure that your code satisfies Microsoft's
-Framework Design Guidelines, these methods can be used to satisfy
-[CA1062: Validate arguments of public methods](https://docs.microsoft.com/en-gb/visualstudio/code-quality/ca1062).
-Until cross-assembly checking becomes standard in Roslyn analysers you 
-will need to add them to your
-[null_check_validation_methods](https://docs.microsoft.com/en-gb/visualstudio/code-quality/ca1062)
-setting in editor.config.
-
+Validate's null-checking methods can be used to 
+[resolve Code Analysis warning CA1062: Validate arguments of public methods](xref:resolving_ca1062.md).
 
 ---
-* Enable cross-assembly checking of Code Analysis CA1062
-* https://docs.microsoft.com/en-us/dotnet/api/microsoft.validatednotnullattribute
-* https://github.com/dotnet/roslyn/issues/35104
-* https://github.com/dotnet/roslyn-analyzers/blob/master/docs/Analyzer%20Configuration.md#null-check-validation-methods
-* dotnet_code_qualityRe.null_check_validation_methods = ThrowIfNull|ThrowIfNullOrEmpty|ThrowIfNullOrWhiteSpace|ToMaybe|Some
-* [CA1062: Validate arguments of public methods](https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/ca1062)
-* [Using Maybe&lt;T&gt;](xref:using_maybe.md)
+

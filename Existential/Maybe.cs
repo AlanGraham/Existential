@@ -35,14 +35,13 @@ namespace Existential
         }
 
         /// <summary>
-        /// Performs an implicit conversion from a <typeparamref name="T"/> to <see cref="Maybe{T}"/>.
+        ///     Performs an implicit conversion from a <typeparamref name="T" /> to <see cref="Maybe{T}" />.
         /// </summary>
         /// <param name="inValue">The value.</param>
         /// <returns>The result of the conversion.</returns>
-        //// Bridge.NET doesn't support simplifying this use of "default" (2020/03/22).
         //// https://github.com/bridgedotnet/Bridge/issues/4046
-        public static implicit operator Maybe<T>(T inValue)
-            => inValue == null ? default(Maybe<T>) : new Maybe<T>(inValue);
+        public static implicit operator Maybe<T>([ValidatedNotNull] T inValue)
+            => inValue == null ? default : new Maybe<T>(inValue);
 
         /// <summary>Implements the == operator.</summary>
         /// <param name="inLeft">The left.</param>
@@ -64,10 +63,7 @@ namespace Existential
         /// <param name="inValue">The value.</param>
         /// <returns>The result of the conversion.</returns>
         /// <remarks>Required by Framework Design Guidelines as an alternate for the implicit operator.</remarks>
-        //// Bridge.NET doesn't support simplifying this use of "default" (2020/03/22).
-        public Maybe<T> ToMaybe([ValidatedNotNull] T inValue) => inValue == null // || inValue is Maybe.MaybeNone
-            ? default
-            : new Maybe<T>(inValue);
+        public Maybe<T> ToMaybe([ValidatedNotNull] T inValue) => inValue;
 
         /// <summary>Returns a <see cref="Maybe{T}" /> when given one, to avoid double-wrapping.</summary>
         /// <param name="inValue">The value.</param>

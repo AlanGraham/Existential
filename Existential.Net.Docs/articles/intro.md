@@ -3,11 +3,12 @@ uid: intro.md
 title: Introduction to Existential.Net
 ---
 # What can I do with Existential.Net?
+
 ## Resolve Code Analysis issues
 Existential.Net provides functionality that helps to resolve a couple of common Code
 Analysis issues.
-* Resolving CA1062: Validate arguments of public methods
-* Resolving CA2000: Dispose objects before losing scope
+* [Resolving CA1062: Validate arguments of public methods](xref:resolving_ca1062.md)
+* [Resolving CA2000: Dispose objects before losing scope](xref:resolving_ca2000.md)
 
 ## Work with nulls
 Existential.Net provides a couple of ways of dealing with the absence of data.

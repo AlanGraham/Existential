@@ -26,17 +26,9 @@ These solutions aren't innovative in themselves - plenty code examples exist out
 there - but Existential brings them together into one tested library so you don't
 have to. 
 
-## Getting started
-Install the package from NuGet, and import the Existential namespace where you want to
-use the library.
+*To get started:*
 
-**[Get the NuGet package](https://www.nuget.org/packages/Existential.Net/)** || **["Getting Started" Articles](xref:intro.md)** || **[API Documentation](xref:index.md)** || **[Access the code](https://dev.azure.com/ggreig/_git/Existential)**
-
-## About the author
-[Gavin Greig](http://www.ggreig.com/)'s been a professional software developer since 1992, 
-and a .NET developer since 2004. Existential.Net's the crystallisation of his experience of
-finding the bits he wishes weren't missing from .NET, often unearthed with the help of static
-code analysis tools.
+**[What can I do with Existential.Net?](xref:intro.md)** || **[API Documentation](xref:index.md)** || **[Access the code](https://dev.azure.com/ggreig/_git/Existential)**
 
 ## ![Existential icon](images/Existential32.png) About the icon
 
@@ -44,6 +36,12 @@ Existential's icon is made up of two symbols from
 [predicate logic](https://en.wikipedia.org/wiki/First-order_logic): 
 * &#8707; (*there exists*) and 
 * &#8708; (*there does not exist*)
+
+## About the author
+[Gavin Greig](http://www.ggreig.com/)'s been a professional software developer since 1992, 
+and a .NET developer since 2004. Existential.Net's the crystallisation of his experience of
+finding the bits he wishes weren't missing from .NET, often unearthed with the help of static
+code analysis tools.
 
 These are the two
 [existential quantifiers](https://en.wikipedia.org/wiki/Existential_quantification)
