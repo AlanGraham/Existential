@@ -232,7 +232,7 @@ namespace Existential.Test
 
             // Assert
             // ReSharper disable once PossiblyMistakenUseOfParamsMethod
-            Assert.That(theResult.GetValueOr(() => CreateEnumerable.From("default")), Contains.Item("default"));
+            Assert.That(theResult.GetValueOr(() => GetGenericEnumerable.From("default")), Contains.Item("default"));
         }
 
         [Test]

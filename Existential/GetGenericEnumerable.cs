@@ -1,4 +1,4 @@
-﻿// <copyright file="CreateEnumerable.cs" company="Gavin Greig">
+﻿// <copyright file="GetGenericEnumerable.cs" company="Gavin Greig">
 //   Copyright (c) Dr. Gavin T.D. Greig, 2020.
 // </copyright>
 
@@ -8,7 +8,7 @@ namespace Existential
     using System.Collections.Generic;
 
     /// <summary>A static class for creating generic IEnumerables.</summary>
-    public static class CreateEnumerable
+    public static class GetGenericEnumerable
     {
         /// <summary>Converts one or more items to an IEnumerable of the same type.</summary>
         /// <typeparam name="T">The type of the items to be converted to an IEnumerable.</typeparam>

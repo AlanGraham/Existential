@@ -30,8 +30,7 @@ the need to know whether there's a value.
 Occasionally it's useful to be able to treat a single value as an IEnumerable&lt;T&gt;, or 
 it would have been useful to have an IEnumerable actually be an IEnumerable&lt;T&gt;.
 Existential.Net provides conversions to enable that.
-* CreateEnumerable
-* EnumerableOf
+* GetGenericEnumerable
 ## Work with types
 Existential provides a number of other small utility classes; to safely return an instance
 of IDisposable from a method, to calculate hash codes, to provide the name of the current

@@ -6,6 +6,7 @@ namespace Existential.Extensions
 {
     using System;
     using System.Linq;
+    using System.Text;
 
     /// <summary>Contains Type extension methods for better support of generics.</summary>
     public static class ExtensionMethodsType
@@ -71,12 +72,13 @@ namespace Existential.Extensions
         private static string GetGenericAwareTypeName(this Type inType, string inTypeNameRoot)
         {
             string theTypeNameRoot = inTypeNameRoot;
+
             if (!inType.IsGenericType)
             {
                 return theTypeNameRoot;
             }
 
-            System.Text.StringBuilder theTypeNameBuilder = new System.Text.StringBuilder()
+            StringBuilder theTypeNameBuilder = new StringBuilder()
                 .Append(theTypeNameRoot.Substring(0, theTypeNameRoot.IndexOf('`')))
                 .Append('<')
                 .Append(string.Join(

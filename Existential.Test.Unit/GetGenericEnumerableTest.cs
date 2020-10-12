@@ -1,4 +1,4 @@
-﻿// <copyright file="CreateEnumerableTest.cs" company="Gavin Greig">
+﻿// <copyright file="GetGenericEnumerableTest.cs" company="Gavin Greig">
 //   Copyright (c) Dr. Gavin T.D. Greig, 2020.
 // </copyright>
 
@@ -10,7 +10,7 @@ namespace Existential.Test
 
     using NUnit.Framework;
 
-    public static class CreateEnumerableTest
+    public static class GetGenericEnumerableTest
     {
         [Test]
         public static void From_Null_ReturnsCollection()
@@ -21,7 +21,7 @@ namespace Existential.Test
             // Act
             // ReSharper disable once ExpressionIsAlwaysNull
             // ReSharper disable once PossiblyMistakenUseOfParamsMethod
-            IEnumerable<string> theResult = CreateEnumerable.From(theNull);
+            IEnumerable<string> theResult = GetGenericEnumerable.From(theNull);
 
             // Assert
             Assert.That(theResult, Is.InstanceOf<IEnumerable<string>>()
@@ -33,7 +33,7 @@ namespace Existential.Test
         public static void From_SingleInt_ReturnsCollection()
         {
             // Act
-            IEnumerable<int> theResult = CreateEnumerable.From(1);
+            IEnumerable<int> theResult = GetGenericEnumerable.From(1);
 
             // Assert
             Assert.That(theResult, Is.InstanceOf<IEnumerable<int>>()
@@ -46,7 +46,7 @@ namespace Existential.Test
         {
             // Act
             // ReSharper disable once PossiblyMistakenUseOfParamsMethod
-            IEnumerable<string> theResult = CreateEnumerable.From("Test");
+            IEnumerable<string> theResult = GetGenericEnumerable.From("Test");
 
             // Assert
             Assert.That(theResult, Is.InstanceOf<IEnumerable<string>>()
@@ -58,7 +58,7 @@ namespace Existential.Test
         public static void From_TwoIntegers_ReturnsCollection()
         {
             // Act
-            IEnumerable<int> theResult = CreateEnumerable.From(1, 2);
+            IEnumerable<int> theResult = GetGenericEnumerable.From(1, 2);
 
             // Assert
             Assert.That(theResult, Is.InstanceOf<IEnumerable<int>>()
@@ -74,7 +74,7 @@ namespace Existential.Test
             var theEnumerable = new ArrayList { null };
 
             // Act
-            IEnumerable<string> theResult = CreateEnumerable.From<string>(theEnumerable)
+            IEnumerable<string> theResult = GetGenericEnumerable.From<string>(theEnumerable)
                 .GetValueOr(new List<string>());
 
             // Assert
@@ -89,7 +89,7 @@ namespace Existential.Test
             var theEnumerable = new ArrayList { 1 };
 
             // Act
-            IEnumerable<int> theResult = CreateEnumerable.From<int>(theEnumerable)
+            IEnumerable<int> theResult = GetGenericEnumerable.From<int>(theEnumerable)
                 .GetValueOr(new List<int>());
 
             // Assert
@@ -104,7 +104,7 @@ namespace Existential.Test
             var theEnumerable = new ArrayList { "Test" };
 
             // Act
-            IEnumerable<string> theResult = CreateEnumerable.From<string>(theEnumerable)
+            IEnumerable<string> theResult = GetGenericEnumerable.From<string>(theEnumerable)
                 .GetValueOr(new List<string>());
 
             // Assert
@@ -119,7 +119,7 @@ namespace Existential.Test
             var theEnumerable = new ArrayList { 1, 2 };
 
             // Act
-            IEnumerable<int> theResult = CreateEnumerable.From<int>(theEnumerable)
+            IEnumerable<int> theResult = GetGenericEnumerable.From<int>(theEnumerable)
                 .GetValueOr(new List<int>());
 
             // Assert
@@ -136,7 +136,7 @@ namespace Existential.Test
             object[] theObjects = { 1, 2 };
 
             // Act
-            IEnumerable<int> theResult = CreateEnumerable.From<int>(theObjects)
+            IEnumerable<int> theResult = GetGenericEnumerable.From<int>(theObjects)
                 .GetValueOr(new List<int>());
 
             // Assert
@@ -150,7 +150,7 @@ namespace Existential.Test
             object[] theObjects = { 1, "A test string" };
 
             // Act
-            IEnumerable<int> theResult = CreateEnumerable.From<int>(theObjects)
+            IEnumerable<int> theResult = GetGenericEnumerable.From<int>(theObjects)
                 .GetValueOr(new List<int>());
 
             // Assert
@@ -166,7 +166,7 @@ namespace Existential.Test
             object[] theObjects = { 1, "A test string" };
 
             // Act
-            IEnumerable<string> theResult = CreateEnumerable.From<string>(theObjects)
+            IEnumerable<string> theResult = GetGenericEnumerable.From<string>(theObjects)
                 .GetValueOr(new List<string>());
 
             // Assert
