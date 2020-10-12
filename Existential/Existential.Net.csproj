@@ -16,7 +16,7 @@
     <IsPackable>true</IsPackable>
     <PackageTags>standard,validation</PackageTags>
     <PackageLicenseExpression>MS-PL</PackageLicenseExpression>
-    <PackageReleaseNotes>Fixed Enumerable bugs (discovered by Alan Graham), changed a class name to avoid a clash with Linq, and extended testing.</PackageReleaseNotes>
+    <PackageReleaseNotes>Breaking changes to IEnumerable&lt;T&gt; support classes, and improvements to documentation.</PackageReleaseNotes>
 
     <!-- This should support NuGet.org's readme functionality when it's delivered. -->
     <!-- https://github.com/NuGet/Home/wiki/Embedding-and-displaying-NuGet-READMEs -->
