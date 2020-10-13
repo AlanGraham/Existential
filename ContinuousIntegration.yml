@@ -30,6 +30,9 @@ steps:
     scannerMode: 'MSBuild'
     projectKey: 'ggreig_Existential'
     projectName: 'Existential'
+    extraProperties : |
+      sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/coverage.opencover.xml
+      sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
 
 - task: DotNetCoreCLI@2
   displayName: 'Build'
@@ -43,7 +46,7 @@ steps:
   displayName: 'Test'
   inputs:
     command: 'test'
-    arguments: '--collect:"XPlat Code Coverage" -- RunConfiguration.DisableAppDomain=true'
+    arguments: '--collect:"XPlat Code Coverage" -- RunConfiguration.DisableAppDomain=true /pCoverletOutputFormat="opencover,cobertura"'
     testRunTitle: 'Run Test and collect Coverage'
 
 - task: DotNetCoreCLI@2
