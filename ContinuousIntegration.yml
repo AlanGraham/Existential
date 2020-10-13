@@ -49,7 +49,7 @@ steps:
     arguments: '--collect:"XPlat Code Coverage" -- RunConfiguration.DisableAppDomain=true'
     testRunTitle: 'Run Test and collect Coverage'
     nobuild: true
-    publishTestResults: false
+#    publishTestResults: false
 
 - task: DotNetCoreCLI@2
   displayName: 'New Manifest'
