@@ -46,7 +46,7 @@ steps:
   displayName: 'Test'
   inputs:
     command: 'test'
-    arguments: '--collect:"XPlat Code Coverage" -- RunConfiguration.DisableAppDomain=true /p:CoverletOutputFormat=cobertura'
+    arguments: '--collect:"XPlat Code Coverage" -- RunConfiguration.DisableAppDomain=true /p:CoverletOutputFormat="cobertura"'
     testRunTitle: 'Run Test and collect Coverage'
     nobuild: true
     publishTestResults: false
