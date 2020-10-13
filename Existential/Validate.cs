@@ -398,6 +398,10 @@ namespace Existential
         ///     </para>
         /// </exception>
         /// <seealso cref="ThrowIfNullOrWhiteSpace" />
+        [SuppressMessage(
+            "Style",
+            "IDE0046:Convert to conditional expression",
+            Justification = "Complex method - would reduce readability.")]
         public static string ThrowIfNullOrEmpty([ValidatedNotNull] string inValue, string inName, bool inTrim)
         {
             if (inValue == null)
@@ -407,11 +411,14 @@ namespace Existential
 
             string theTestValue = inTrim ? inValue.Trim() : inValue;
 
-            return string.IsNullOrEmpty(theTestValue)
-                       ? throw (inTrim
-                                    ? new ArgumentException(Resources.StringCannotBeEmptyOrWhiteSpaceWithTrim, inName)
-                                    : new ArgumentException(Resources.StringCannotBeEmpty, inName))
-                       : inValue;
+            if (string.IsNullOrEmpty(theTestValue))
+            {
+                throw inTrim
+                    ? new ArgumentException(Resources.StringCannotBeEmptyOrWhiteSpaceWithTrim, inName)
+                    : new ArgumentException(Resources.StringCannotBeEmpty, inName);
+            }
+
+            return inValue;
         }
 
         /// <summary>
