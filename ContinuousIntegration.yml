@@ -31,7 +31,7 @@ steps:
     projectKey: 'ggreig_Existential'
     projectName: 'Existential'
     extraProperties : |
-      sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/**/coverage.opencover.xml
+      sonar.cs.opencover.reportsPaths=$(Agent.TempDirectory)/**/coverage.opencover.xml
       sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
 
 - task: DotNetCoreCLI@2
