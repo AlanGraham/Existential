@@ -25,11 +25,11 @@ if a null is encountered. They're simple to understand, ensure consistent handli
 and save a few lines of code each time they're used, but you'll need to decide for yourself how to 
 handle any exceptions that are thrown as a result.
 
-[Maybe&lt;T&gt;](xref:using_maybe.md) takes a little more getting used to, but can help to make your 
-code more robust, and won't throw exceptions. It's similar in concept to 
+[Maybe&lt;T&gt;](xref:using_maybe.md) takes a little more getting used to, but doesn't throw exceptions,
+so if used carefully can help to make your code more robust. It's similar in concept to 
 [Nullable&lt;T&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1) - it may 
 or may not contain a value - but takes the approach a little further. Take a little time to read 
-"[Using Maybe&lt;T&gt;](xref:using_maybe.md)" and see if it's for you.
+<em>[Using Maybe&lt;T&gt;](xref:using_maybe.md)</em> and see if it's for you.
 
 ### 2. Call the relevant methods
 The following methods on the Validate will resolve CA1062:
@@ -40,6 +40,7 @@ The following methods on the Validate will resolve CA1062:
 * Validate.ThrowIfNullOrWhiteSpace(String, String)
 
 Methods on Maybe&lt;T&gt;:
+* The implicit operator (can be used by assignment: <code>Maybe&lt;T&gt; x = ...</code>)
 * Maybe.Some&lt;T&gt;(T)
 * Maybe&lt;T&gt;.ToMaybe(T)
 * Maybe&lt;T&gt;.ToMaybe(Maybe&lt;T&gt;)

@@ -1,4 +1,8 @@
-﻿- name: Use Maybe<T>
+﻿- name: Resolve CA1062
+  href: resolving_ca1062.md
+- name: Resolve CA2000
+  href: resolving_ca2000.md
+- name: Use Maybe<T>
   href: using_maybe.md
 - name: Use Validate
   href: using_validate.md
