@@ -286,12 +286,17 @@ namespace Existential
         ///         found to be unexpectedly empty will be included in the exception message.
         ///     </para>
         /// </exception>
+        [SuppressMessage(
+            "Style",
+            "IDE0046:Convert to conditional expression",
+            Justification = "Complex method - would reduce readability.")]
         public static T ThrowIfNullOrEmpty<T>([ValidatedNotNull] T inCollection, string inName)
             where T : class, IEnumerable
         {
             if (inCollection == null)
             {
-                throw new ArgumentNullException(inName,
+                throw new ArgumentNullException(
+                    inName,
                     FormatArgumentMessage("The collection \"{0}\" is null", inName));
             }
 
@@ -451,6 +456,10 @@ namespace Existential
         ///         found to be unexpectedly empty or containing only white space will be included in the exception message.
         ///     </para>
         /// </exception>
+        [SuppressMessage(
+            "Style",
+            "IDE0046:Convert to conditional expression",
+            Justification = "Complex method - would reduce readability.")]
         public static string ThrowIfNullOrWhiteSpace([ValidatedNotNull] string inValue, string inName)
         {
             if (inValue == null)
