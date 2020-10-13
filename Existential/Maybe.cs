@@ -128,7 +128,9 @@ namespace Existential
         ///     type will be returned. If the default value for the type is null, the empty string will
         ///     be returned.
         /// </remarks>
-        [SuppressMessage("Style", "IDE0046:Convert to conditional expression",
+        [SuppressMessage(
+            "Style",
+            "IDE0046:Convert to conditional expression",
             Justification = "Complex method - would reduce readability.")]
         public override string ToString()
         {
