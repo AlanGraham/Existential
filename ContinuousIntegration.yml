@@ -46,9 +46,6 @@ steps:
     arguments: '--collect:"XPlat Code Coverage" -- RunConfiguration.DisableAppDomain=true'
     testRunTitle: 'Run Test and collect Coverage'
 
-- task: SonarCloudAnalyze@1
-  displayName: 'SonarCloud Analysis'
-
 - task: DotNetCoreCLI@2
   displayName: 'New Manifest'
   inputs:
@@ -116,6 +113,9 @@ steps:
 #    command: 'push'
 #    nugetFeedType: 'external'
 #    externalEndPoint: 'MyNuGetServiceConnection'
+
+- task: SonarCloudAnalyze@1
+  displayName: 'SonarCloud Analysis'
 
 - task: SonarCloudPublish@1
   displayName: 'Publish SonarCloud Quality Gate Result'
