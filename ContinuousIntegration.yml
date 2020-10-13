@@ -31,7 +31,7 @@ steps:
     projectKey: 'ggreig_Existential'
     projectName: 'Existential'
     extraProperties : |
-      sonar.coverageReportPaths==$(Build.SourcesDirectory)/coverlet/reports/SonarQube.xml
+      sonar.coverageReportPaths=coverlet/reports/SonarQube.xml
       sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/coverlet/reports/SonarQube.xml
       sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
 
