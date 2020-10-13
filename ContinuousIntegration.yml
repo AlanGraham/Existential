@@ -46,7 +46,7 @@ steps:
   displayName: 'Test'
   inputs:
     command: 'test'
-    arguments: '--collect:"XPlat Code Coverage" -- RunConfiguration.DisableAppDomain=true "/p:CoverletOutputFormat=\\"opencover,cobertura\\""'
+    arguments: '--collect:"XPlat Code Coverage" -- RunConfiguration.DisableAppDomain=true "/p:CoverletOutputFormat=opencover"'
     testRunTitle: 'Run Test and collect Coverage'
 
 - task: DotNetCoreCLI@2
