@@ -1,4 +1,4 @@
-body {
+﻿body {
     color: #ccd5dc;
     font-family: "Open Sans",sans-serif;
     line-height: 1.5;
@@ -106,12 +106,6 @@ article h4 {
     border-right: none;
 }
 
-.sidefilter {
-    background-color: #2d2d30;
-    border-left: none;
-    border-right: none;
-}
-
 .toc-filter {
     padding: 10px;
     margin: 0;
@@ -193,7 +187,7 @@ pre {
     font-size: 13px;
     word-break: break-all;
     word-wrap: break-word;
-    background-color: #1e1e1e;;
+    background-color: #1e1e1e;
     border-radius: 0;
     border: none;
 }

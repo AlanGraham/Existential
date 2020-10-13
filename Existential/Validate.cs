@@ -9,8 +9,9 @@ namespace Existential
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
 
-    using Existential.Extensions;
-    using Existential.Properties;
+    using Extensions;
+
+    using Properties;
 
     /// <summary>
     ///     <para>
@@ -286,15 +287,20 @@ namespace Existential
         ///     </para>
         /// </exception>
         public static T ThrowIfNullOrEmpty<T>([ValidatedNotNull] T inCollection, string inName)
-            where T : class, IEnumerable =>
-            inCollection == null
-                ?
-                throw new ArgumentNullException(inName, FormatArgumentMessage("The collection \"{0}\" is null", inName))
-                : !inCollection.GetEnumerator().MoveNext()
-                    ? throw new ArgumentException(
-                          FormatArgumentMessage("The collection \"{0}\" is empty", inName),
-                          inName)
-                    : inCollection;
+            where T : class, IEnumerable
+        {
+            if (inCollection == null)
+            {
+                throw new ArgumentNullException(inName,
+                    FormatArgumentMessage("The collection \"{0}\" is null", inName));
+            }
+
+            return !inCollection.GetEnumerator().MoveNext()
+                ? throw new ArgumentException(
+                    FormatArgumentMessage("The collection \"{0}\" is empty", inName),
+                    inName)
+                : inCollection;
+        }
 
         /// <summary>
         ///     <em>ThrowIfNullOrEmpty</em>
@@ -445,12 +451,17 @@ namespace Existential
         ///         found to be unexpectedly empty or containing only white space will be included in the exception message.
         ///     </para>
         /// </exception>
-        public static string ThrowIfNullOrWhiteSpace([ValidatedNotNull] string inValue, string inName) =>
-            inValue == null
-                ? throw new ArgumentNullException(inName)
-                : string.IsNullOrWhiteSpace(inValue)
-                    ? throw new ArgumentException(Resources.StringCannotBeEmptyOrWhiteSpace, inName)
-                    : inValue;
+        public static string ThrowIfNullOrWhiteSpace([ValidatedNotNull] string inValue, string inName)
+        {
+            if (inValue == null)
+            {
+                throw new ArgumentNullException(inName);
+            }
+
+            return string.IsNullOrWhiteSpace(inValue)
+                ? throw new ArgumentException(Resources.StringCannotBeEmptyOrWhiteSpace, inName)
+                : inValue;
+        }
 
         /// <summary>Inserts a name into an exception message.</summary>
         /// <param name="inMessage">The message into which the name should be inserted.</param>

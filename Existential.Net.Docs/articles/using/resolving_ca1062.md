@@ -32,15 +32,15 @@ or may not contain a value - but takes the approach a little further. Take a lit
 <em>[Using Maybe&lt;T&gt;](xref:using_maybe.md)</em> and see if it's for you.
 
 ### 2. Call the relevant methods
-The following methods on the Validate will resolve CA1062:
+Using the following methods on the Validate will resolve CA1062:
 * Validate.ThrowIfNull&lt;T&gt;(T, String)
 * Validate.ThrowIfNullOrEmpty(String, String)
 * Validate.ThrowIfNullOrEmpty(String, String, Boolean)
 * Validate.ThrowIfNullOrEmpty&lt;T&gt;(T, String)
 * Validate.ThrowIfNullOrWhiteSpace(String, String)
 
-Methods on Maybe&lt;T&gt;:
-* The implicit operator (can be used by assignment: <code>Maybe&lt;T&gt; x = ...</code>)
+Using the following methods on Maybe&lt;T&gt; will resolve CA1062:
+* The implicit operator (can be used by assignment, e.g.: <code>Maybe&lt;T&gt; x = ...</code>)
 * Maybe.Some&lt;T&gt;(T)
 * Maybe&lt;T&gt;.ToMaybe(T)
 * Maybe&lt;T&gt;.ToMaybe(Maybe&lt;T&gt;)

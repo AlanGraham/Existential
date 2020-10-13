@@ -72,17 +72,17 @@ namespace Existential
         public Maybe<T> ToMaybe([ValidatedNotNull] Maybe<T> inValue) => inValue;
 
         /// <summary>Indicates whether this instance and a specified object are equal.</summary>
-        /// <param name="inObj">The object to compare with the current instance.</param>
+        /// <param name="obj">The object to compare with the current instance.</param>
         /// <returns>
-        /// true if <paramref name="inObj" /> and this instance are the same type and represent the
-        /// same value; otherwise, false.
+        ///     true if <paramref name="obj" /> and this instance are the same type and represent the
+        ///     same value; otherwise, false.
         /// </returns>
         [SuppressMessage(
             "Naming",
             "CA1725:Parameter names should match base declaration",
             Justification = "Base declaration is inconsistent between .NET and Bridge.")]
-        public override bool Equals(object inObj)
-            => inObj is Maybe<T> theOther && Equals(theOther);
+        public override bool Equals(object obj)
+            => obj is Maybe<T> theOther && Equals(theOther);
 
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
@@ -120,20 +120,23 @@ namespace Existential
         public override int GetHashCode() => myValueExists ? myValue.GetHashCode() : 0;
 
         /// <summary>
-        /// Returns the underlying value, or the default for its type, converted to a string.
+        ///     Returns the underlying value, or the default for its type, converted to a string.
         /// </summary>
         /// <returns>The string representation of the value, or a suitable fall-back value.</returns>
         /// <remarks>
-        /// Fall-backs: if no value exists, the string representation of the default value for the
-        /// type will be returned. If the default value for the type is null, the empty string will
-        /// be returned.
+        ///     Fall-backs: if no value exists, the string representation of the default value for the
+        ///     type will be returned. If the default value for the type is null, the empty string will
+        ///     be returned.
         /// </remarks>
         public override string ToString()
-            => myValueExists ?
-                myValue.ToString() :
-                default(T) != null ?
-                    default(T)?.ToString() :
-                    string.Empty;
+        {
+            if (myValueExists)
+            {
+                return myValue.ToString();
+            }
+
+            return default(T) != null ? default(T)?.ToString() : string.Empty;
+        }
 
         /// <summary>Applies different functions depending on whether the value exists.</summary>
         /// <typeparam name="TResult">The type of the result.</typeparam>

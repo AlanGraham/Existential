@@ -9,7 +9,7 @@ namespace Existential.Net.Docs
 
     /// <summary>The entry point for the website program.</summary>
     /// <remarks>Inspired by: https://www.tpeczek.com/2017/05/generating-documentation-with-docfx-as.html.</remarks>
-    public class Program
+    public static class Program
     {
         /// <summary>The host builder for the web site.</summary>
         /// <param name="args">
