@@ -9,8 +9,6 @@ namespace Existential
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
 
-    using Extensions;
-
     using Properties;
 
     /// <summary>

@@ -73,7 +73,7 @@ dotnet_separate_import_directive_groups = true
 # Enable cross-assembly checking of Code Analysis CA1062
 # https://github.com/dotnet/roslyn/issues/35104
 # https://github.com/dotnet/roslyn-analyzers/blob/master/docs/Analyzer%20Configuration.md#null-check-validation-methods
-dotnet_code_qualityRe.null_check_validation_methods = ThrowIfNull|ThrowIfNullOrEmpty|ThrowIfNullOrWhiteSpace|ToMaybe|Some|Existential.Maybe``.op_Implicit(``)~Existential.Maybe``
+dotnet_code_quality.null_check_validation_methods = ThrowIfNull|ThrowIfNullOrEmpty|ThrowIfNullOrWhiteSpace|ToMaybe|Some|Existential.Maybe``.op_Implicit(``)~Existential.Maybe``
 
 # Restrict FxCop analyzer to checking only public and protected interfaces for Design issues.
 dotnet_code_quality.Design.api_surface = public, protected

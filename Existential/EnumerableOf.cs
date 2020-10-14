@@ -10,8 +10,6 @@ namespace Existential
     using System.Globalization;
     using System.Linq;
 
-    using Extensions;
-
     using Properties;
 
     /// <summary>

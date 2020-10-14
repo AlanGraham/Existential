@@ -6,4 +6,9 @@ title: Resolving CA2000
 
 ## What's the problem?
 
-## how do I resolve it?
+## How do I resolve it?
+
+### Call the relevant method
+
+* [Disposable.SafelyReturn&lt;T&gt;](xref:Existential.Disposable#Existential_Disposable_SafelyReturn__1_System_Action___0__)
+

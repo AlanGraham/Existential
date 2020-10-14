@@ -1,18 +1,16 @@
-﻿// <copyright file="ExtensionMethodsTypeTest.cs" company="Gavin Greig">
+﻿// <copyright file="TypeExtensionMethodsTest.cs" company="Gavin Greig">
 //   Copyright (c) Dr. Gavin T.D. Greig, 2020.
 // </copyright>
 
-namespace Existential.Extensions.Test
+namespace Existential.Test
 {
     using System;
     using System.Collections.Generic;
 
-    using Existential.Extensions;
-
     using NUnit.Framework;
 
     [TestFixture]
-    public static class ExtensionMethodsTypeTest
+    public static class TypeExtensionMethodsTest
     {
         [Test]
         public static void GetGenericAwareFullTypeName_WithGenericType_Succeeds()

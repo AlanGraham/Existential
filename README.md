@@ -20,8 +20,11 @@ that can target .NET Standard 2.0 you can build the library itself. The document
 and test projects also require support for .NET Core 3.1.
 
 # Contribute
-If you can successfully fork the code from Azure DevOps please feel free to submit a 
-pull request, but at the time of writing some problems have been experienced with that 
-route. Hopefully that will be fixed at a future date. In the meantime, if you're unable
-to do that, please submit any bugs or feature requests through the "Contact owners" form 
-[on NuGet.org](https://www.nuget.org/packages/Existential.Net).
+Fork the code to your own account in Azure DevOps and submit a pull request. A lot of open-source code
+is on GitHub. Sorry, this isn't, because I also use Azure DevOps professionally, need a testing ground,
+and this is it. If you don't want to sign up to Azure DevOps yourself (it's 
+[free for up to 5 people](https://azure.microsoft.com/en-us/pricing/details/devops/azure-devops-services/)), 
+you can submit any bugs or feature 
+requests through the "Contact owners" form 
+[on NuGet.org](https://www.nuget.org/packages/Existential.Net). I may look into mirroring to GitHub, but
+it's not a top priority.

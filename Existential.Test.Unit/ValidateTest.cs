@@ -9,14 +9,9 @@ namespace Existential.Test
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
 
-    using Existential.Extensions;
-
     using FsCheck;
 
-    using NUnit.Framework;
-
-    // using AssertPropertyThat = FsCheck.Prop;
-    using PropertyAttribute = FsCheck.NUnit.PropertyAttribute;
+    using NUnit.Framework; // using AssertPropertyThat = FsCheck.Prop;
 
     /// <summary>Unit tests for parameter validation methods.</summary>
     [TestFixture]
@@ -223,7 +218,7 @@ namespace Existential.Test
             Assert.AreEqual(theResult, theGuid);
         }
 
-        [Property]
+        [FsCheck.NUnit.Property]
         public static Property ThrowIfNullOrEmpty_WithNonWhiteSpaceString_ReturnsValue(NonEmptyString inText, bool inTrim)
         {
             Func<bool> theProperty = () => Validate.ThrowIfNullOrEmpty(inText.Get, nameof(inText), inTrim) == inText.Get;

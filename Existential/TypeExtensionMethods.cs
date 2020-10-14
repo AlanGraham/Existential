@@ -1,15 +1,15 @@
-﻿// <copyright file="ExtensionMethodsType.cs" company="Gavin Greig">
+﻿// <copyright file="TypeExtensionMethods.cs" company="Gavin Greig">
 //     Copyright (c) Dr. Gavin T.D. Greig, 2020.
 // </copyright>
 
-namespace Existential.Extensions
+namespace Existential
 {
     using System;
     using System.Linq;
     using System.Text;
 
     /// <summary>Contains Type extension methods for better support of generics.</summary>
-    public static class ExtensionMethodsType
+    public static class TypeExtensionMethods
     {
         /// <summary>Gets the full name of the type, including any generic type parameters.</summary>
         /// <param name="inType">The type for which to get the full name.</param>
