@@ -11,6 +11,7 @@
 <img alt="Azure DevOps releases" src="https://img.shields.io/azure-devops/release/ggreig/9c4fc971-bef3-428a-ab81-cf30a24bea74/1/1">
 <a href="https://www.nuget.org/packages/Existential.Net/"><img alt="Nuget (with prereleases)" src="https://img.shields.io/nuget/vpre/Existential.Net"></a>
 
+
 Existential is a utility library that contains parameter validation methods, a Maybe monad, 
 and more. It can be used to work effectively with nulls, to efficiently resolve Code Analysis 
 issues [CA1062](xref:resolving_ca1062.md) and [CA2000](xref:resolving_ca2000.md), to help generate 

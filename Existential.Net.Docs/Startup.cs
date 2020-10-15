@@ -11,15 +11,15 @@ namespace Existential.Net.Docs
     using Microsoft.Extensions.Hosting;
 
     /// <summary>Start-up actions for the web site.</summary>
-    public class Startup
+    public sealed class Startup
     {
         /// <summary>Configures the application.</summary>
         /// <param name="app">The application builder.</param>
         /// <param name="env">The web host environment.</param>
         /// <remarks>
-        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        ///     This method gets called by the run-time. Use this method to configure the HTTP request pipeline.
         /// </remarks>
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -33,9 +33,9 @@ namespace Existential.Net.Docs
                 .UseEndpoints(endpoints =>
                     {
                         _ = endpoints.MapGet("/", async context =>
-                            {
-                                await context.Response.WriteAsync("Hello World!");
-                            });
+                        {
+                            await context.Response.WriteAsync("Hello World!").ConfigureAwait(false);
+                        });
                     });
         }
 
@@ -44,9 +44,11 @@ namespace Existential.Net.Docs
         /// <remarks>
         ///     This method gets called by the run-time. Use this method to add services to the
         ///     container. For more information on how to configure your application, visit
-        ///     https://go.microsoft.com/fwlink/?LinkID=398940
+        ///     https://go.microsoft.com/fwlink/?LinkID=398940.
         /// </remarks>
-        public void ConfigureServices(IServiceCollection _)
+#pragma warning disable SA1313 // Parameter names should begin with lower-case letter
+        public static void ConfigureServices(IServiceCollection _)
+#pragma warning restore SA1313 // Parameter names should begin with lower-case letter
         {
             // Haven't needed to add anything here yet.
         }

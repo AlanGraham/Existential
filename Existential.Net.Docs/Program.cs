@@ -13,15 +13,15 @@ namespace Existential.Net.Docs
     {
         /// <summary>The host builder for the web site.</summary>
         /// <param name="args">
-        /// Command line arguments passed through from <see cref="Main(string[])" />
+        ///     Command line arguments passed through from <see cref="Main(string[])" />.
         /// </param>
         /// <returns>The builder for the web site.</returns>
         public static IHostBuilder CreateHostBuilder(string[] args) =>
-                   Host.CreateDefaultBuilder(args)
-                       .ConfigureWebHostDefaults(webBuilder =>
-                        {
-                            _ = webBuilder.UseStartup<Startup>();
-                        });
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    _ = webBuilder.UseStartup<Startup>();
+                });
 
         /// <summary>The main method of the website.</summary>
         /// <param name="args">Command line arguments.</param>
