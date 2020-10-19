@@ -11,9 +11,12 @@ to ensure that your code satisfies Microsoft's
 [Framework Design Guidelines](https://docs.microsoft.com/en-us/dotnet/standard/design-guidelines/), 
 you've probably encountered warning
 [CA1062: Validate arguments of public methods](https://docs.microsoft.com/en-gb/visualstudio/code-quality/ca1062).
+It occurs when you use a parameter of a public method in a way that could cause an unexpected 
+[NullReferenceException](https://docs.microsoft.com/en-us/dotnet/api/system.nullreferenceexception)
+to occcur.
+
 You can use the methods in Existential.Net to resolve that warning consistently and
-concisely, without having to sprinkle your code with lots of repetitive null-checking. The most
-you'll need is a single line for each parameter that has to be checked.
+concisely, without having to sprinkle your code with lots of lines of repetitive null-checking.
 
 ## How do I resolve it?
 There are three steps.
@@ -42,13 +45,15 @@ Existential.Net supports two alternate approaches to dealing with nulls, represe
 The static [Validate](xref:using_validate.md) class contains methods that will throw an
 [ArgumentNullException](https://docs.microsoft.com/en-us/dotnet/api/system.argumentnullexception)
 if a null is encountered. They're simple to understand, ensure consistent handling of null-detection,
-and save a few lines of code each time they're used, but you'll need to decide for yourself how to 
-handle any exceptions that are thrown as a result.
+and save a few lines of code each time they're used, but of course they don't eradicate exceptions,
+they just make them a bit more consistent and informative; and you'll still need to decide for yourself 
+how to handle them.
 
-[Maybe&lt;T&gt;](xref:using_maybe.md) takes a little more getting used to, but doesn't throw exceptions,
-so if used carefully can help to make your code more robust. It's similar in concept to 
-[Nullable&lt;T&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1) - it may 
-or may not contain a value - but takes the approach a little further. Take a little time to read 
+[Maybe&lt;T&gt;](xref:using_maybe.md) takes a little more getting used to, but it's the better option.
+It can be used to prevent exceptions as a result of unexpected nulls altogether, making your code more 
+robust. It's similar in concept to 
+[Nullable&lt;T&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1) -
+it may or may not contain a value - but takes the approach a little further. Take a little time to read 
 <em>[Using Maybe&lt;T&gt;](xref:using_maybe.md)</em> and see if it's for you.
 
 ### 3. Call a relevant method

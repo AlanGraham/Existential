@@ -4,7 +4,6 @@
 
 namespace Existential.Test
 {
-    using System;
     using System.IO;
     using System.IO.Compression;
 
@@ -13,6 +12,16 @@ namespace Existential.Test
     [TestFixture]
     public static class DisposableTest
     {
+        [Test]
+        public static void Disposable_SafelyReturnWithNull_RetainsDefaultManagedValueOutsideCreationScope()
+        {
+            // Act
+            TestDummyDisposable theResult = Disposable.SafelyReturn<TestDummyDisposable>();
+
+            // Assert
+            Assert.That(theResult.ManagedObject, Is.Not.Null.And.TypeOf<MemoryStream>());
+        }
+
         [Test]
         public static void Disposable_SafelyReturn_RetainsDefaultManagedValueOutsideCreationScope()
         {
@@ -23,7 +32,7 @@ namespace Existential.Test
             }
 
             // Act
-            TestDummyDisposable theResult = Disposable.SafelyReturn((Action<TestDummyDisposable>)EmptyInitialiser);
+            TestDummyDisposable theResult = Disposable.SafelyReturn<TestDummyDisposable>(EmptyInitialiser);
 
             // Assert
             Assert.That(theResult.ManagedObject, Is.Not.Null.And.TypeOf<MemoryStream>());
@@ -37,7 +46,7 @@ namespace Existential.Test
                 inDisposable.ManagedObject = new BrotliStream(new MemoryStream(), CompressionMode.Compress);
 
             // Act
-            TestDummyDisposable theResult = Disposable.SafelyReturn((Action<TestDummyDisposable>)Initialiser);
+            TestDummyDisposable theResult = Disposable.SafelyReturn<TestDummyDisposable>(Initialiser);
 
             // Assert
             Assert.That(theResult.ManagedObject, Is.Not.Null.And.TypeOf<BrotliStream>());
@@ -46,11 +55,9 @@ namespace Existential.Test
         [Test]
         public static void Disposable_SafelyReturn_RetainsUnmanagedValueOutsideCreationScope()
         {
-            // Arrange
-            static void Initialiser(TestDummyDisposable inDisposable) => inDisposable.UnmanagedObject = "A test string";
-
             // Act
-            TestDummyDisposable theResult = Disposable.SafelyReturn((Action<TestDummyDisposable>)Initialiser);
+            TestDummyDisposable theResult = Disposable.SafelyReturn<TestDummyDisposable>(
+                inDisposable => inDisposable.UnmanagedObject = "A test string");
 
             // Assert
             Assert.That(theResult.UnmanagedObject, Is.EqualTo("A test string"));

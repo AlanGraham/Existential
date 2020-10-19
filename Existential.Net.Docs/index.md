@@ -6,10 +6,6 @@
 
 
 ## Introduction
-<img alt="Azure DevOps builds (branch)" src="https://img.shields.io/azure-devops/build/ggreig/Existential/1/main">
-<img alt="SonarCloud quality gate" src="https://sonarcloud.io/api/project_badges/measure?project=ggreig_Existential&metric=alert_status">
-<img alt="Azure DevOps releases" src="https://img.shields.io/azure-devops/release/ggreig/9c4fc971-bef3-428a-ab81-cf30a24bea74/1/1">
-<a href="https://www.nuget.org/packages/Existential.Net/"><img alt="Nuget (with prereleases)" src="https://img.shields.io/nuget/vpre/Existential.Net"></a>
 
 
 Existential is a utility library that contains parameter validation methods, a Maybe monad, 
@@ -33,6 +29,14 @@ have to.
 
 **[What can I do with Existential.Net?](xref:intro.md)** || **[API Documentation](xref:index.md)** || **[Access the code](https://dev.azure.com/ggreig/_git/Existential)**
 
+<img alt="Azure DevOps builds (branch)" src="https://img.shields.io/azure-devops/build/ggreig/Existential/1/main">
+<img alt="SonarCloud quality gate" src="https://sonarcloud.io/api/project_badges/measure?project=ggreig_Existential&metric=alert_status">
+<img alt="Azure DevOps releases" src="https://img.shields.io/azure-devops/release/ggreig/9c4fc971-bef3-428a-ab81-cf30a24bea74/1/1">
+<a href="https://www.nuget.org/packages/Existential.Net/"><img alt="Nuget (with prereleases)" src="https://img.shields.io/nuget/vpre/Existential.Net"></a>
+
+---
+
+
 ## ![Existential icon](images/Existential32.png) About the icon
 
 Existential's icon is made up of two symbols from 
@@ -40,7 +44,7 @@ Existential's icon is made up of two symbols from
 * &#8707; (*there exists*) and 
 * &#8708; (*there does not exist*)
 
-## About the author
+## [![Existential icon](images/gg_greyscale32.jpg)](http://www.ggreig.com/) About the author
 [Gavin Greig](http://www.ggreig.com/)'s been a professional software developer since 1992, 
 and a .NET developer since 2004. Existential.Net's the crystallisation of his experience of
 finding the bits he wishes weren't missing from .NET, often unearthed with the help of static
