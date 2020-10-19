@@ -39,6 +39,17 @@ namespace Existential.Test
         }
 
         [Test]
+        public static void Disposable_SafelyReturn_InitialisesCorrectly()
+        {
+            // Act
+            MemoryStream theResult =
+                Disposable.SafelyReturn<MemoryStream>(inMemoryStream => inMemoryStream.SetLength(64));
+
+            // Assert
+            Assert.That(theResult.Length, Is.EqualTo(64));
+        }
+
+        [Test]
         public static void Disposable_SafelyReturn_RetainsInitialisedManagedValueOutsideCreationScope()
         {
             // Arrange

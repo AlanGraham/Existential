@@ -25,6 +25,23 @@ of code - or you can call an Existential.Net method to do it for you.
 ## How do I resolve it?
 The type you want to return must implement 
 [IDisposable](https://docs.microsoft.com/en-us/dotnet/api/system.idisposable),
-and have a default constructor. If it meets those conditions, you can call the
-* [Disposable.SafelyReturn&lt;T&gt;]()
+and have a default constructor. If it meets those conditions, you can call the method 
+[Disposable.SafelyReturn&lt;T&gt;(Action&lt;T&gt;)](xref:Existential.Disposable#Existential_Disposable_SafelyReturn__1_System_Action___0__);
+for example:
+```cs
+public MemoryStream GetMemoryStream()
+{
+    return Disposable.SafelyReturn<MemoryStream>();
+}
+```
+The simplest way of calling this method is to leave the Action&lt;T&gt; parameter unspecified, 
+in which case it will default to null the default constructor of T will be used.
+
+If further initialisation of the object's needed, an Action that acts upon it can be specified, for example:
+```cs
+public MemoryStream GetMemoryStream(long inLength)
+{
+    return Disposable.SafelyReturn<MemoryStream>(stream => stream.SetLength(inLength));
+}
+```
 
