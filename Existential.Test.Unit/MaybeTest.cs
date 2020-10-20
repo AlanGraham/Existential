@@ -225,6 +225,19 @@ namespace Existential.Test
         }
 
         [Test]
+        public static void ImplicitCreate_WithMaybe_ReturnsSameValue()
+        {
+            // Arrange
+            Maybe<int> theOriginalMaybe = 1;
+
+            // Act
+            Maybe<int> theResult = theOriginalMaybe;
+
+            // Assert
+            Assert.That(theResult.GetValueOr(0), Is.EqualTo(1));
+        }
+
+        [Test]
         public static void ImplicitCreate_WithInt_HasExpectedValue()
         {
             // Act

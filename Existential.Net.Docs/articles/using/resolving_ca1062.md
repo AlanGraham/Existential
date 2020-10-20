@@ -49,9 +49,8 @@ and save a few lines of code each time they're used, but of course they don't er
 they just make them a bit more consistent and informative; and you'll still need to decide for yourself 
 how to handle them.
 
-[Maybe&lt;T&gt;](xref:using_maybe.md) takes a little more getting used to, but it's the better option.
-It can be used to prevent exceptions as a result of unexpected nulls altogether, making your code more 
-robust. It's similar in concept to 
+[Maybe&lt;T&gt;](xref:using_maybe.md) takes a little more getting used to, but it's probably the better 
+option as it doesn't throw an exception. It's similar in concept to 
 [Nullable&lt;T&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1) -
 it may or may not contain a value - but takes the approach a little further. Take a little time to read 
 <em>[Using Maybe&lt;T&gt;](xref:using_maybe.md)</em> and see if it's for you.
