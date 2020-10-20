@@ -34,14 +34,15 @@ public MemoryStream GetMemoryStream()
     return Disposable.SafelyReturn<MemoryStream>();
 }
 ```
-The simplest way of calling this method is to leave the Action&lt;T&gt; parameter unspecified, 
+The simplest method is to leave the Action&lt;T&gt; parameter unspecified, 
 in which case it will default to null the default constructor of T will be used.
 
-If further initialisation of the object's needed, an Action that acts upon it can be specified, for example:
+If further initialisation of the object's needed, an Action that performs the initialisation can be provided, for example:
 ```cs
-public MemoryStream GetMemoryStream(long inLength)
+public MemoryStream GetMemoryStream()
 {
-    return Disposable.SafelyReturn<MemoryStream>(stream => stream.SetLength(inLength));
+    long theLengthInBytes = 256;
+    return Disposable.SafelyReturn<MemoryStream>(stream => stream.SetLength(theLengthInBytes));
 }
 ```
 
