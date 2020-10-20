@@ -10,10 +10,9 @@ namespace Existential
     /// <summary>A container representing a value that may or may not exist.</summary>
     /// <typeparam name="T">The type of the object that may exist.</typeparam>
     /// <remarks>
-    /// Very strongly based on an example by Yacoub Massad:
-    /// https://www.dotnetcurry.com/patterns-practices/1510/maybe-monad-csharp. Defined as a struct
-    /// because structs themselves cannot be null.
-    /// TODO: Add support for nullable? values.
+    ///     Very strongly based on an example by Yacoub Massad:
+    ///     https://www.dotnetcurry.com/patterns-practices/1510/maybe-monad-csharp. Defined as a struct
+    ///     because structs themselves cannot be null.
     /// </remarks>
     public readonly struct Maybe<T> : IEquatable<Maybe<T>>
     {

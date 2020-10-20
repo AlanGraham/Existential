@@ -11,8 +11,16 @@ namespace Existential.Net.Docs
     using Microsoft.Extensions.Hosting;
 
     /// <summary>Start-up actions for the web site.</summary>
+    // ReSharper disable once ConvertToStaticClass - can't be static due to the way it's used in Program.
     public sealed class Startup
     {
+        /// <summary>
+        ///     Initialises a new instance of the <see cref="Startup" /> class.
+        /// </summary>
+        private Startup()
+        {
+        }
+
         /// <summary>Configures the application.</summary>
         /// <param name="app">The application builder.</param>
         /// <param name="env">The web host environment.</param>
