@@ -70,6 +70,15 @@ namespace Existential.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An empty Maybe&lt;T&gt; cannot be provided as the default value to replace an empty Maybe&lt;T&gt;..
+        /// </summary>
+        internal static string EmptyMaybeCannotBeDefaultForEmptyMaybe {
+            get {
+                return ResourceManager.GetString("EmptyMaybeCannotBeDefaultForEmptyMaybe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The GUID has the empty value, {00000000-0000-0000-0000-000000000000}..
         /// </summary>
         internal static string GuidHasTheEmptyValue {

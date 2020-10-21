@@ -53,7 +53,7 @@ how to handle them.
 option as it doesn't throw an exception. It's similar in concept to 
 [Nullable&lt;T&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1) -
 it may or may not contain a value - but takes the approach a little further. Take a little time to read 
-<em>[Using Maybe&lt;T&gt;](xref:using_maybe.md)</em> and see if it's for you.
+<em>[Should I Use Maybe&lt;T&gt;?](xref:should_i_use_maybe.md)</em> to see if it's for you.
 
 ### 3. Call a relevant method
 #### If you've chosen Validate:

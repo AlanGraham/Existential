@@ -25,7 +25,10 @@ may or may not contain a value; but functions can be applied to it in a way that
 Maybe of an independent type. That allows code to be written that postpones or eradicates 
 the need to know whether there's a value.
 
-* **Maybe&lt;T&gt;**: [How To](xref:using_maybe.md), [Documentation](xref:Existential.Maybe`1)
+* **Maybe&lt;T&gt;**: 
+    * [Should I Use Maybe&lt;T&gt;?](xref:should_i_use_maybe.md)
+    * [How To Use Maybe&lt;T&gt;](xref:using_maybe.md)
+    * [Documentation](xref:Existential.Maybe`1)
 
 ## Convert to IEnumerable&lt;T&gt;
 Occasionally it's useful to be able to treat a single value as an IEnumerable&lt;T&gt;, or 

@@ -132,4 +132,7 @@
   <data name="StringCannotBeEmptyOrWhiteSpaceWithTrim" xml:space="preserve">
     <value>The string cannot be empty (or contain only whitespace characters when the inTrim parameter is true).</value>
   </data>
+  <data name="EmptyMaybeCannotBeDefaultForEmptyMaybe" xml:space="preserve">
+    <value>An empty Maybe&lt;T&gt; cannot be provided as the default value to replace an empty Maybe&lt;T&gt;.</value>
+  </data>
 </root>

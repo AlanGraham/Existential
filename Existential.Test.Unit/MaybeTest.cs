@@ -584,7 +584,7 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void ValueOr_WithNull_ReturnsDefaultValue()
+        public static void GetValueOr_WithNull_ReturnsDefaultValue()
         {
             // Arrange
             Maybe<string> theMaybe = null;
@@ -597,7 +597,25 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void ValueOr_WithNullAndFactory_ReturnsFactoryValue()
+        public static void GetValueOr_WithNullAndNullDefault_ThrowsException()
+        {
+            // Arrange
+            Maybe<string> theMaybe = null;
+
+            // Assert
+            Assert.That(
+                () =>
+                {
+                    // Act
+                    string theResult = theMaybe.GetValueOr((string)null);
+                },
+                Throws.ArgumentNullException
+                    .With.Message.Contains("Value cannot be null")
+                    .And.Message.Contains("inDefaultValue"));
+        }
+
+        [Test]
+        public static void GetValueOr_WithNullAndFactory_ReturnsFactoryValue()
         {
             // Arrange
             Maybe<string> theMaybe = null;
@@ -610,7 +628,25 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void ValueOr_WithValue_ReturnsValue()
+        public static void GetValueOr_WithNullAndNullDefaultFactory_ThrowsException()
+        {
+            // Arrange
+            Maybe<string> theMaybe = null;
+
+            // Assert
+            Assert.That(
+                () =>
+                {
+                    // Act
+                    string theResult = theMaybe.GetValueOr((Func<string>)null);
+                },
+                Throws.ArgumentNullException
+                    .With.Message.Contains("Value cannot be null")
+                    .And.Message.Contains("inDefaultValueFactory"));
+        }
+
+        [Test]
+        public static void GetValueOr_WithValue_ReturnsValue()
         {
             // Arrange
             Maybe<string> theMaybe = "A test string";
@@ -623,7 +659,20 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void ValueOr_WithValueAndFactory_ReturnsValue()
+        public static void GetValueOr_WithValueAndNullDefault_StillReturnsValue()
+        {
+            // Arrange
+            Maybe<string> theMaybe = "A test string";
+
+            // Act
+            string theResult = theMaybe.GetValueOr((string)null);
+
+            // Assert
+            Assert.That(theResult, Is.EqualTo("A test string"));
+        }
+
+        [Test]
+        public static void GetValueOr_WithValueAndFactory_ReturnsValue()
         {
             // Arrange
             Maybe<string> theMaybe = "A test string";
@@ -636,7 +685,20 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void ValueOrMaybe_WithNoneAndAlternativeMaybe_ReturnsAlternativeMaybe()
+        public static void GetValueOr_WithValueAndNullFactory_StillReturnsValue()
+        {
+            // Arrange
+            Maybe<string> theMaybe = "A test string";
+
+            // Act
+            string theResult = theMaybe.GetValueOr((Func<string>)null);
+
+            // Assert
+            Assert.That(theResult, Is.EqualTo("A test string"));
+        }
+
+        [Test]
+        public static void GetValueOrMaybe_WithNoneAndAlternativeMaybe_ReturnsAlternativeMaybe()
         {
             // Arrange
             Maybe<string> theDefault = "A different default string";
@@ -650,7 +712,27 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void ValueOrMaybe_WithNoneAndMaybeFactory_ReturnsFactoryValue()
+        public static void GetValueOrMaybe_WithNoneAndEmptyAlternativeMaybe_ReturnsAlternativeMaybe()
+        {
+            // Arrange
+            Maybe<string> theDefault = null;
+            Maybe<string> theMaybe = null;
+
+            // Assert
+            Assert.That(
+                () =>
+                {
+                    // Act
+                    Maybe<string> theResult = theMaybe.GetValueOrMaybe(theDefault);
+                },
+                Throws.ArgumentException
+                    .With.Message
+                    .Contains("An empty Maybe<T> cannot be provided as the default value to replace an empty Maybe<T>.")
+                    .And.Message.Contains("inAlternativeValue"));
+        }
+
+        [Test]
+        public static void GetValueOrMaybe_WithNoneAndMaybeFactory_ReturnsFactoryValue()
         {
             // Arrange
             Maybe<string> theDefault = "A factory string";
@@ -664,7 +746,25 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void ValueOrMaybe_WithValueAndAlternativeMaybe_ReturnsValue()
+        public static void GetValueOrMaybe_WithNoneAndNullMaybeFactory_ReturnsFactoryValue()
+        {
+            // Arrange
+            Maybe<string> theMaybe = null;
+
+            // Assert
+            Assert.That(
+                () =>
+                {
+                    // Act
+                    Maybe<string> theResult = theMaybe.GetValueOrMaybe((Func<Maybe<string>>)null);
+                },
+                Throws.ArgumentNullException
+                    .With.Message.Contains("Value cannot be null")
+                    .And.Message.Contains("inAlternativeValueFactory"));
+        }
+
+        [Test]
+        public static void GetValueOrMaybe_WithValueAndAlternativeMaybe_ReturnsValue()
         {
             // Arrange
             Maybe<string> theDefault = "A different default string";
@@ -678,7 +778,21 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void ValueOrMaybe_WithValueAndMaybeFactory_ReturnsValue()
+        public static void GetValueOrMaybe_WithValueAndNullAlternativeMaybe_StillReturnsValue()
+        {
+            // Arrange
+            Maybe<string> theDefault = null;
+            Maybe<string> theMaybe = "A test string";
+
+            // Act
+            Maybe<string> theResult = theMaybe.GetValueOrMaybe(theDefault);
+
+            // Assert
+            Assert.That(theResult, Is.EqualTo(theMaybe));
+        }
+
+        [Test]
+        public static void GetValueOrMaybe_WithValueAndMaybeFactory_ReturnsValue()
         {
             // Arrange
             Maybe<string> theDefault = "A factory string";
@@ -692,7 +806,20 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void ValueOrThrow_WithNone_Throws()
+        public static void GetValueOrMaybe_WithValueAndNullMaybeFactory_StillReturnsValue()
+        {
+            // Arrange
+            Maybe<string> theMaybe = "A test string";
+
+            // Act
+            Maybe<string> theResult = theMaybe.GetValueOrMaybe((Func<Maybe<string>>)null);
+
+            // Assert
+            Assert.That(theResult, Is.EqualTo(theMaybe));
+        }
+
+        [Test]
+        public static void GetValueOrThrow_WithNone_Throws()
         {
             // Arrange
             Maybe<string> theMaybe = null;
@@ -708,13 +835,42 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void ValueOrThrow_WithValue_ReturnsValue()
+        public static void GetValueOrThrow_WithNoneAndNoMessage_StillThrows()
+        {
+            // Arrange
+            Maybe<string> theMaybe = null;
+
+            // Assert
+            Assert.That(
+                () =>
+                {
+                    // Act
+                    _ = theMaybe.GetValueOrThrow(null);
+                },
+                Throws.InvalidOperationException);
+        }
+
+        [Test]
+        public static void GetValueOrThrow_WithValue_ReturnsValue()
         {
             // Arrange
             Maybe<string> theMaybe = "A test string";
 
             // Act
             string theResult = theMaybe.GetValueOrThrow("An error message.");
+
+            // Assert
+            Assert.That(theResult, Is.EqualTo("A test string"));
+        }
+
+        [Test]
+        public static void GetValueOrThrow_WithValueAndNoMessage_StillReturnsValue()
+        {
+            // Arrange
+            Maybe<string> theMaybe = "A test string";
+
+            // Act
+            string theResult = theMaybe.GetValueOrThrow(null);
 
             // Assert
             Assert.That(theResult, Is.EqualTo("A test string"));

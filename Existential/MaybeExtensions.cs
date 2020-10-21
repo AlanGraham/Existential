@@ -23,7 +23,7 @@ namespace Existential
         /// </param>
         /// <returns>The value, if it exists, or the empty string.</returns>
         /// <remarks>Implemented as an extension method to keep it type-specific to strings.</remarks>
-        public static string ValueOrEmpty(this Maybe<string> inMaybe) => inMaybe.GetValueOr(string.Empty);
+        public static string GetValueOrEmpty(this Maybe<string> inMaybe) => inMaybe.GetValueOr(string.Empty);
 
         /// <summary>
         ///     Returns the value, if it exists, or <see cref="Guid.Empty" />.
@@ -31,7 +31,7 @@ namespace Existential
         /// <param name="inMaybe">The <see cref="Maybe{T}" /> (where T is <see cref="Guid" />) that may or may not contain a value.</param>
         /// <returns>The value, if it exists, or <see cref="Guid.Empty" />.</returns>
         /// <remarks>Implemented as an extension method to keep it type-specific to GUIDs.</remarks>
-        public static Guid ValueOrEmpty(this Maybe<Guid> inMaybe) => inMaybe.GetValueOr(Guid.Empty);
+        public static Guid GetValueOrEmpty(this Maybe<Guid> inMaybe) => inMaybe.GetValueOr(Guid.Empty);
 
         /// <summary>
         ///     Returns the value, if it exists, or an empty array of the same type.
@@ -40,7 +40,7 @@ namespace Existential
         /// <param name="inMaybe">The <see cref="Maybe{T}" /> that may or may not contain an array.</param>
         /// <returns>The value, if it exists, or an empty array of the same type.</returns>
         /// <remarks>Implemented as an extension method to keep it type-specific to arrays of T.</remarks>
-        public static T[] ValueOrEmpty<T>(this Maybe<T[]> inMaybe) => inMaybe.GetValueOr(Array.Empty<T>());
+        public static T[] GetValueOrEmpty<T>(this Maybe<T[]> inMaybe) => inMaybe.GetValueOr(Array.Empty<T>());
 
         /// <summary>
         ///     Returns the value, if it exists, or an empty collection of the same type.
@@ -57,7 +57,7 @@ namespace Existential
             "Design",
             "CA1002:Do not expose generic lists",
             Justification = "The default value must be of the same type as the input.")]
-        public static List<T> ValueOrEmpty<T>(this Maybe<List<T>> inMaybe)
+        public static List<T> GetValueOrEmpty<T>(this Maybe<List<T>> inMaybe)
             => inMaybe.GetValueOr(new List<T>());
 
         /// <summary>
