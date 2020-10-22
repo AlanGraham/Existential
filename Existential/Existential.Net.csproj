@@ -18,7 +18,7 @@ Existential is a utility library that contains parameter validation methods, a M
     <IsPackable>true</IsPackable>
     <PackageTags>standard,validation</PackageTags>
     <PackageLicenseExpression>MS-PL</PackageLicenseExpression>
-    <PackageReleaseNotes>Breaking change: TypeExtensionMethods renamed, and moved into Existential root namespace. Improvements to documentation.</PackageReleaseNotes>
+    <PackageReleaseNotes>Breaking changes: method renaming to improve readability of code.</PackageReleaseNotes>
 
     <!-- This should support NuGet.org's readme functionality when it's delivered. -->
     <!-- https://github.com/NuGet/Home/wiki/Embedding-and-displaying-NuGet-READMEs -->

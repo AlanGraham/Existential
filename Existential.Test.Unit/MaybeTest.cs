@@ -12,6 +12,24 @@ namespace Existential.Test
     public static class MaybeTest
     {
         [Test]
+        public static void Apply_WithNoValue_ReturnsMaybeWithNoValue()
+        {
+            // Arrange
+            Maybe<string> theEmptyMaybe = null;
+
+            // Act
+            Maybe<int> theResult = theEmptyMaybe.Apply(
+                inText =>
+                {
+                    Maybe<int> theIntegerMaybe = inText.Length;
+                    return theIntegerMaybe;
+                });
+
+            // Assert
+            Assert.That(theResult.GetValueOr(12), Is.EqualTo(12));
+        }
+
+        [Test]
         public static void Bind_WithNoValue_ReturnsMaybeWithNoValue()
         {
             // Arrange
@@ -27,6 +45,24 @@ namespace Existential.Test
 
             // Assert
             Assert.That(theResult.GetValueOr(12), Is.EqualTo(12));
+        }
+
+        [Test]
+        public static void Apply_WithValue_ReturnsExpectedValue()
+        {
+            // Arrange
+            Maybe<string> theTextMaybe = "Call me Maybe";
+
+            // Act
+            Maybe<int> theResult = theTextMaybe.Apply(
+                inText =>
+                {
+                    Maybe<int> theIntegerMaybe = inText.Length;
+                    return theIntegerMaybe;
+                });
+
+            // Assert
+            Assert.That(theResult.GetValueOr(0), Is.EqualTo(13));
         }
 
         [Test]
@@ -291,6 +327,19 @@ namespace Existential.Test
         }
 
         [Test]
+        public static void DoEither_WithFuncAndEmpty_AppliesAlternativeFunc()
+        {
+            // Arrange
+            Maybe<string> theMaybe = null;
+
+            // Act
+            int theResult = theMaybe.DoEither(inText => inText.Length, () => -1);
+
+            // Assert
+            Assert.That(theResult, Is.EqualTo(-1));
+        }
+
+        [Test]
         public static void Match_WithFuncAndValue_AppliesExpectedFunc()
         {
             // Arrange
@@ -304,6 +353,19 @@ namespace Existential.Test
         }
 
         [Test]
+        public static void DoEither_WithFuncAndValue_AppliesExpectedFunc()
+        {
+            // Arrange
+            Maybe<string> theMaybe = "A test string";
+
+            // Act
+            int theResult = theMaybe.DoEither(inText => inText.Length, () => -1);
+
+            // Assert
+            Assert.That(theResult, Is.EqualTo(13));
+        }
+
+        [Test]
         public static void Match_WithFuncAndEdgeCase_AppliesExpectedFunc()
         {
             // Arrange
@@ -311,6 +373,19 @@ namespace Existential.Test
 
             // Act
             int theResult = theMaybe.Match(inText => inText.Length, () => -1);
+
+            // Assert
+            Assert.That(theResult, Is.EqualTo(0));
+        }
+
+        [Test]
+        public static void DoEither_WithFuncAndEdgeCase_AppliesExpectedFunc()
+        {
+            // Arrange
+            Maybe<string> theMaybe = string.Empty;
+
+            // Act
+            int theResult = theMaybe.DoEither(inText => inText.Length, () => -1);
 
             // Assert
             Assert.That(theResult, Is.EqualTo(0));
@@ -333,6 +408,22 @@ namespace Existential.Test
         }
 
         [Test]
+        public static void DoEither_WithActionAndEmpty_AppliesAlternativeAction()
+        {
+            // Arrange
+            Maybe<string> theMaybe = "A test string";
+            bool isActionApplied = false;
+            void Action(string inText) => isActionApplied = inText == "A test string";
+            void AlternativeAction() => isActionApplied = false;
+
+            // Act
+            theMaybe.DoEither(Action, AlternativeAction);
+
+            // Assert
+            Assert.That(isActionApplied, Is.True);
+        }
+
+        [Test]
         public static void Match_WithActionAndValue_AppliesExpectedAction()
         {
             // Arrange
@@ -343,6 +434,22 @@ namespace Existential.Test
 
             // Act
             theMaybe.Match(Action, AlternativeAction);
+
+            // Assert
+            Assert.That(isAlternativeActionApplied, Is.True);
+        }
+
+        [Test]
+        public static void DoEither_WithActionAndValue_AppliesExpectedAction()
+        {
+            // Arrange
+            Maybe<string> theMaybe = null;
+            bool isAlternativeActionApplied = false;
+            void Action(string inText) => isAlternativeActionApplied = inText == "A test string";
+            void AlternativeAction() => isAlternativeActionApplied = true;
+
+            // Act
+            theMaybe.DoEither(Action, AlternativeAction);
 
             // Assert
             Assert.That(isAlternativeActionApplied, Is.True);
@@ -426,6 +533,19 @@ namespace Existential.Test
         }
 
         [Test]
+        public static void ConvertUsing_WithNoValue_ReturnsMaybeWithNoValue()
+        {
+            // Arrange
+            Maybe<string> theNullString = null;
+
+            // Act
+            Maybe<int> theResult = theNullString.ConvertUsing(inText => inText.Length);
+
+            // Assert
+            Assert.That(theResult.GetValueOr(17), Is.EqualTo(17));
+        }
+
+        [Test]
         public static void Map_WithNoValue_ReturnsMaybeWithNoValue()
         {
             // Arrange
@@ -436,6 +556,19 @@ namespace Existential.Test
 
             // Assert
             Assert.That(theResult.GetValueOr(17), Is.EqualTo(17));
+        }
+
+        [Test]
+        public static void ConvertUsing_WithValue_ReturnsExpectedValue()
+        {
+            // Arrange
+            Maybe<string> theString = "Call me Maybe";
+
+            // Act
+            Maybe<int> theResult = theString.ConvertUsing(inText => inText.Length);
+
+            // Assert
+            Assert.That(theResult.GetValueOr(0), Is.EqualTo(13));
         }
 
         [Test]

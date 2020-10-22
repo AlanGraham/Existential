@@ -148,7 +148,19 @@ namespace Existential
         /// <param name="inSome">The function to apply if a value exists.</param>
         /// <param name="inNone">The function to apply if no value exists.</param>
         /// <returns>The result of the function that was applied.</returns>
-        public TResult Match<TResult>(Func<T, TResult> inSome, Func<TResult> inNone)
+        public TResult Match<TResult>(Func<T, TResult> inSome, Func<TResult> inNone) => DoEither(inSome, inNone);
+
+        /// <summary>Applies different actions depending on whether the value exists.</summary>
+        /// <param name="inSome">The action to apply if a value exists.</param>
+        /// <param name="inNone">The action to apply if no value exists.</param>
+        public void Match(Action<T> inSome, Action inNone) => DoEither(inSome, inNone);
+
+        /// <summary>Applies different functions depending on whether the value exists.</summary>
+        /// <typeparam name="TResult">The type of the result.</typeparam>
+        /// <param name="inSome">The function to apply if a value exists.</param>
+        /// <param name="inNone">The function to apply if no value exists.</param>
+        /// <returns>The result of the function that was applied.</returns>
+        public TResult DoEither<TResult>(Func<T, TResult> inSome, Func<TResult> inNone)
         {
             _ = Validate.ThrowIfNull(inSome, nameof(inSome));
             _ = Validate.ThrowIfNull(inNone, nameof(inNone));
@@ -161,7 +173,7 @@ namespace Existential
         /// <summary>Applies different actions depending on whether the value exists.</summary>
         /// <param name="inSome">The action to apply if a value exists.</param>
         /// <param name="inNone">The action to apply if no value exists.</param>
-        public void Match(Action<T> inSome, Action inNone)
+        public void DoEither(Action<T> inSome, Action inNone)
         {
             _ = Validate.ThrowIfNull(inSome, nameof(inSome));
             _ = Validate.ThrowIfNull(inNone, nameof(inNone));
@@ -195,21 +207,30 @@ namespace Existential
         }
 
         /// <summary>
-        /// Returns the result of applying the function to the value, or the default if no value exists.
+        ///     Returns the result of applying the function to the value, or the default if no value exists.
         /// </summary>
         /// <typeparam name="TResult">The underlying type of the result.</typeparam>
         /// <param name="inConvert">The function to apply to the value.</param>
         /// <returns>A container representing a result that may or may not exist.</returns>
-        /// <remarks>Equivalent to Select; this is effectively an alias for comfort.</remarks>
+        /// <remarks>Equivalent to ConvertUsing/Select; this is effectively an alias for comfort.</remarks>
         public Maybe<TResult> Map<TResult>(Func<T, TResult> inConvert) => Select(inConvert);
 
         /// <summary>
-        /// Returns the result of applying the function to the value, or the default if no value exists.
+        ///     Returns the result of applying the function to the value, or the default if no value exists.
         /// </summary>
         /// <typeparam name="TResult">The underlying type of the result.</typeparam>
         /// <param name="inConvert">The function to apply to the value.</param>
         /// <returns>A container representing a result that may or may not exist.</returns>
-        /// <remarks>Equivalent to Map. Required for Linq compatibility.</remarks>
+        /// <remarks>Equivalent to Map/Select; this is effectively an alias for comfort.</remarks>
+        public Maybe<TResult> ConvertUsing<TResult>(Func<T, TResult> inConvert) => Select(inConvert);
+
+        /// <summary>
+        ///     Returns the result of applying the function to the value, or the default if no value exists.
+        /// </summary>
+        /// <typeparam name="TResult">The underlying type of the result.</typeparam>
+        /// <param name="inConvert">The function to apply to the value.</param>
+        /// <returns>A container representing a result that may or may not exist.</returns>
+        /// <remarks>Equivalent to ConvertUsing/Map. Required for Linq compatibility.</remarks>
         public Maybe<TResult> Select<TResult>(Func<T, TResult> inConvert)
         {
             _ = Validate.ThrowIfNull(inConvert, nameof(inConvert));
@@ -218,32 +239,44 @@ namespace Existential
         }
 
         /// <summary>
-        /// Returns the result of applying the function to the value, or the default if no value exists.
+        ///     Returns the result of applying the function to the value, or the default if no value exists.
+        /// </summary>
+        /// <typeparam name="TResult">The underlying type of the result.</typeparam>
+        /// <param name="inConvert">The function to apply to the value.</param>
+        /// <returns>A container representing a result that may or may not exist.</returns>
+        /// <remarks>
+        ///     Required Monad method. Here, an alias of <see cref="Apply{TResult}" /> because Apply is thought to be more
+        ///     readable.
+        /// </remarks>
+        public Maybe<TResult> Bind<TResult>(Func<T, Maybe<TResult>> inConvert) => Apply(inConvert);
+
+        /// <summary>
+        ///     Returns the result of applying the function to the value, or the default if no value exists.
         /// </summary>
         /// <typeparam name="TResult">The underlying type of the result.</typeparam>
         /// <param name="inConvert">The function to apply to the value.</param>
         /// <returns>A container representing a result that may or may not exist.</returns>
         /// <remarks>Required Monad method.</remarks>
-        public Maybe<TResult> Bind<TResult>(Func<T, Maybe<TResult>> inConvert)
+        public Maybe<TResult> Apply<TResult>(Func<T, Maybe<TResult>> inConvert)
         {
             _ = Validate.ThrowIfNull(inConvert, nameof(inConvert));
 
             // Bridge.NET doesn't support simplifying this use of "default" (2020/03/22).
-            return !myValueExists ? default(Maybe<TResult>) : inConvert(myValue);
+            return !myValueExists ? default : inConvert(myValue);
         }
 
         /// <summary>
-        /// Allows Linq queries to be written that reference multiple properties of the type
-        /// <typeparamref name="T" /> underlying <see cref="Maybe{T}" />.
+        ///     Allows Linq queries to be written that reference multiple properties of the type
+        ///     <typeparamref name="T" /> underlying <see cref="Maybe{T}" />.
         /// </summary>
         /// <typeparam name="T2">The type of the intermediate result.</typeparam>
         /// <typeparam name="TResult">The type of the final result.</typeparam>
         /// <param name="inConvert">
-        /// A function that converts <typeparamref name="T" /> to an intermediate type.
+        ///     A function that converts <typeparamref name="T" /> to an intermediate type.
         /// </param>
         /// <param name="inFinalSelect">
-        /// A function that produces a result using the original value and any value of the
-        /// intermediate type.
+        ///     A function that produces a result using the original value and any value of the
+        ///     intermediate type.
         /// </param>
         /// <returns>A container representing a result that may or may not exist.</returns>
         /// <remarks>Unlikely to be used directly, but required to support Linq usage.</remarks>

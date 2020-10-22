@@ -46,17 +46,48 @@ you specify a factory method that will return a default value if none exists.
 you specify an alternative Maybe&lt;T&gt; that will be returned if no value exists.
 * **[GetValueOrMaybe(Func&lt;Maybe&lt;T&gt;&gt;)](xref:Existential.Maybe`1#Existential_Maybe_1_GetValueOrMaybe_System_Func_Existential_Maybe__0___)** - 
 you specify a factory method that will return an alternative Maybe&lt;T&gt; if no value exists.
-* **[GetValueOrThrow()](xref:Existential.Maybe`1#Existential_Maybe_1_GetValueOrThrow_System_String_)** - 
+* **[GetValueOrThrow(string)](xref:Existential.Maybe`1#Existential_Maybe_1_GetValueOrThrow_System_String_)** - 
 will throw an 
 [InvalidOperationException](https://docs.microsoft.com/en-us/dotnet/api/system.invalidoperationexception)
-if no value exists.
+with the specified message if no value exists.
 * **[GetValueOrEmpty()](xref:Existential.MaybeExtensions#Existential_MaybeExtensions_GetValueOrEmpty_Existential_Maybe_System_Guid__)** - 
-available when the underlying type has forms that can be considered "empty". There are 
+available when the underlying type supports forms that can be considered "empty". There are 
 overloads of this method for GUIDs, strings and collections.
 * **[ToString()](xref:Existential.Maybe`1#Existential_Maybe_1_ToString)** - 
-returns the result of calling ToString on the value or default value (if either exists),
+returns the result of calling ToString on the underlying value or the default value for the type (if either exists),
 or the empty string (if neither a value nor default exists).
 * **[TryGetValue(out T)](xref:Existential.Maybe`1#Existential_Maybe_1_TryGetValue__0__)** - 
 returns a Boolean indicating whether a value exists or not. If it does, the value of it will 
 be assigned to the out parameter. If it doesn't, the out parameter will have the default value
 for T (which may be null).
+
+## Working with Maybes
+Maybe&lt;T&gt; has a few more options for extracting values from it than Nullable&lt;T&gt; has,
+but so far we've seen nothing much to distinguish Maybe from Nullable. The next few methods are
+where that difference emerges. Each of these have supported aliases that may be more comfortable for
+developers familar with the theory behind Maybes, but in writing Existential.Net I've tried to
+emphasise usability over theory - so I'll mention the aliases here, then ignore them.
+* **[Apply(Func&lt;T, Maybe&lt;TResult&gt;&gt;)](xref:Existential.Maybe`1#Existential_Maybe_1_Apply__1_System_Func__0_Existential_Maybe___0___)** 
+(*alias: 
+[Bind](xref:Existential.Maybe`1#Existential_Maybe_1_Bind__1_System_Func__0_Existential_Maybe___0___)*) - 
+You provide a function that converts a T to a Maybe&lt;TResult&gt;. A Maybe&lt;TResult&gt; 
+will be returned.
+* **[DoEither(Action&lt;T&gt;, Action)](xref:Existential.Maybe`1#Existential_Maybe_1_DoEither_System_Action__0__System_Action_)** 
+(*alias: 
+[Match](xref:Existential.Maybe`1#Existential_Maybe_1_Match_System_Action__0__System_Action_)*) -
+You provide two actions: one action that acts on a T and will be used if a value exists; and another that takes no parameters 
+and will be used if no value exists. There is no return from this method.
+* **[DoEither(Func&lt;T, TResult&gt;, Func&lt;TResult&gt;)](xref:Existential.Maybe`1#Existential_Maybe_1_DoEither__1_System_Func__0___0__System_Func___0__)** 
+(*alias: 
+[Match](xref:Existential.Maybe`1#Existential_Maybe_1_Match__1_System_Func__0___0__System_Func___0__)*) -
+You provide two functions: one function that acts on a T, returns a TResult and will be used if a value exists; and another 
+that takes no parameters, but still returns a TResult. It will be used if no value exists. A
+TResult will be returned.
+* **[ConvertUsing(Func&lt;T, TResult&gt;)](xref:Existential.Maybe`1#Existential_Maybe_1_ConvertUsing__1_System_Func__0___0__)** 
+(*alias: 
+[Map](xref:Existential.Maybe`1#Existential_Maybe_1_Map__1_System_Func__0___0__)/
+[Select](xref:Existential.Maybe`1#Existential_Maybe_1_Select__1_System_Func__0___0__)*) -
+You provide a function that converts a T to a TResult. A Maybe&lt;TResult&gt; will be returned.
+
+## Using Maybes in Linq
+Select, Where, (SelectMany)

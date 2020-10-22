@@ -28,7 +28,7 @@ the need to know whether there's a value.
 * **Maybe&lt;T&gt;**: 
     * [Should I Use Maybe&lt;T&gt;?](xref:should_i_use_maybe.md)
     * [How To Use Maybe&lt;T&gt;](xref:using_maybe.md)
-    * [Documentation](xref:Existential.Maybe`1)
+    * [API Documentation](xref:Existential.Maybe`1)
 
 ## Convert to IEnumerable&lt;T&gt;
 Occasionally it's useful to be able to treat a single value as an IEnumerable&lt;T&gt;, or 
