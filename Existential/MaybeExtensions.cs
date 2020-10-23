@@ -10,7 +10,7 @@ namespace Existential
     using System.Linq;
 
     /// <summary>
-    /// Extensions to the <see cref="Maybe"/> class that enable additional functionality on selected types of Maybe.
+    ///     Extensions to <see cref="Maybe{T}" /> that enable additional functionality on selected types of Maybe.
     /// </summary>
     public static class MaybeExtensions
     {

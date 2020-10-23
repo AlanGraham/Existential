@@ -72,22 +72,33 @@ emphasise usability over theory - so I'll mention the aliases here, then ignore 
 [Bind](xref:Existential.Maybe`1#Existential_Maybe_1_Bind__1_System_Func__0_Existential_Maybe___0___)*) - 
 You provide a function that converts a T to a Maybe&lt;TResult&gt;. A Maybe&lt;TResult&gt; 
 will be returned.
-* **[DoEither(Action&lt;T&gt;, Action)](xref:Existential.Maybe`1#Existential_Maybe_1_DoEither_System_Action__0__System_Action_)** 
+* **[Apply(Func&lt;T, TResult&gt;)](xref:Existential.Maybe`1#Existential_Maybe_1_Apply__1_System_Func__0___0__)** 
 (*alias: 
-[Match](xref:Existential.Maybe`1#Existential_Maybe_1_Match_System_Action__0__System_Action_)*) -
-You provide two actions: one action that acts on a T and will be used if a value exists; and another that takes no parameters 
-and will be used if no value exists. There is no return from this method.
+[Map](xref:Existential.Maybe`1#Existential_Maybe_1_Map__1_System_Func__0___0__)/
+[Select](xref:Existential.Maybe`1#Existential_Maybe_1_Select__1_System_Func__0___0__)*) -
+You provide a function that converts a T to a TResult. A Maybe&lt;TResult&gt; will be returned.
 * **[DoEither(Func&lt;T, TResult&gt;, Func&lt;TResult&gt;)](xref:Existential.Maybe`1#Existential_Maybe_1_DoEither__1_System_Func__0___0__System_Func___0__)** 
 (*alias: 
 [Match](xref:Existential.Maybe`1#Existential_Maybe_1_Match__1_System_Func__0___0__System_Func___0__)*) -
 You provide two functions: one function that acts on a T, returns a TResult and will be used if a value exists; and another 
 that takes no parameters, but still returns a TResult. It will be used if no value exists. A
-TResult will be returned.
-* **[ConvertUsing(Func&lt;T, TResult&gt;)](xref:Existential.Maybe`1#Existential_Maybe_1_ConvertUsing__1_System_Func__0___0__)** 
+Maybe&lt;TResult&gt; will be returned.
+
+Methods that act on a Maybe&lt;T&gt; and return a Maybe&lt;TResult&gt; can be chained together to apply a sequence of
+operations, perhaps with the underlying datatype changing, without giving up the "Maybeness" of the results - so it's
+not essential to know whether or not a value exists at any point when designing the sequence, reducing the amount
+of conditional code that has to be written. Of course, that conditionality exists, but it's hidden away and dealt
+with by the Maybe methods and doesn't intrude on the expression of more interesting business logic. (T and TResult 
+*needn't* be different types, but the possibility that they *can be* is what gives Maybe&lt;T&gt; its power.)
+
+There's an overload of DoEither that performs an Action without returning any values. It has its uses, but
+of course it can only be used to terminate a sequence.
+
+* **[DoEither(Action&lt;T&gt;, Action)](xref:Existential.Maybe`1#Existential_Maybe_1_DoEither_System_Action__0__System_Action_)** 
 (*alias: 
-[Map](xref:Existential.Maybe`1#Existential_Maybe_1_Map__1_System_Func__0___0__)/
-[Select](xref:Existential.Maybe`1#Existential_Maybe_1_Select__1_System_Func__0___0__)*) -
-You provide a function that converts a T to a TResult. A Maybe&lt;TResult&gt; will be returned.
+[Match](xref:Existential.Maybe`1#Existential_Maybe_1_Match_System_Action__0__System_Action_)*) -
+You provide two actions: one action that acts on a T and will be used if a value exists; and another that takes no parameters 
+and will be used if no value exists. There is no return from this method.
 
 ## Using Maybes in Linq
 Select, Where, (SelectMany)

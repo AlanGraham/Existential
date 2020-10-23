@@ -222,6 +222,34 @@ namespace Existential.Test
         }
 
         [Test]
+        public static void Equals_WithDifferentTypes_ReturnsFalse()
+        {
+            // Arrange
+            Maybe<string> theFirstMaybe = "2";
+            Maybe<int> theSecondMaybe = 2;
+
+            // Act
+            bool theResult = theFirstMaybe.Equals(theSecondMaybe);
+
+            // Assert
+            Assert.That(theResult, Is.False);
+        }
+
+        [Test]
+        public static void Equals_WithForcedObjectComparison_ReturnsTrue()
+        {
+            // Arrange
+            Maybe<string> theFirstMaybe = "Test";
+            Maybe<string> theSecondMaybe = "Test";
+
+            // Act
+            bool theResult = theFirstMaybe.Equals((object)theSecondMaybe);
+
+            // Assert
+            Assert.That(theResult, Is.True);
+        }
+
+        [Test]
         public static void EqualsOperator_WhenNeitherValueExists_ReturnsTrue()
         {
             // Arrange
@@ -320,7 +348,7 @@ namespace Existential.Test
             Maybe<string> theMaybe = null;
 
             // Act
-            int theResult = theMaybe.Match(inText => inText.Length, () => -1);
+            int theResult = theMaybe.Match(inText => inText.Length, () => -1).GetValueOr(-2);
 
             // Assert
             Assert.That(theResult, Is.EqualTo(-1));
@@ -333,7 +361,7 @@ namespace Existential.Test
             Maybe<string> theMaybe = null;
 
             // Act
-            int theResult = theMaybe.DoEither(inText => inText.Length, () => -1);
+            int theResult = theMaybe.DoEither(inText => inText.Length, () => -1).GetValueOr(-2);
 
             // Assert
             Assert.That(theResult, Is.EqualTo(-1));
@@ -346,7 +374,7 @@ namespace Existential.Test
             Maybe<string> theMaybe = "A test string";
 
             // Act
-            int theResult = theMaybe.Match(inText => inText.Length, () => -1);
+            int theResult = theMaybe.Match(inText => inText.Length, () => -1).GetValueOr(-2);
 
             // Assert
             Assert.That(theResult, Is.EqualTo(13));
@@ -359,7 +387,7 @@ namespace Existential.Test
             Maybe<string> theMaybe = "A test string";
 
             // Act
-            int theResult = theMaybe.DoEither(inText => inText.Length, () => -1);
+            int theResult = theMaybe.DoEither(inText => inText.Length, () => -1).GetValueOr(-2);
 
             // Assert
             Assert.That(theResult, Is.EqualTo(13));
@@ -372,7 +400,7 @@ namespace Existential.Test
             Maybe<string> theMaybe = string.Empty;
 
             // Act
-            int theResult = theMaybe.Match(inText => inText.Length, () => -1);
+            int theResult = theMaybe.Match(inText => inText.Length, () => -1).GetValueOr(-2);
 
             // Assert
             Assert.That(theResult, Is.EqualTo(0));
@@ -385,7 +413,7 @@ namespace Existential.Test
             Maybe<string> theMaybe = string.Empty;
 
             // Act
-            int theResult = theMaybe.DoEither(inText => inText.Length, () => -1);
+            int theResult = theMaybe.DoEither(inText => inText.Length, () => -1).GetValueOr(-2);
 
             // Assert
             Assert.That(theResult, Is.EqualTo(0));
@@ -533,13 +561,13 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void ConvertUsing_WithNoValue_ReturnsMaybeWithNoValue()
+        public static void ApplyOverload_WithNoValue_ReturnsMaybeWithNoValue()
         {
             // Arrange
             Maybe<string> theNullString = null;
 
             // Act
-            Maybe<int> theResult = theNullString.ConvertUsing(inText => inText.Length);
+            Maybe<int> theResult = theNullString.Apply(inText => inText.Length);
 
             // Assert
             Assert.That(theResult.GetValueOr(17), Is.EqualTo(17));
@@ -559,13 +587,13 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void ConvertUsing_WithValue_ReturnsExpectedValue()
+        public static void ApplyOverload_WithValue_ReturnsExpectedValue()
         {
             // Arrange
             Maybe<string> theString = "Call me Maybe";
 
             // Act
-            Maybe<int> theResult = theString.ConvertUsing(inText => inText.Length);
+            Maybe<int> theResult = theString.Apply(inText => inText.Length);
 
             // Assert
             Assert.That(theResult.GetValueOr(0), Is.EqualTo(13));
