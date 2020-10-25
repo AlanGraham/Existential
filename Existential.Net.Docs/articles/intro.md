@@ -34,13 +34,13 @@ the need to know whether there's a value.
 Occasionally it's useful to be able to treat a single value as an IEnumerable&lt;T&gt;, or 
 it would have been useful to have an IEnumerable actually be an IEnumerable&lt;T&gt;.
 Existential.Net provides conversions to enable that.
-* GetGenericEnumerable
+* **GetGenericEnumerable**: [Documentation](xref:Existential.GetGenericEnumerable)
 ## Work with types
 Existential provides a number of other small utility classes; to safely return an instance
 of IDisposable from a method, to calculate hash codes, to provide the name of the current
 method (without the need for reflection), and (using reflection) to report the name of a
 generic type in the form it's usually written.
 * **Disposable**: [How To](xref:resolving_ca2000.md), [Documentation](xref:Existential.Disposable)
-* HashCodeHelper
-* ThisMethod
-* Type Extension Methods
+* **HashCodeHelper**: [Documentation](xref:Existential.HashCodeHelper)
+* **ThisMethod**: [Documentation](xref:Existential.ThisMethod)
+* **Type Extension Methods**: [Documentation](xref:Existential.TypeExtensionMethods)

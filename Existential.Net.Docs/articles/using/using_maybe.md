@@ -11,9 +11,9 @@ Once you've decided, here's how to get started:
 So you've decided to use Maybe&lt;T&gt;!
 
 You can use one of the following methods to create a Maybe&lt;T&gt;:
-* [The implicit operator](xref:Existential.Maybe`1#Existential_Maybe_1_op_Implicit__0__Existential_Maybe__0_)
-* [Maybe&lt;T&gt;.ToMaybe(T)](xref:Existential.Maybe`1#Existential_Maybe_1_ToMaybe__0_)
-* [Maybe.Some&lt;T&gt;(T)](xref:Existential.Maybe#Existential_Maybe_Some__1___0_)
+* **[The implicit operator](xref:Existential.Maybe`1#Existential_Maybe_1_op_Implicit__0__Existential_Maybe__0_)**
+* **[Maybe&lt;T&gt;.ToMaybe(T)](xref:Existential.Maybe`1#Existential_Maybe_1_ToMaybe__0_)**
+* **[Maybe.Some&lt;T&gt;(T)](xref:Existential.Maybe#Existential_Maybe_Some__1___0_)**
 
 Usually the most straightforward to use is the implicit operator; explicitly declare a 
 variable of type Maybe&lt;T&gt;, where T is the type of the value that may be null, and 
