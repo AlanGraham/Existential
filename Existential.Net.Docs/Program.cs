@@ -16,15 +16,17 @@ namespace Existential.Net.Docs
         ///     Command line arguments passed through from <see cref="Main(string[])" />.
         /// </param>
         /// <returns>The builder for the web site.</returns>
+        // ReSharper disable once InconsistentNaming, IdentifierTypo
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
+                .ConfigureWebHostDefaults(inWebBuilder =>
                 {
-                    _ = webBuilder.UseStartup<Startup>();
+                    _ = inWebBuilder.UseStartup<Startup>();
                 });
 
         /// <summary>The main method of the website.</summary>
         /// <param name="args">Command line arguments.</param>
+        // ReSharper disable once InconsistentNaming, IdentifierTypo
         public static void Main(string[] args) => CreateHostBuilder(args).Build().Run();
     }
 }

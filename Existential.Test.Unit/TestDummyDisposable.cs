@@ -7,8 +7,11 @@ namespace Existential.Test
     using System;
     using System.IO;
 
+    using JetBrains.Annotations;
+
     public class TestDummyDisposable : IDisposable
     {
+        [UsedImplicitly]
         public TestDummyDisposable()
             : this(new MemoryStream())
         {

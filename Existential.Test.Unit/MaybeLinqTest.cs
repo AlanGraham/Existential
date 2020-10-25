@@ -8,6 +8,7 @@ namespace Existential.Test
 
     using NUnit.Framework;
 
+    // ReSharper disable once TestFileNameWarning
     [TestFixture]
     public static class MaybeLinqTest
     {

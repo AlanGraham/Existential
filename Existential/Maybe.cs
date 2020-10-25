@@ -85,16 +85,18 @@ namespace Existential
             "Naming",
             "CA1725:Parameter names should match base declaration",
             Justification = "Base declaration is inconsistent between .NET and Bridge.")]
+        [SuppressMessage("ReSharper", "InconsistentNaming", Justification = "Name matches Microsoft definition.")]
         public override bool Equals(object obj) => obj is Maybe<T> theOther && Equals(theOther);
 
         /// <summary>
-        /// Indicates whether the current object is equal to another object of the same type.
+        ///     Indicates whether the current object is equal to another object of the same type.
         /// </summary>
         /// <param name="other">An object to compare with this object.</param>
         /// <returns>
-        /// true if the current object is equal to the <paramref name="other">other</paramref>
-        /// parameter; otherwise, false.
+        ///     true if the current object is equal to the <paramref name="other">other</paramref>
+        ///     parameter; otherwise, false.
         /// </returns>
+        // ReSharper disable once InconsistentNaming
         public bool Equals(Maybe<T> other)
         {
             if (myValueExists)
@@ -223,6 +225,21 @@ namespace Existential
         /// <typeparam name="TResult">The underlying type of the result.</typeparam>
         /// <param name="inConvert">The function to apply to the value.</param>
         /// <returns>A container representing a result that may or may not exist.</returns>
+        /// <remarks>Required Monad method.</remarks>
+        public Maybe<TResult> Apply<TResult>(Func<T, Maybe<TResult>> inConvert)
+        {
+            _ = Validate.ThrowIfNull(inConvert, nameof(inConvert));
+
+            // Bridge.NET doesn't support simplifying this use of "default" (2020/03/22).
+            return !myValueExists ? default : inConvert(myValue);
+        }
+
+        /// <summary>
+        ///     Returns the result of applying the function to the value, or the default if no value exists.
+        /// </summary>
+        /// <typeparam name="TResult">The underlying type of the result.</typeparam>
+        /// <param name="inConvert">The function to apply to the value.</param>
+        /// <returns>A container representing a result that may or may not exist.</returns>
         /// <remarks>Equivalent to Map/Select; this is effectively an alias for comfort.</remarks>
         public Maybe<TResult> Apply<TResult>(Func<T, TResult> inConvert) => Select(inConvert);
 
@@ -247,26 +264,14 @@ namespace Existential
         /// <param name="inConvert">The function to apply to the value.</param>
         /// <returns>A container representing a result that may or may not exist.</returns>
         /// <remarks>
-        ///     Required Monad method. Here, an alias of <see cref="Apply{TResult}(System.Func{T,Existential.Maybe{TResult}})" />
+        ///     Required Monad method. Here, an alias of
+        ///     <see>
+        ///         <cref>Apply{TResult}(System.Func{T,Existential.Maybe{TResult}})</cref>
+        ///     </see>
         ///     because Apply is thought to be more
         ///     readable.
         /// </remarks>
         public Maybe<TResult> Bind<TResult>(Func<T, Maybe<TResult>> inConvert) => Apply(inConvert);
-
-        /// <summary>
-        ///     Returns the result of applying the function to the value, or the default if no value exists.
-        /// </summary>
-        /// <typeparam name="TResult">The underlying type of the result.</typeparam>
-        /// <param name="inConvert">The function to apply to the value.</param>
-        /// <returns>A container representing a result that may or may not exist.</returns>
-        /// <remarks>Required Monad method.</remarks>
-        public Maybe<TResult> Apply<TResult>(Func<T, Maybe<TResult>> inConvert)
-        {
-            _ = Validate.ThrowIfNull(inConvert, nameof(inConvert));
-
-            // Bridge.NET doesn't support simplifying this use of "default" (2020/03/22).
-            return !myValueExists ? default : inConvert(myValue);
-        }
 
         /// <summary>
         ///     Allows Linq queries to be written that reference multiple properties of the type
@@ -288,7 +293,7 @@ namespace Existential
             if (!myValueExists)
             {
                 // Bridge.NET doesn't support simplifying this use of "default" (2020/03/22).
-                return default(Maybe<TResult>);
+                return default;
             }
 
             _ = Validate.ThrowIfNull(inConvert, nameof(inConvert));
@@ -309,15 +314,15 @@ namespace Existential
             if (!myValueExists)
             {
                 // Bridge.NET doesn't support simplifying this use of "default" (2020/03/22).
-                return default(Maybe<T>);
+                return default;
             }
 
             _ = Validate.ThrowIfNull(inPredicate, nameof(inPredicate));
 
             //// Bridge.NET doesn't support simplifying this use of "default" (2020/03/22).
             return inPredicate(myValue)
-                       ? this
-                       : default(Maybe<T>);
+                ? this
+                : default;
         }
 
         /// <summary>Returns the value, if it exists, or the specified default value.</summary>

@@ -20,13 +20,13 @@ namespace Existential.Test.Architecture
         public static void RootNamespace_IsCorrect()
         {
             // Arrange
-            const string theRootNamespace = "Existential";
+            const string RootNamespace = "Existential";
 
             var theTargetAssembly = Assembly.GetAssembly(typeof(Validate));
             ConditionList theRootNamespaceRule = Types.InAssembly(theTargetAssembly)
                 .That().AreNotNested()
                 .And().DoNotResideInNamespaceStartingWith("Coverlet")
-                .Should().ResideInNamespaceStartingWith(theRootNamespace);
+                .Should().ResideInNamespaceStartingWith(RootNamespace);
 
             // Act
             TestResult theResult = theRootNamespaceRule.GetResult();
@@ -37,7 +37,7 @@ namespace Existential.Test.Architecture
                 StringBuilder theBuilder = new StringBuilder()
                     .Append(theResult.FailingTypeNames.Count)
                     .Append(" type(s) not under the correct root namespace \"")
-                    .Append(theRootNamespace)
+                    .Append(RootNamespace)
                     .Append("\":\n\t")
                     .Append(
                         theResult

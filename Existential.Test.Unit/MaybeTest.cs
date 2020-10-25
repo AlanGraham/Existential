@@ -229,6 +229,7 @@ namespace Existential.Test
             Maybe<int> theSecondMaybe = 2;
 
             // Act
+            // ReSharper disable once SuspiciousTypeConversion.Global
             bool theResult = theFirstMaybe.Equals(theSecondMaybe);
 
             // Assert
@@ -247,6 +248,21 @@ namespace Existential.Test
 
             // Assert
             Assert.That(theResult, Is.True);
+        }
+
+        [Test]
+        public static void Equals_WithForcedObjectComparisonAndDifferentTypes_ReturnsFalse()
+        {
+            // Arrange
+            Maybe<string> theFirstMaybe = "Test";
+            Maybe<int> theSecondMaybe = 2;
+
+            // Act
+            // ReSharper disable once SuspiciousTypeConversion.Global
+            bool theResult = theFirstMaybe.Equals(theSecondMaybe);
+
+            // Assert
+            Assert.That(theResult, Is.False);
         }
 
         [Test]
@@ -768,6 +784,7 @@ namespace Existential.Test
                 () =>
                 {
                     // Act
+                    // ReSharper disable once UnusedVariable
                     string theResult = theMaybe.GetValueOr((string)null);
                 },
                 Throws.ArgumentNullException
@@ -799,6 +816,7 @@ namespace Existential.Test
                 () =>
                 {
                     // Act
+                    // ReSharper disable once UnusedVariable
                     string theResult = theMaybe.GetValueOr((Func<string>)null);
                 },
                 Throws.ArgumentNullException
@@ -884,6 +902,7 @@ namespace Existential.Test
                 () =>
                 {
                     // Act
+                    // ReSharper disable once UnusedVariable
                     Maybe<string> theResult = theMaybe.GetValueOrMaybe(theDefault);
                 },
                 Throws.ArgumentException
@@ -917,6 +936,7 @@ namespace Existential.Test
                 () =>
                 {
                     // Act
+                    // ReSharper disable once UnusedVariable
                     Maybe<string> theResult = theMaybe.GetValueOrMaybe((Func<Maybe<string>>)null);
                 },
                 Throws.ArgumentNullException

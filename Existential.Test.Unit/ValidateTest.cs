@@ -11,7 +11,9 @@ namespace Existential.Test
 
     using FsCheck;
 
-    using NUnit.Framework; // using AssertPropertyThat = FsCheck.Prop;
+    using NUnit.Framework;
+
+    // using AssertPropertyThat = FsCheck.Prop;
 
     /// <summary>Unit tests for parameter validation methods.</summary>
     [TestFixture]
@@ -53,6 +55,7 @@ namespace Existential.Test
                 () =>
                 {
                     // Act
+                    // ReSharper disable once ExpressionIsAlwaysNull
                     Validate.ThrowIfNullOrEmpty(theCollection, nameof(theCollection));
                 },
                 Throws.ArgumentNullException
@@ -95,6 +98,7 @@ namespace Existential.Test
                 () =>
                 {
                     // Act
+                    // ReSharper disable once ExpressionIsAlwaysNull
                     Validate.ThrowIfNullOrEmpty(theCollection, nameof(theCollection));
                 },
                 Throws.ArgumentNullException
@@ -135,6 +139,7 @@ namespace Existential.Test
                 () =>
                 {
                     // Act
+                    // ReSharper disable once ExpressionIsAlwaysNull
                     Validate.ThrowIfNullOrEmpty(theCollection, nameof(theCollection));
                 },
                 Throws.ArgumentNullException
@@ -238,6 +243,7 @@ namespace Existential.Test
                 () =>
                 {
                     // Act
+                    // ReSharper disable once ExpressionIsAlwaysNull
                     Validate.ThrowIfNull(theNullText, nameof(theNullText));
                 },
                 Throws.ArgumentNullException
@@ -283,6 +289,7 @@ namespace Existential.Test
                 () =>
                 {
                     // Act
+                    // ReSharper disable once ExpressionIsAlwaysNull
                     Validate.ThrowIfNotOfType<ExpectedType>(theNullReference, nameof(theNullReference));
                 },
                 Throws.ArgumentNullException
@@ -351,6 +358,7 @@ namespace Existential.Test
                 () =>
                 {
                     // Act
+                    // ReSharper disable once ExpressionIsAlwaysNull
                     Validate.ThrowIfNotOfType(typeof(ExpectedType), theNullReference, nameof(theNullReference));
                 },
                 Throws.ArgumentNullException
@@ -412,6 +420,7 @@ namespace Existential.Test
                 () =>
                 {
                     // Act
+                    // ReSharper disable once ExpressionIsAlwaysNull
                     Validate.ThrowIfNullOrEmpty(theNullString, nameof(theNullString));
                 },
                 Throws.ArgumentNullException
@@ -510,6 +519,7 @@ namespace Existential.Test
                 () =>
                 {
                     // Act
+                    // ReSharper disable once ExpressionIsAlwaysNull
                     Validate.ThrowIfNullOrWhiteSpace(theNullString, nameof(theNullString));
                 },
                 Throws.ArgumentNullException
@@ -536,12 +546,6 @@ namespace Existential.Test
             // Arrange
             string theExpectedMessage = "The string cannot be empty or contain only whitespace characters.";
             string theWhiteSpaceText = "    ";
-
-            // Act
-            string theResult = Validate.ThrowIfNullOrEmpty(
-                theWhiteSpaceText,
-                nameof(theWhiteSpaceText),
-                inTrim: false);
 
             // Assert
             Assert.That(

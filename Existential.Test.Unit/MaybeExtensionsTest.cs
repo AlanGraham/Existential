@@ -284,6 +284,7 @@ namespace Existential.Test
         public static void MaybeFirst_WithEmptyList_ReturnsExpectedValue()
         {
             // Arrange
+            // ReSharper disable once CollectionNeverUpdated.Local
             var theCollection = new List<string>();
 
             // Act

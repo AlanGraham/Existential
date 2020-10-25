@@ -61,23 +61,23 @@ namespace Existential
             => inMaybe.GetValueOr(new List<T>());
 
         /// <summary>
-        /// Gets a <see cref="Maybe{T}"/> containing the first matching member of the collection, if it exists.
+        ///     Gets a <see cref="Maybe{T}" /> containing the first matching member of the collection, if it exists.
         /// </summary>
         /// <typeparam name="T">The type of the collection members.</typeparam>
         /// <param name="inCollection">A collection in which to find the first matching member.</param>
         /// <param name="inPredicate">The condition that a collection member must satisfy.</param>
-        /// <returns>A <see cref="Maybe{T}"/> containing the first member if it exists.</returns>
+        /// <returns>A <see cref="Maybe{T}" /> containing the first member if it exists.</returns>
         public static Maybe<T> MaybeFirstWhere<T>(this IEnumerable<T> inCollection, Func<T, bool> inPredicate)
-            => inCollection?.ThatExist().Where(inPredicate).MaybeFirst() ?? default(Maybe<T>);
+            => inCollection?.ThatExist().Where(inPredicate).MaybeFirst() ?? default;
 
         /// <summary>
-        /// Gets a <see cref="Maybe{T}"/> containing the first matching member of the collection, if it exists.
+        ///     Gets a <see cref="Maybe{T}" /> containing the first matching member of the collection, if it exists.
         /// </summary>
         /// <typeparam name="T">The type of the collection members.</typeparam>
         /// <param name="inCollection">A collection in which to find the first matching member.</param>
-        /// <returns>A <see cref="Maybe{T}"/> containing the first member if it exists.</returns>
+        /// <returns>A <see cref="Maybe{T}" /> containing the first member if it exists.</returns>
         public static Maybe<T> MaybeFirstThatExists<T>(this IEnumerable<T> inCollection)
-            => inCollection?.ThatExist().MaybeFirst() ?? default(Maybe<T>);
+            => inCollection?.ThatExist().MaybeFirst() ?? default;
 
         /// <summary>
         /// Gets a <see cref="Maybe{T}"/> containing the first member of the collection if it exists.
@@ -108,7 +108,7 @@ namespace Existential
                 }
             }
 
-            return default(Maybe<T>);
+            return default;
         }
 
         /// <summary>

@@ -15,29 +15,29 @@ namespace Existential.Net.Docs
     public sealed class Startup
     {
         /// <summary>Configures the application.</summary>
-        /// <param name="app">The application builder.</param>
-        /// <param name="env">The web host environment.</param>
+        /// <param name="inApplication">The application builder.</param>
+        /// <param name="inEnvironment">The web host environment.</param>
         /// <remarks>
         ///     This method gets called by the run-time. Use this method to configure the HTTP request pipeline.
         /// </remarks>
-        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public static void Configure(IApplicationBuilder inApplication, IWebHostEnvironment inEnvironment)
         {
-            if (env.IsDevelopment())
+            if (inEnvironment.IsDevelopment())
             {
-                _ = app.UseDeveloperExceptionPage();
+                _ = inApplication.UseDeveloperExceptionPage();
             }
 
-            _ = app
+            _ = inApplication
                 .UseDefaultFiles()
                 .UseStaticFiles()
                 .UseRouting()
-                .UseEndpoints(endpoints =>
+                .UseEndpoints(inEndpoints =>
+                {
+                    _ = inEndpoints.MapGet("/", async inContext =>
                     {
-                        _ = endpoints.MapGet("/", async context =>
-                        {
-                            await context.Response.WriteAsync("Hello World!").ConfigureAwait(false);
-                        });
+                        await inContext.Response.WriteAsync("Hello World!").ConfigureAwait(false);
                     });
+                });
         }
 
         /// <summary>Configures services for the application.</summary>

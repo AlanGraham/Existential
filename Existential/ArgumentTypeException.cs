@@ -13,7 +13,6 @@ namespace Existential
     {
         /// <summary>Initialises a new instance of the <see cref="ArgumentTypeException" /> class.</summary>
         public ArgumentTypeException()
-            : base()
         {
         }
 
