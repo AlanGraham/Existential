@@ -9,12 +9,12 @@
 trigger:
   branches:
     include:
-    - '*''
+    - '*'
     exclude:
     - main
 
 pool:
-  vmImage:  'ubuntu-latest'
+  vmImage: 'ubuntu-latest'
 
 variables:
   buildConfiguration: 'Debug'

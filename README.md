@@ -1,5 +1,5 @@
 ﻿# About Existential&#46;NET
-<img alt="Azure DevOps builds (branch)" src="https://img.shields.io/azure-devops/build/ggreig/Existential/1/main">
+<img alt="Azure DevOps builds (branch)" src="https://img.shields.io/azure-devops/build/ggreig/Existential/7">
 <img alt="SonarCloud quality gate" src="https://sonarcloud.io/api/project_badges/measure?project=ggreig_Existential&metric=alert_status">
 <img alt="Azure DevOps releases" src="https://img.shields.io/azure-devops/release/ggreig/9c4fc971-bef3-428a-ab81-cf30a24bea74/1/1">
 <a href="https://www.nuget.org/packages/Existential.Net"><img alt="Nuget (with prereleases)" src="https://img.shields.io/nuget/vpre/Existential.Net"></a>

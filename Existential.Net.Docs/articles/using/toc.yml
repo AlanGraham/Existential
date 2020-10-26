@@ -2,7 +2,7 @@
   href: resolving_ca1062.md
 - name: Resolve CA2000
   href: resolving_ca2000.md
-- name: Should I Use Maybe<T>
+- name: Should I Use Maybe<T>?
   href: should_i_use_maybe.md
 - name: Using Maybe<T>
   href: using_maybe.md
