@@ -100,5 +100,7 @@ of course it can only be used to terminate a sequence.
 You provide two actions: one action that acts on a T and will be used if a value exists; and another that takes no parameters 
 and will be used if no value exists. There is no return from this method.
 
+<!--
 ## Using Maybes in Linq
 Select, Where, (SelectMany)
+-->
