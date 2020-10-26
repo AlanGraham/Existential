@@ -264,10 +264,7 @@ namespace Existential
         /// <param name="inConvert">The function to apply to the value.</param>
         /// <returns>A container representing a result that may or may not exist.</returns>
         /// <remarks>
-        ///     Required Monad method. Here, an alias of
-        ///     <see>
-        ///         <cref>Apply{TResult}(System.Func{T,Existential.Maybe{TResult}})</cref>
-        ///     </see>
+        ///     Required Monad method. Here, an alias of <see cref="Maybe{T}.Apply{TResult}(Func{T,Maybe{TResult}})" />
         ///     because Apply is thought to be more
         ///     readable.
         /// </remarks>
@@ -414,7 +411,7 @@ namespace Existential
         public static Maybe<T> Some<T>([ValidatedNotNull] T inValue) => inValue ?? default(Maybe<T>);
 
         /// <summary>
-        ///     Ensures that a <see cref="Maybe{T}" /> doesn't get double-wrapped to become a Maybe{Maybe{T}}.
+        ///     Ensures that a <see cref="Maybe{T}" /> doesn't get double-wrapped to become a Maybe&lt;Maybe&lt;T&gt;&gt;.
         /// </summary>
         /// <typeparam name="T">The type of the value.</typeparam>
         /// <param name="inValue">The <see cref="Maybe{T}" />.</param>

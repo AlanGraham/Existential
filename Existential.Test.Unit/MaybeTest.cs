@@ -11,6 +11,25 @@ namespace Existential.Test
     [TestFixture]
     public static class MaybeTest
     {
+        [TestCase("A non-null string")]
+        public static void Maybe_IsRecognisedAsNullCheck(string inText)
+        {
+            // Arrange
+            // ReSharper disable once UnusedVariable
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
+            Maybe<string> theMaybe = inText;
+#pragma warning restore IDE0059 // Unnecessary assignment of a value
+
+            // Act
+            // Without assignment to Maybe, this should raise a CA1062 warning.
+            // Wouldn't usually do this, because it could cause a null deference,
+            // but it confirms that Maybe configuration in .editorconfig is correct.
+            int theLength = inText.Length;
+
+            // Assert
+            Assert.That(theLength, Is.EqualTo(17));
+        }
+
         [Test]
         public static void Apply_WithNoValue_ReturnsMaybeWithNoValue()
         {

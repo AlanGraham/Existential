@@ -35,10 +35,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="templates\existential\pdf\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Existential\Existential.Net.csproj" />
   </ItemGroup>
 
