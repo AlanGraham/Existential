@@ -26,6 +26,7 @@ Existential is a utility library that contains parameter validation methods, a M
 
     <!-- Include Source Link. -->
     <SourceLink>$(BaseIntermediateOutputPath)source_link.json</SourceLink>
+    <AssemblyOriginatorKeyFile>..\.sharedFiles\existential.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
