@@ -16,8 +16,7 @@ variables:
 #  buildPlatform: 'Any CPU'
   buildConfiguration: 'Debug'
 
-- steps:
-
+steps:
 - template: BuildAndTest.yml
   parameters:
     buildConfiguration: $(buildConfiguration)
