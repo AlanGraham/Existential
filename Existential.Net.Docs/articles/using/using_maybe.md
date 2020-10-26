@@ -37,7 +37,7 @@ contributing to the overall robustness of the code.
 
 ## Getting a value from Maybe&lt;T&gt;
 
-There are a number of methods on Maybe&ltT&gt; for retrieving a value from it safely:
+There are a number of methods on Maybe&lt;T&gt; for retrieving a value from it safely:
 * **[GetValueOr(T)](xref:Existential.Maybe`1#Existential_Maybe_1_GetValueOr__0_)** - 
 you specify a default value to return if none exists.
 * **[GetValueOr(Func&lt;T&gt;)](xref:Existential.Maybe`1#Existential_Maybe_1_GetValueOr_System_Func__0__)** - 
