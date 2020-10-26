@@ -1,0 +1,54 @@
+﻿# Intended to run for every commit; should build, run quick quality checks and unit tests.
+# Swift feedback is expected.
+
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/ecosystems/dotnet-core?view=azure-devops
+  
+trigger:
+- main
+
+pool:
+  vmImage:  'ubuntu-latest'
+
+variables:
+#  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Debug'
+
+- steps:
+
+- template: BuildAndTest.yml
+  parameters:
+    buildConfiguration: $(buildConfiguration)
+
+- task: CopyFiles@2
+  displayName: 'Stage NuGet packages'
+  inputs:
+    contents: '**/*.*nupkg'
+    targetFolder: $(Build.ArtifactStagingDirectory)/NuGet
+    flattenFolders: true
+
+- task: DotNetCoreCLI@2
+  displayName: 'Stage docs as zip for Azure'
+  inputs:
+    command: publish
+    publishWebProjects: True
+    arguments: '--configuration $(buildConfiguration) --output "$(Build.ArtifactStagingDirectory)/Package" /p:PublishProfile=FolderProfile'
+    zipAfterPublish: True
+
+- task: DotNetCoreCLI@2
+  displayName: 'Stage docs as folder for hosting'
+  inputs:
+    command: 'publish'
+    publishWebProjects: true
+    arguments: '--configuration $(buildConfiguration) --output "$(Build.ArtifactStagingDirectory)/Folder" /p:PublishProfile=FolderProfile'
+    zipAfterPublish: false
+    modifyOutputPath: false
+
+# this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish staged artifacts'
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+    artifactName: 'ggreig.com.Existential'

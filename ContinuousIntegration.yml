@@ -13,147 +13,115 @@ pool:
   vmImage:  'ubuntu-latest'
 
 variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
+#  buildPlatform: 'Any CPU'
   buildConfiguration: 'Debug'
 
-steps:
-- task: NuGetAuthenticate@0
-  inputs:
-    nuGetServiceConnections: 
+- steps:
 
-- task: SonarCloudPrepare@1
-  displayName: 'Prepare SonarCloud'
-  inputs:
-    SonarCloud: 'SonarCloud'
-    organization: 'ggreig'
-    scannerMode: 'MSBuild'
-    projectKey: 'ggreig_Existential'
-    projectName: 'Existential'
-    extraProperties : |
-      sonar.coverageReportPaths=coverlet/reports/SonarQube.xml
-      sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/coverlet/reports/SonarQube.xml
-      sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
+- template: BuildAndTest.yml
+  parameters:
+    buildConfiguration: $(buildConfiguration)
 
-- task: DotNetCoreCLI@2
-  displayName: 'Build'
-  inputs:
-    command: 'build'
-    arguments: '--configuration $(buildConfiguration)'
-
-# Begin testing:
-# https://stackoverflow.com/a/61481951
-- task: DotNetCoreCLI@2
-  displayName: 'Test'
-  inputs:
-    command: 'test'
-    arguments: '--collect:"XPlat Code Coverage" -- RunConfiguration.DisableAppDomain=true'
-    testRunTitle: 'Run Test and collect Coverage'
-    nobuild: true
-
-- task: DotNetCoreCLI@2
-  displayName: 'New Manifest'
-  inputs:
-    command: 'custom'
-    custom: 'new'
-    arguments: 'tool-manifest --force'
-
-- task: DotNetCoreCLI@2
-  displayName: 'Install ReportGenerator'
-  inputs:
-    command: custom
-    custom: tool
-    arguments: install dotnet-reportgenerator-globaltool
-
-- task: DotNetCoreCLI@2
-  displayName: 'Collate Code Coverage Results'
-  inputs:
-    command: custom
-    custom: tool
-    arguments: 'run reportgenerator -reports:$(Agent.TempDirectory)/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/coverlet/reports -reporttypes:"Cobertura;SonarQube"'
-
-- task: PublishCodeCoverageResults@1
-  displayName: 'Publish Code Coverage Results'
-  inputs:
-    codeCoverageTool: Cobertura
-    summaryFileLocation: $(Build.SourcesDirectory)/coverlet/reports/Cobertura.xml
-
-#- task: DotNetCoreCLI@2
-#  displayName: 'Pack NuGet Package'
+##################################
+#
+#steps:
+#- task: NuGetAuthenticate@0
 #  inputs:
-#    command: custom
-#    custom: pack
-#    arguments: '''
-    
+#    nuGetServiceConnections: 
+#
+#- task: SonarCloudPrepare@1
+#  displayName: 'Prepare SonarCloud'
+#  inputs:
+#    SonarCloud: 'SonarCloud'
+#    organization: 'ggreig'
+#    scannerMode: 'MSBuild'
+#    projectKey: 'ggreig_Existential'
+#    projectName: 'Existential'
+#    extraProperties : |
+#      sonar.coverageReportPaths=coverlet/reports/SonarQube.xml
+#      sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/coverlet/reports/SonarQube.xml
+#      sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
+#
 #- task: DotNetCoreCLI@2
-#  displayName: 'Pack NuGet package'
+#  displayName: 'Build'
+#  inputs:
+#    command: 'build'
+#    arguments: '--configuration $(buildConfiguration)'
+#
+## Begin testing:
+## https://stackoverflow.com/a/61481951
+#- task: DotNetCoreCLI@2
+#  displayName: 'Test'
+#  inputs:
+#    command: 'test'
+#    arguments: '--collect:"XPlat Code Coverage" -- RunConfiguration.DisableAppDomain=true'
+#    testRunTitle: 'Run Test and collect Coverage'
+#    nobuild: true
+#
+#- task: DotNetCoreCLI@2
+#  displayName: 'New Manifest'
 #  inputs:
 #    command: 'custom'
-#    projects: '**/Existential.Net.csproj'
-#    custom: 'pack'
-#    arguments: '--include-symbols -v d -c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)'
-
+#    custom: 'new'
+#    arguments: 'tool-manifest --force'
+#
 #- task: DotNetCoreCLI@2
-#  displayName: 'Pack NuGet Package'
+#  displayName: 'Install ReportGenerator'
 #  inputs:
-#    command: 'pack'
-#    packagesToPack: '**/Existential.Net.csproj'
-#    nobuild: true
-#    includesymbols: true
-#    versioningScheme: 'off'
-#    verbosityPack: 'Normal'
-
+#    command: custom
+#    custom: tool
+#    arguments: install dotnet-reportgenerator-globaltool
+#
 #- task: DotNetCoreCLI@2
-#  displayName: 'Publish NuGet package to internal feed'
+#  displayName: 'Collate Code Coverage Results'
 #  inputs:
-#    command: 'push'
-#    packagesToPush: '$(Build.SourcesDirectory)/**/*.*nupkg'
-##    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.*nupkg'
-#    nuGetFeedType: 'internal'
-#    publishVstsFeed: '9c4fc971-bef3-428a-ab81-cf30a24bea74/b2d0adc6-2924-4761-b868-ab5cfdc8d329'
-
-# Push all NuGet packages from a build to external Feed
+#    command: custom
+#    custom: tool
+#    arguments: 'run reportgenerator -reports:$(Agent.TempDirectory)/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/coverlet/reports -reporttypes:"Cobertura;SonarQube"'
+#
+#- task: PublishCodeCoverageResults@1
+#  displayName: 'Publish Code Coverage Results'
+#  inputs:
+#    codeCoverageTool: Cobertura
+#    summaryFileLocation: $(Build.SourcesDirectory)/coverlet/reports/Cobertura.xml
+#
+#- task: SonarCloudAnalyze@1
+#  displayName: 'SonarCloud Analysis'
+#
+#- task: SonarCloudPublish@1
+#  displayName: 'Publish SonarCloud Quality Gate Result'
+#  inputs:
+#    pollingTimeoutSec: '300'
+#
+#################################
+#
+#- task: CopyFiles@2
+#  displayName: 'Stage NuGet packages'
+#  inputs:
+#    contents: '**/*.*nupkg'
+#    targetFolder: $(Build.ArtifactStagingDirectory)/NuGet
+#    flattenFolders: true
+#
 #- task: DotNetCoreCLI@2
+#  displayName: 'Stage docs as zip for Azure'
 #  inputs:
-#    command: 'push'
-#    nugetFeedType: 'external'
-#    externalEndPoint: 'MyNuGetServiceConnection'
-
-- task: SonarCloudAnalyze@1
-  displayName: 'SonarCloud Analysis'
-
-- task: SonarCloudPublish@1
-  displayName: 'Publish SonarCloud Quality Gate Result'
-  inputs:
-    pollingTimeoutSec: '300'
-
-- task: CopyFiles@2
-  displayName: 'Stage NuGet packages'
-  inputs:
-    contents: '**/*.*nupkg'
-    targetFolder: $(Build.ArtifactStagingDirectory)/NuGet
-    flattenFolders: true
-
-- task: DotNetCoreCLI@2
-  displayName: 'Stage docs as zip for Azure'
-  inputs:
-    command: publish
-    publishWebProjects: True
-    arguments: '--configuration $(buildConfiguration) --output "$(Build.ArtifactStagingDirectory)/Package" /p:PublishProfile=FolderProfile'
-    zipAfterPublish: True
-
-- task: DotNetCoreCLI@2
-  displayName: 'Stage docs as folder for hosting'
-  inputs:
-    command: 'publish'
-    publishWebProjects: true
-    arguments: '--configuration $(buildConfiguration) --output "$(Build.ArtifactStagingDirectory)/Folder" /p:PublishProfile=FolderProfile'
-    zipAfterPublish: false
-    modifyOutputPath: false
-
-# this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish staged artifacts'
-  inputs:
-    pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
-    artifactName: 'ggreig.com.Existential'
+#    command: publish
+#    publishWebProjects: True
+#    arguments: '--configuration $(buildConfiguration) --output "$(Build.ArtifactStagingDirectory)/Package" /p:PublishProfile=FolderProfile'
+#    zipAfterPublish: True
+#
+#- task: DotNetCoreCLI@2
+#  displayName: 'Stage docs as folder for hosting'
+#  inputs:
+#    command: 'publish'
+#    publishWebProjects: true
+#    arguments: '--configuration $(buildConfiguration) --output "$(Build.ArtifactStagingDirectory)/Folder" /p:PublishProfile=FolderProfile'
+#    zipAfterPublish: false
+#    modifyOutputPath: false
+#
+## this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
+#- task: PublishBuildArtifacts@1
+#  displayName: 'Publish staged artifacts'
+#  inputs:
+#    pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+#    artifactName: 'ggreig.com.Existential'

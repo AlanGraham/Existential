@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
+		BuildAndTest.yml = BuildAndTest.yml
 		.sharedFiles\CompanyInfo.cs = .sharedFiles\CompanyInfo.cs
 		ContinuousIntegration.yml = ContinuousIntegration.yml
 		Directory.Build.props = Directory.Build.props
@@ -27,6 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		nuget.config = nuget.config
 		NuGetPackageMonitor.yml = NuGetPackageMonitor.yml
 		OvernightBuild.yml = OvernightBuild.yml
+		Publish.yml = Publish.yml
 		README.md = README.md
 		.sharedFiles\stylecop.json = .sharedFiles\stylecop.json
 	EndProjectSection
