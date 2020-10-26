@@ -13,15 +13,43 @@ namespace Existential.Test
 
     using NUnit.Framework;
 
-    // using AssertPropertyThat = FsCheck.Prop;
-
     /// <summary>Unit tests for parameter validation methods.</summary>
     [TestFixture]
     [SuppressMessage("ReSharper", "StyleCop.SA1600", Justification = "Tests don't need doc comments.")]
     public static class ValidateTest
     {
         /// <summary>
-        /// Checks that validation fails when an IEnumerable collection is non-null but empty.
+        ///     Regression test to check whether Roslyn Analyzer Issue 2504 has recurred.
+        /// </summary>
+        /// <remarks>
+        ///     https://github.com/dotnet/roslyn-analyzers/issues/2504.
+        /// </remarks>
+        [Test]
+        public static void RoslynAnalyzerIssue2504_DoesNotArise()
+        {
+            // Arrange
+            var thePerson = new Person("Christopher Robin", 6);
+
+            // ReSharper disable once NotAccessedVariable
+            string theName;
+
+            // ReSharper disable once NotAccessedVariable
+            int theAge;
+
+            // Assert
+            Assert.That(
+                () =>
+                {
+                    // Act
+                    Validate.ThrowIfNull(thePerson, nameof(thePerson));
+                    theName = thePerson.Name;
+                    theAge = thePerson.Age;
+                },
+                Throws.Nothing);
+        }
+
+        /// <summary>
+        ///     Checks that validation fails when an IEnumerable collection is non-null but empty.
         /// </summary>
         [Test]
         public static void ThrowIfNullOrEmpty_Fails_WhenIEnumerableIsEmpty()
@@ -569,6 +597,19 @@ namespace Existential.Test
 
         private class UnexpectedType
         {
+        }
+
+        private class Person
+        {
+            public Person(string inName, int inAge)
+            {
+                Name = inName;
+                Age = inAge;
+            }
+
+            public string Name { get; }
+
+            public int Age { get; }
         }
     }
 }
