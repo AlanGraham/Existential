@@ -44,15 +44,15 @@ Existential's icon is made up of two symbols from
 * &#8707; (*there exists*) and 
 * &#8708; (*there does not exist*)
 
+These are the two
+[existential quantifiers](https://en.wikipedia.org/wiki/Existential_quantification)
+, and capture the essence of what the Existential library is about.
+
 ## [![Existential icon](images/gg_greyscale32.jpg)](http://www.ggreig.com/) About the author
 [Gavin Greig](http://www.ggreig.com/)'s been a professional software developer since 1992, 
 and a .NET developer since 2004. Existential.Net's the crystallisation of his experience of
 finding the bits he wishes weren't missing from .NET, often unearthed with the help of static
 code analysis tools.
-
-These are the two
-[existential quantifiers](https://en.wikipedia.org/wiki/Existential_quantification)
-, and capture the essence of what the Existential library is about.
 
 ## Acknowledgements
 The implementation of the [Maybe&lt;T&gt;](xref:using_maybe.md) monad is based on a
