@@ -10,9 +10,9 @@
     <!-- NuGet package settings. -->
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IsPackable>true</IsPackable>
-    <PackageTags>standard,validation</PackageTags>
+    <PackageTags>validation, validate, optional types, maybe, Optional&lt;T&gt;, Maybe&lt;T&gt;, null, nulls, generic names, generic reflection</PackageTags>
     <PackageLicenseExpression>MS-PL</PackageLicenseExpression>
-    <PackageReleaseNotes>Breaking changes: method renaming to improve readability of code.</PackageReleaseNotes>
+    <PackageReleaseNotes>Added: Maybe&lt;T&gt;.WithValueOf(T), Maybe&lt;T&gt;.WithGuaranteedValueOf(T), Maybe&lt;T&gt;.Or(Maybe&lt;T&gt;), Maybe&lt;T&gt;.Or(Func&lt;Maybe&lt;T&gt;&gt;) and Maybe&lt;T&gt;.IfExists(Action&lt;T&gt;)</PackageReleaseNotes>
     <PackageProjectUrl>https://existential.ggreig.com/</PackageProjectUrl>
     <RepositoryUrl>https://dev.azure.com/ggreig/_git/Existential</RepositoryUrl>
     <PackageIcon>Existential256.png</PackageIcon>

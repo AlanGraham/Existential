@@ -22,7 +22,15 @@ result without needing to know whether a null is actually there hidden away insi
 a series of such methods together safely without worrying about a failure occurring somewhere at the start or middle 
 of the chain. Methods that would previously have converted a T to a U can instead convert a Maybe&lt;T&gt; to a 
 Maybe&lt;U&gt; - so the underlying type changes - all without having to check whether a result actually exists before 
-it's needed somewhere at the end of the process. 
+it's needed somewhere at the end of the process.
+
+Programmers familar with 
+[other languages](https://en.wikipedia.org/wiki/Option_type)
+may recognise Maybe&lt;T&gt; as being similar to features in their
+own languages. The name "Maybe" comes from 
+[Haskell](https://wiki.haskell.org/Maybe),
+and Java programmers may be accustomed to using
+[Optional&lt;T&gt;](https://docs.oracle.com/javase/10/docs/api/java/util/Optional.html).
 
 ## Cons:
 Sounds amazing, doesn't it? Of course it doesn't come for free - it requires a change to your programming
@@ -51,3 +59,6 @@ Maybe&lt;T&gt; has the potential to go further, but requires a significant commi
 If you're ready to jump into 
 [Maybe&lt;T&gt;](xref:Existential.Maybe`1), then
 **[Using Maybe&lt;T&gt;](xref:using_maybe.md)** is the best place to start.
+
+## Comparison with other languages
+This 

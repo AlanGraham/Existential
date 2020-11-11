@@ -12,17 +12,26 @@ So you've decided to use Maybe&lt;T&gt;!
 
 You can use one of the following methods to create a Maybe&lt;T&gt;:
 * **[The implicit operator](xref:Existential.Maybe`1#Existential_Maybe_1_op_Implicit__0__Existential_Maybe__0_)**
-* **[Maybe&lt;T&gt;.ToMaybe(T)](xref:Existential.Maybe`1#Existential_Maybe_1_ToMaybe__0_)**
 * **[Maybe.Some&lt;T&gt;(T)](xref:Existential.Maybe#Existential_Maybe_Some__1___0_)**
+* **[Maybe&lt;T&gt;.WithValue(T)](xref:Existential.Maybe`1#Existential_Maybe_1_WithValue__0_)**
+* **[Maybe&lt;T&gt;.WithGuaranteedValue(T)](xref:Existential.Maybe`1#Existential_Maybe_1_WithGuaranteedValue__0_)**
 
-Usually the most straightforward to use is the implicit operator; explicitly declare a 
-variable of type Maybe&lt;T&gt;, where T is the type of the value that may be null, and 
-assign the value to it:
+Here are examples with comments about pros and cons:
 
 ```cs
 public void Method(string inCouldBeNull)
 {
-    Maybe<string> theString = inCouldBeNull;
+    // Simplest method; but you need to declare the type explicitly.
+    Maybe<string> theMaybeString1 = inCouldBeNull;
+
+    // Nearly as simple and allows use of var.
+    var theMaybeString2 = Maybe.Some(inCouldBeNull);
+
+    // Expresses intention most clearly and allows var, but longer.
+    var theMaybeString3 = Maybe<string>.WithValue(inCouldBeNull);
+
+    // Throws exception if value is null; a guarantee but at a cost.
+    var theMaybeString4 = Maybe<string>.WithGuaranteedValue(inCouldBeNull);
 
     // Other code goes here. There are safe methods 
     // to get a value or a default from theString 
@@ -64,9 +73,10 @@ for T (which may be null).
 ## Working with Maybes
 Maybe&lt;T&gt; has a few more options for extracting values from it than Nullable&lt;T&gt; has,
 but so far we've seen nothing much to distinguish Maybe from Nullable. The next few methods are
-where that difference emerges. Each of these have supported aliases that may be more comfortable for
+where that difference emerges. Some of these have supported aliases that may be more comfortable for
 developers familar with the theory behind Maybes, but in writing Existential.Net I've tried to
 emphasise usability over theory - so I'll mention the aliases here, then ignore them.
+
 * **[Apply(Func&lt;T, Maybe&lt;TResult&gt;&gt;)](xref:Existential.Maybe`1#Existential_Maybe_1_Apply__1_System_Func__0_Existential_Maybe___0___)** 
 (*alias: 
 [Bind](xref:Existential.Maybe`1#Existential_Maybe_1_Bind__1_System_Func__0_Existential_Maybe___0___)*) - 
@@ -83,6 +93,12 @@ You provide a function that converts a T to a TResult. A Maybe&lt;TResult&gt; wi
 You provide two functions: one function that acts on a T, returns a TResult and will be used if a value exists; and another 
 that takes no parameters, but still returns a TResult. It will be used if no value exists. A
 Maybe&lt;TResult&gt; will be returned.
+* **[Or(Maybe&lt;T&gt;)](xref:Existential.Maybe`1#Existential_Maybe_1_Or_Existential_Maybe__0__)** - 
+You provide an alternative Maybe&lt;T&gt;. If the current Maybe instance has a value, it will return 
+itself; if not it will return the provided alternative.
+* **[Or(Func&lt;Maybe&lt;T&gt;&gt;)](xref:Existential.Maybe`1#Existential_Maybe_1_Or_Existential_Maybe__0__)** - 
+You provide a method that will return an alternative Maybe&lt;T&gt;. If the current Maybe instance has a 
+value, it will return itself; otherwise it will return the alternative provided by the method.
 
 Methods that act on a Maybe&lt;T&gt; and return a Maybe&lt;TResult&gt; can be chained together to apply a sequence of
 operations, perhaps with the underlying datatype changing, without giving up the "Maybeness" of the results - so it's
@@ -92,13 +108,20 @@ with by the Maybe methods and doesn't intrude on the expression of more interest
 *needn't* be different types, but the possibility that they *can be* is what gives Maybe&lt;T&gt; its power.)
 
 There's an overload of DoEither that performs an Action without returning any values. It has its uses, but
-of course it can only be used to terminate a sequence.
+of course it can only be used to terminate a sequence. IfExists is another method that can only be used to
+end a sequence.
 
 * **[DoEither(Action&lt;T&gt;, Action)](xref:Existential.Maybe`1#Existential_Maybe_1_DoEither_System_Action__0__System_Action_)** 
 (*alias: 
 [Match](xref:Existential.Maybe`1#Existential_Maybe_1_Match_System_Action__0__System_Action_)*) -
 You provide two actions: one action that acts on a T and will be used if a value exists; and another that takes no parameters 
-and will be used if no value exists. There is no return from this method.
+and will be used if no value exists. There is no value returned from this method.
+* **[IfExists(Action&lt;T&gt;)](xref:Existential.Maybe`1#Existential_Maybe_1_IfExists_System_Action__0__)** -
+You provide an action that acts on a T and it will be used if a value exists. There is no value returned from this 
+method. (The chainable equivalents are
+[Apply(Func&lt;T, Maybe&lt;TResult&gt;&gt;)](xref:Existential.Maybe`1#Existential_Maybe_1_Apply__1_System_Func__0_Existential_Maybe___0___)
+and 
+[Apply(Func&lt;T, TResult&gt;)](xref:Existential.Maybe`1#Existential_Maybe_1_Apply__1_System_Func__0___0__).)
 
 <!--
 ## Using Maybes in Linq

@@ -28,9 +28,9 @@ namespace Existential
         /// <summary>Initialises a new instance of the <see cref="Maybe{T}" /> struct.</summary>
         /// <param name="inValue">The value for the maybe to contain.</param>
         /// <remarks>
-        /// Private so that it can only be used by methods within the class that check for null
-        /// before construction. If the provided value is null, they will use the default
-        /// constructor instead.
+        ///     Private so that it can only be used by methods within the class that check for null
+        ///     before construction. If the provided value is null, they will use the default
+        ///     constructor instead.
         /// </remarks>
         private Maybe(T inValue)
         {
@@ -60,6 +60,27 @@ namespace Existential
         /// <returns>The result of the operator.</returns>
         public static bool operator !=(Maybe<T> inLeft, Maybe<T> inRight)
             => !inLeft.Equals(inRight);
+
+#pragma warning disable CA1000 // Do not declare static members on generic types - these two methods help with readability.
+        /// <summary>
+        ///     Creates a <see cref="Maybe{T}" /> with the specified value.
+        /// </summary>
+        /// <param name="inValue">The value to assign to the <see cref="Maybe{T}" />.</param>
+        /// <returns>A <see cref="Maybe{T}" /> with the value <paramref name="inValue" />.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if the value, <paramref name="inValue" />, is null.</exception>
+        public static Maybe<T> WithGuaranteedValue(T inValue)
+        {
+            _ = Validate.ThrowIfNull(inValue, nameof(inValue));
+            return inValue;
+        }
+
+        /// <summary>
+        ///     Creates a <see cref="Maybe{T}" /> with the specified value.
+        /// </summary>
+        /// <param name="inValue">The value to assign to the <see cref="Maybe{T}" />.</param>
+        /// <returns>A <see cref="Maybe{T}" /> with the value <paramref name="inValue" />.</returns>
+        public static Maybe<T> WithValue(T inValue) => inValue;
+#pragma warning restore CA1000 // Do not declare static members on generic types
 
         /// <summary>
         ///     Performs a conversion from a <typeparamref name="T" /> to a <see cref="Maybe{T}" />.
@@ -119,8 +140,8 @@ namespace Existential
 
         /// <summary>Returns a hash code for this instance.</summary>
         /// <returns>
-        /// A hash code for this instance, suitable for use in hashing algorithms and data
-        /// structures like a hash table.
+        ///     A hash code for this instance, suitable for use in hashing algorithms and data
+        ///     structures like a hash table.
         /// </returns>
         public override int GetHashCode() => myValueExists ? myValue.GetHashCode() : 0;
 
@@ -159,6 +180,18 @@ namespace Existential
         /// <param name="inNone">The action to apply if no value exists.</param>
         public void Match(Action<T> inSome, Action inNone) => DoEither(inSome, inNone);
 
+        /// <summary>Applies an action if the value exists.</summary>
+        /// <param name="inSome">The action to apply if a value exists.</param>
+        public void IfExists(Action<T> inSome)
+        {
+            _ = Validate.ThrowIfNull(inSome, nameof(inSome));
+
+            if (myValueExists)
+            {
+                inSome(myValue);
+            }
+        }
+
         /// <summary>Applies different functions depending on whether the value exists.</summary>
         /// <typeparam name="TResult">The type of the result.</typeparam>
         /// <param name="inSome">The function to apply if a value exists.</param>
@@ -170,8 +203,8 @@ namespace Existential
             _ = Validate.ThrowIfNull(inNone, nameof(inNone));
 
             return myValueExists
-                       ? inSome(myValue)
-                       : inNone();
+                ? inSome(myValue)
+                : inNone();
         }
 
         /// <summary>Applies different actions depending on whether the value exists.</summary>
@@ -193,8 +226,8 @@ namespace Existential
         }
 
         /// <summary>
-        /// Puts the actual value into <paramref name="inValue" />, if it exists, otherwise the
-        /// default value. Returns a Boolean indicating whether a value was found.
+        ///     Puts the actual value into <paramref name="inValue" />, if it exists, otherwise the
+        ///     default value. Returns a Boolean indicating whether a value was found.
         /// </summary>
         /// <param name="inValue">The value, if it exists, or the default for that type.</param>
         /// <returns>A Boolean indicating whether a value was found.</returns>
@@ -209,6 +242,31 @@ namespace Existential
             inValue = default;
             return false;
         }
+
+        /// <summary>
+        ///     Returns the current <see cref="Maybe{T}" /> if a value exists, or the specified alternative
+        ///     <see cref="Maybe{T}" />.
+        /// </summary>
+        /// <param name="inAlternativeValue">An alternative <see cref="Maybe{T}" />.</param>
+        /// <returns>
+        ///     The current <see cref="Maybe{T}" /> if a value exists, or the specified alternative
+        ///     <see cref="Maybe{T}" />.
+        /// </returns>
+        public Maybe<T> Or(Maybe<T> inAlternativeValue) => myValueExists ? this : inAlternativeValue;
+
+        /// <summary>
+        ///     Returns the current <see cref="Maybe{T}" /> if a value exists, or the specified alternative
+        ///     <see cref="Maybe{T}" />.
+        /// </summary>
+        /// <param name="inAlternativeValueFactory">A method that returns an alternative <see cref="Maybe{T}" />.</param>
+        /// <returns>
+        ///     The current <see cref="Maybe{T}" /> if a value exists, or an alternative <see cref="Maybe{T}" />
+        ///     provided by the specified method.
+        /// </returns>
+        public Maybe<T> Or(Func<Maybe<T>> inAlternativeValueFactory)
+            => myValueExists
+                ? this
+                : Validate.ThrowIfNull(inAlternativeValueFactory, nameof(inAlternativeValueFactory)).Invoke();
 
         /// <summary>
         ///     Returns the result of applying the function to the value, or the default if no value exists.
@@ -299,8 +357,8 @@ namespace Existential
 
             // Bridge.NET doesn't support simplifying this use of "default" (2020/03/22).
             return !theConverted.myValueExists
-                       ? default(Maybe<TResult>)
-                       : inFinalSelect(myValue, theConverted.myValue);
+                ? default(Maybe<TResult>)
+                : inFinalSelect(myValue, theConverted.myValue);
         }
 
         /// <summary>Returns the value if the predicate applies, otherwise the default.</summary>

@@ -11,8 +11,9 @@ namespace Existential.Net.Docs
     using Microsoft.Extensions.Hosting;
 
     /// <summary>Start-up actions for the web site.</summary>
-    // ReSharper disable once ConvertToStaticClass - can't be static due to the way it's used in Program.
+#pragma warning disable S1118 // Utility classes should not have public constructors - can't be static due to the way it's used in Program.
     public sealed class Startup
+#pragma warning restore S1118 // Utility classes should not have public constructors
     {
         /// <summary>Configures the application.</summary>
         /// <param name="inApplication">The application builder.</param>

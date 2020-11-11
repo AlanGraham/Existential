@@ -11,14 +11,116 @@ namespace Existential.Test
     [TestFixture]
     public static class MaybeTest
     {
+        [Test]
+        public static void Maybe_WithValue_Succeeds()
+        {
+            // Act
+            var theMaybe = Maybe<string>.WithValue("Success");
+
+            // Assert
+            Assert.That(theMaybe.GetValueOr("Fail"), Is.EqualTo("Success"));
+        }
+
+        [Test]
+        public static void Maybe_WithValue_FailsAsExpected()
+        {
+            // Act
+            var theMaybe = Maybe<string>.WithValue(null);
+
+            // Assert
+            Assert.That(theMaybe.GetValueOr("Fail"), Is.EqualTo("Fail"));
+        }
+
+        [Test]
+        public static void Maybe_WithGuaranteedValue_Succeeds()
+        {
+            // Act
+            var theMaybe = Maybe<string>.WithGuaranteedValue("Success");
+
+            // Assert
+            Assert.That(theMaybe.GetValueOr("Fail"), Is.EqualTo("Success"));
+        }
+
+        [Test]
+        public static void Maybe_WithGuaranteedValue_FailsAsExpected()
+        {
+            // Assert
+            Assert.That(
+                () =>
+                {
+                    // Act
+#pragma warning disable S1481 // Unused local variables should be removed
+                    var theMaybe = Maybe<string>.WithGuaranteedValue(null);
+#pragma warning restore S1481 // Unused local variables should be removed
+                },
+                Throws.ArgumentNullException
+                    .With.Message.Contains("Value cannot be null."));
+        }
+
+        [Test]
+        public static void Maybe_OrWithValue_ReturnsOriginal()
+        {
+            // Arrange
+            Maybe<string> theOriginalMaybe = "Success";
+            Maybe<string> theAlternativeMaybe = "Fail";
+
+            // Act
+            Maybe<string> theResult = theOriginalMaybe.Or(theAlternativeMaybe);
+
+            // Assert
+            Assert.That(theResult.GetValueOr("Unexpected Fail!"), Is.EqualTo("Success"));
+        }
+
+        [Test]
+        public static void Maybe_OrWithNull_ReturnsAlternative()
+        {
+            // Arrange
+            Maybe<string> theOriginalMaybe = null;
+            Maybe<string> theAlternativeMaybe = "Success";
+
+            // Act
+            Maybe<string> theResult = theOriginalMaybe.Or(theAlternativeMaybe);
+
+            // Assert
+            Assert.That(theResult.GetValueOr("Unexpected Fail!"), Is.EqualTo("Success"));
+        }
+
+        [Test]
+        public static void Maybe_OrFunctionWithValue_ReturnsOriginal()
+        {
+            // Arrange
+            Maybe<string> theOriginalMaybe = "Success";
+            Maybe<string> theAlternativeMaybe = "Fail";
+
+            // Act
+            Maybe<string> theResult = theOriginalMaybe.Or(() => theAlternativeMaybe);
+
+            // Assert
+            Assert.That(theResult.GetValueOr("Unexpected Fail!"), Is.EqualTo("Success"));
+        }
+
+        [Test]
+        public static void Maybe_OrFunctionWithNull_ReturnsAlternative()
+        {
+            // Arrange
+            Maybe<string> theOriginalMaybe = null;
+            Maybe<string> theAlternativeMaybe = "Success";
+
+            // Act
+            Maybe<string> theResult = theOriginalMaybe.Or(() => theAlternativeMaybe);
+
+            // Assert
+            Assert.That(theResult.GetValueOr("Unexpected Fail!"), Is.EqualTo("Success"));
+        }
+
         [TestCase("A non-null string")]
         public static void Maybe_IsRecognisedAsNullCheck(string inText)
         {
             // Arrange
             // ReSharper disable once UnusedVariable
-#pragma warning disable IDE0059 // Unnecessary assignment of a value
+#pragma warning disable IDE0059, S1481 // Unnecessary assignment of a value, unused local variable
             Maybe<string> theMaybe = inText;
-#pragma warning restore IDE0059 // Unnecessary assignment of a value
+#pragma warning restore IDE0059, S1481 // Unnecessary assignment of a value, unused local variable
 
             // Act
             // Without assignment to Maybe, this should raise a CA1062 warning.
@@ -519,6 +621,36 @@ namespace Existential.Test
         }
 
         [Test]
+        public static void IfExists_WithActionAndNull_DoesNotApplyAction()
+        {
+            // Arrange
+            Maybe<string> theMaybe = null;
+            bool isActionApplied = false;
+            void Action(string inText) => isActionApplied = inText == null;
+
+            // Act
+            theMaybe.IfExists(Action);
+
+            // Assert
+            Assert.That(isActionApplied, Is.False);
+        }
+
+        [Test]
+        public static void IfExists_WithActionAndValue_AppliesAction()
+        {
+            // Arrange
+            Maybe<string> theMaybe = "Test";
+            bool isActionApplied = false;
+            void Action(string inText) => isActionApplied = inText == "Test";
+
+            // Act
+            theMaybe.IfExists(Action);
+
+            // Assert
+            Assert.That(isActionApplied, Is.True);
+        }
+
+        [Test]
         public static void Some_WithInt_HasExpectedValue()
         {
             // Act
@@ -803,8 +935,9 @@ namespace Existential.Test
                 () =>
                 {
                     // Act
-                    // ReSharper disable once UnusedVariable
+#pragma warning disable S1481 // Unused local variables should be removed
                     string theResult = theMaybe.GetValueOr((string)null);
+#pragma warning restore S1481 // Unused local variables should be removed
                 },
                 Throws.ArgumentNullException
                     .With.Message.Contains("Value cannot be null")
@@ -835,8 +968,9 @@ namespace Existential.Test
                 () =>
                 {
                     // Act
-                    // ReSharper disable once UnusedVariable
+#pragma warning disable S1481 // Unused local variables should be removed
                     string theResult = theMaybe.GetValueOr((Func<string>)null);
+#pragma warning restore S1481 // Unused local variables should be removed
                 },
                 Throws.ArgumentNullException
                     .With.Message.Contains("Value cannot be null")
@@ -921,8 +1055,9 @@ namespace Existential.Test
                 () =>
                 {
                     // Act
-                    // ReSharper disable once UnusedVariable
+#pragma warning disable S1481 // Unused local variables should be removed
                     Maybe<string> theResult = theMaybe.GetValueOrMaybe(theDefault);
+#pragma warning restore S1481 // Unused local variables should be removed
                 },
                 Throws.ArgumentException
                     .With.Message
@@ -955,8 +1090,9 @@ namespace Existential.Test
                 () =>
                 {
                     // Act
-                    // ReSharper disable once UnusedVariable
+#pragma warning disable S1481 // Unused local variables should be removed
                     Maybe<string> theResult = theMaybe.GetValueOrMaybe((Func<Maybe<string>>)null);
+#pragma warning restore S1481 // Unused local variables should be removed
                 },
                 Throws.ArgumentNullException
                     .With.Message.Contains("Value cannot be null")
