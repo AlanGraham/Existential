@@ -1,0 +1,31 @@
+﻿# # Intended to run overnight. Will report on open source use.
+
+trigger: none
+pr: none
+
+schedules:
+- cron: '0 0 * * *'
+  displayName: 'WhiteSource Bolt'
+  always: true
+  branches:
+    include: [main]
+    exclude: []
+
+pool:
+  vmImage:  'ubuntu-latest'
+
+steps:
+
+- task: NuGetAuthenticate@0
+  inputs:
+    nuGetServiceConnections: 
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'restore'
+    projects: '**/*.csproj'
+    feedsToUse: 'config'
+    nugetConfigPath: 'nuget.config'
+    
+- task: WhiteSource Bolt@20
+  inputs:

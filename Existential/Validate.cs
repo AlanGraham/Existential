@@ -185,8 +185,10 @@ namespace Existential
         /// </exception>
         public static object ThrowIfNotOfType(Type inType, object inActual, string inName)
         {
-            // ReSharper disable once UseMethodIsInstanceOfType - can't be directly substituted.
+            // ReSharper disable once UseMethodIsInstanceOfType
+#pragma warning disable S2219 // Runtime type checking should be simplified - UseMethodIsInstanceOfType can't be directly substituted.
             if (!ThrowIfNull(inType, nameof(inType)).IsAssignableFrom(ThrowIfNull(inActual, inName).GetType()))
+#pragma warning restore S2219 // Runtime type checking should be simplified
             {
                 string theMessage = string.Format(
                     CultureInfo.CurrentCulture,

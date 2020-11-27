@@ -3,22 +3,22 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Existential</RootNamespace>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AssemblyTitle>Existential.Net</AssemblyTitle>
-    <Description>The library for things that may or may not exist.
-
-Existential is a utility library that contains parameter validation methods, a Maybe monad, and more. It can be used to work effectively with nulls, to efficiently resolve Code Analysis issues CA1062 and CA2000, to help generate a hash code, and to convert the names of generic types into a familiar string representation.</Description>
-    <PackageProjectUrl>https://existential.ggreig.com/</PackageProjectUrl>
-    <RepositoryUrl>https://dev.azure.com/ggreig/_git/Existential</RepositoryUrl>
-    <PackageIcon>Existential256.png</PackageIcon>
   </PropertyGroup>
   
   <PropertyGroup>
     <!-- NuGet package settings. -->
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IsPackable>true</IsPackable>
-    <PackageTags>standard,validation</PackageTags>
+    <PackageTags>validation, validate, optional types, maybe, Optional&lt;T&gt;, Maybe&lt;T&gt;, null, nulls, generic names, generic reflection</PackageTags>
     <PackageLicenseExpression>MS-PL</PackageLicenseExpression>
-    <PackageReleaseNotes>Breaking changes: method renaming to improve readability of code.</PackageReleaseNotes>
+    <PackageReleaseNotes>Established feature parity with Java's Optional&lt;T&gt;. Added: Maybe&lt;T&gt;.WithValueOf(T), Maybe&lt;T&gt;.WithGuaranteedValueOf(T), Maybe&lt;T&gt;.Or(Maybe&lt;T&gt;), Maybe&lt;T&gt;.Or(Func&lt;Maybe&lt;T&gt;&gt;) and Maybe&lt;T&gt;.IfExists(Action&lt;T&gt;)</PackageReleaseNotes>
+    <PackageProjectUrl>https://existential.ggreig.com/</PackageProjectUrl>
+    <RepositoryUrl>https://dev.azure.com/ggreig/_git/Existential</RepositoryUrl>
+    <PackageIcon>Existential256.png</PackageIcon>
+    <Description>The library for things that may or may not exist.
+
+Existential is a utility library that contains parameter validation methods, a Maybe monad, and more. It can be used to work effectively with nulls, to efficiently resolve Code Analysis issues CA1062 and CA2000, to help generate a hash code, and to convert the names of generic types into a familiar string representation.</Description>
 
     <!-- This should support NuGet.org's readme functionality when it's delivered. -->
     <!-- https://github.com/NuGet/Home/wiki/Embedding-and-displaying-NuGet-READMEs -->
@@ -47,15 +47,8 @@ Existential is a utility library that contains parameter validation methods, a M
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="3.3.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.NetCore.Analyzers" Version="3.3.1">
+    <PackageReference Include="InclusivenessAnalyzer" Version="1.2.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
