@@ -29,3 +29,4 @@ steps:
     
 - task: WhiteSource Bolt@20
   inputs:
+    cwd: '$(Build.SourcesDirectory)'
