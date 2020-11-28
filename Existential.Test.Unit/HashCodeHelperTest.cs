@@ -12,12 +12,11 @@ namespace Existential.Test
     using NUnit.Framework;
 
     using AssertPropertyThat = FsCheck.Prop;
-    using PropertyAttribute = FsCheck.NUnit.PropertyAttribute;
 
     [TestFixture]
     public static class HashCodeHelperTest
     {
-        [Property]
+        [FsCheck.NUnit.Property]
         public static void HashCodeRepeatable() =>
             AssertPropertyThat.ForAll<int[]>(
                 inNumber =>
@@ -27,10 +26,10 @@ namespace Existential.Test
                     return theFirstHashCode == theSecondHashCode;
                 });
 
-        [Property]
+        [FsCheck.NUnit.Property]
         public static void ReorderedValuesGiveDifferentHashCode() =>
             AssertPropertyThat.ForAll<int[]>(
-                (inNumber) =>
+                inNumber =>
                     HashCodeHelper.CalculateHashCode(inNumber) != HashCodeHelper.CalculateHashCode(inNumber.Reverse()));
 
         [Test]
@@ -64,16 +63,6 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void HashCode_HasExpectedValue()
-        {
-            // Act
-            int theResult = HashCodeHelper.CalculateHashCode(1, 1, 1);
-
-            // Assert
-            Assert.That(theResult, Is.EqualTo(207392));
-        }
-
-        [Test]
         public static void HashCode_ForNull_IsZero()
         {
             // Act
@@ -84,23 +73,33 @@ namespace Existential.Test
         }
 
         [Test]
-        public static void HashCode_WithAnInvalidValueInCollection_UsesDefault()
+        public static void HashCode_WithAnInvalidValueInCollection_IsNonZero()
         {
             // Act
             int theResult = HashCodeHelper.CalculateHashCode(1, null);
 
             // Assert
-            Assert.That(theResult, Is.EqualTo(9016));
+            Assert.That(theResult, Is.Not.EqualTo(0));
         }
 
         [Test]
-        public static void HashCode_WithAllInvalidValueInCollection_UsesDefault()
+        public static void HashCode_WithAllInvalidValueInCollection_IsNonZero()
         {
             // Act
             int theResult = HashCodeHelper.CalculateHashCode(null, null);
 
             // Assert
-            Assert.That(theResult, Is.EqualTo(8993));
+            Assert.That(theResult, Is.Not.EqualTo(0));
+        }
+
+        [Test]
+        public static void HashCode_WithSomeInvalidValueSInCollection_IsDifferentFromNoInvalid()
+        {
+            // Act
+            int theResult = HashCodeHelper.CalculateHashCode(1, null);
+
+            // Assert
+            Assert.That(theResult, Is.Not.EqualTo(HashCodeHelper.CalculateHashCode(null, null)));
         }
     }
 }
