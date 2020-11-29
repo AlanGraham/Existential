@@ -9,7 +9,14 @@ namespace Existential
     /// <summary>A class containing methods to help with hash codes.</summary>
     public static class HashCodeHelper
     {
-        private const int PrimeNumber = 16777619;
+        // This is the value suggested for the FNV algorithm.
+        private const int FnvPrimeNumber = 16777619;
+
+        // This value is used as a fallback in the unlikely event that a random offset can't be assigned. The original uint
+        // value is the one suggested for the FNV algorithm. The conversion from uint to int is not ideal, but should help to
+        // retain its effect on the distribution of the hash function. As it's only ever used as a compromise in an unlikely
+        // situation, we'll live with it.
+        private const int FallbackOffsetBasis = unchecked((int)2166136261);
 
         private static readonly int OffsetBasis = GetOffsetBasis();
 
@@ -51,7 +58,8 @@ namespace Existential
 
                     foreach (object aFieldValue in inObjectArray)
                     {
-                        theHashCode = (theHashCode * PrimeNumber) ^ (aFieldValue?.GetHashCode()).GetValueOrDefault(0);
+                        theHashCode = (theHashCode * FnvPrimeNumber) ^
+                                      (aFieldValue?.GetHashCode()).GetValueOrDefault(0);
                     }
                 }
             }
@@ -68,7 +76,8 @@ namespace Existential
             var theRandom = new Random();
             int theOffsetBasis = theRandom.Next();
 
-            // Ensure the offset basis can't be zero.
+            // It's very unlikely the random number will be zero, but if it happens we'll allow a number of
+            // retries to get a different result.
             const int LoopLimit = 101;
             int theCounter = 0;
             while (theOffsetBasis == 0 && theCounter < LoopLimit)
@@ -77,11 +86,10 @@ namespace Existential
                 theCounter++;
             }
 
-            // Throw an exception if we reached the loop limit (very unlikely).
-            // Otherwise return the random offset basis.
+            // Return the offset basis. If a random one has not been created, we'll use a fallback value,
+            // which is the one recommended for the FNV algorithm.
             return theCounter == LoopLimit - 1
-                ? throw new InvalidOperationException(
-                    $"Random number generation unexpectedly returned 0 on {LoopLimit - 1} consecutive occasions.")
+                ? FallbackOffsetBasis
                 : theOffsetBasis;
         }
     }
