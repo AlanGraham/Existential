@@ -48,6 +48,206 @@ namespace Existential.Test
                 Throws.Nothing);
         }
 
+        [Test]
+        public static void ThrowIfGreaterThan_WithGreaterValue_Throws()
+        {
+            // Arrange
+            const int Value = 2;
+            const int Limit = 1;
+
+            // Assert
+            Assert.That(
+                () =>
+                {
+                    // Act
+                    _ = Validate.ThrowIfGreaterThan(Limit, Value, nameof(Value));
+                },
+                Throws.Exception.TypeOf<ArgumentOutOfRangeException>()
+                    .With.Message.Contains(nameof(Value))
+                    .And.Message.Contains("greater than")
+                    .And.Not.Message.Contains("equal to"));
+        }
+
+        [Test]
+        public static void ThrowIfGreaterThan_WithEqualValue_ReturnsValue()
+        {
+            // Arrange
+            const int Value = 2;
+            const int Limit = 2;
+
+            // Act
+            int theResult = Validate.ThrowIfGreaterThan(Limit, Value, nameof(Value));
+
+            // Assert
+            Assert.That(theResult, Is.EqualTo(Value));
+        }
+
+        [Test]
+        public static void ThrowIfGreaterThan_WithLesserValue_ReturnsValue()
+        {
+            // Arrange
+            const int Value = 1;
+            const int Limit = 2;
+
+            // Act
+            int theResult = Validate.ThrowIfGreaterThan(Limit, Value, nameof(Value));
+
+            // Assert
+            Assert.That(theResult, Is.EqualTo(Value));
+        }
+
+        [Test]
+        public static void ThrowIfGreaterThanOrEqualTo_WithGreaterValue_Throws()
+        {
+            // Arrange
+            const int Value = 2;
+            const int Limit = 1;
+
+            // Assert
+            Assert.That(
+                () =>
+                {
+                    // Act
+                    _ = Validate.ThrowIfGreaterThanOrEqualTo(Limit, Value, nameof(Value));
+                },
+                Throws.Exception.TypeOf<ArgumentOutOfRangeException>()
+                    .With.Message.Contains(nameof(Value))
+                    .And.Message.Contains("greater than or equal to"));
+        }
+
+        [Test]
+        public static void ThrowIfGreaterThanOrEqualTo_WithEqualValue_Throws()
+        {
+            // Arrange
+            const int Value = 2;
+            const int Limit = 2;
+
+            // Assert
+            Assert.That(
+                () =>
+                {
+                    // Act
+                    _ = Validate.ThrowIfGreaterThanOrEqualTo(Limit, Value, nameof(Value));
+                },
+                Throws.Exception.TypeOf<ArgumentOutOfRangeException>()
+                    .With.Message.Contains(nameof(Value))
+                    .And.Message.Contains("greater than or equal to"));
+        }
+
+        [Test]
+        public static void ThrowIfGreaterThanOrEqualTo_WithLesserValue_ReturnsValue()
+        {
+            // Arrange
+            const int Value = 1;
+            const int Limit = 2;
+
+            // Act
+            int theResult = Validate.ThrowIfGreaterThanOrEqualTo(Limit, Value, nameof(Value));
+
+            // Assert
+            Assert.That(theResult, Is.EqualTo(Value));
+        }
+
+        [Test]
+        public static void ThrowIfLessThan_WithGreaterValue_ReturnsValue()
+        {
+            // Arrange
+            const int Value = 2;
+            const int Limit = 1;
+
+            // Act
+            int theResult = Validate.ThrowIfLessThan(Limit, Value, nameof(Value));
+
+            // Assert
+            Assert.That(theResult, Is.EqualTo(Value));
+        }
+
+        [Test]
+        public static void ThrowIfLessThan_WithEqualValue_ReturnsValue()
+        {
+            // Arrange
+            const int Value = 2;
+            const int Limit = 2;
+
+            // Act
+            int theResult = Validate.ThrowIfLessThan(Limit, Value, nameof(Value));
+
+            // Assert
+            Assert.That(theResult, Is.EqualTo(Value));
+        }
+
+        [Test]
+        public static void ThrowIfLessThan_WithLesserValue_Throws()
+        {
+            // Arrange
+            const int Value = 1;
+            const int Limit = 2;
+
+            // Assert
+            Assert.That(
+                () =>
+                {
+                    // Act
+                    _ = Validate.ThrowIfLessThan(Limit, Value, nameof(Value));
+                },
+                Throws.Exception.TypeOf<ArgumentOutOfRangeException>()
+                    .With.Message.Contains(nameof(Value))
+                    .And.Message.Contains("less than")
+                    .And.Not.Message.Contains("equal to"));
+        }
+
+        [Test]
+        public static void ThrowIfLessThanOrEqualTo_WithGreaterValue_ReturnsValue()
+        {
+            // Arrange
+            const int Value = 2;
+            const int Limit = 1;
+
+            // Act
+            int theResult = Validate.ThrowIfLessThanOrEqualTo(Limit, Value, nameof(Value));
+
+            // Assert
+            Assert.That(theResult, Is.EqualTo(Value));
+        }
+
+        [Test]
+        public static void ThrowIfLessThanOrEqualTo_WithEqualValue_Throws()
+        {
+            // Arrange
+            const int Value = 2;
+            const int Limit = 2;
+
+            // Assert
+            Assert.That(
+                () =>
+                {
+                    // Act
+                    _ = Validate.ThrowIfLessThanOrEqualTo(Limit, Value, nameof(Value));
+                },
+                Throws.Exception.TypeOf<ArgumentOutOfRangeException>()
+                    .With.Message.Contains(nameof(Value))
+                    .And.Message.Contains("less than or equal to"));
+        }
+
+        [Test]
+        public static void ThrowIfLessThanOrEqualTo_WithLesserValue_Throws()
+        {
+            // Arrange
+            const int Value = 1;
+            const int Limit = 2;
+
+            // Assert
+            Assert.That(
+                () =>
+                {
+                    // Act
+                    _ = Validate.ThrowIfLessThanOrEqualTo(Limit, Value, nameof(Value));
+                },
+                Throws.Exception.TypeOf<ArgumentOutOfRangeException>()
+                    .With.Message.Contains(nameof(Value))
+                    .And.Message.Contains("less than or equal to"));
+        }
+
         /// <summary>
         ///     Checks that validation fails when an IEnumerable collection is non-null but empty.
         /// </summary>

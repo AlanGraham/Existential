@@ -113,5 +113,41 @@ namespace Existential.Properties {
                 return ResourceManager.GetString("StringCannotBeEmptyOrWhiteSpaceWithTrim", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value {0} was greater than the limit..
+        /// </summary>
+        internal static string ValueGreaterThanLimit {
+            get {
+                return ResourceManager.GetString("ValueGreaterThanLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value {0} was greater than or equal to the limit..
+        /// </summary>
+        internal static string ValueGreaterThanOrEqualToLimit {
+            get {
+                return ResourceManager.GetString("ValueGreaterThanOrEqualToLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value {0} was less than the limit..
+        /// </summary>
+        internal static string ValueLessThanLimit {
+            get {
+                return ResourceManager.GetString("ValueLessThanLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value {0} was less than or equal to the limit..
+        /// </summary>
+        internal static string ValueLessThanOrEqualToLimit {
+            get {
+                return ResourceManager.GetString("ValueLessThanOrEqualToLimit", resourceCulture);
+            }
+        }
     }
 }
