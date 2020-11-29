@@ -479,6 +479,234 @@ namespace Existential
                 : inValue;
         }
 
+        /// <summary>
+        ///     <em>
+        ///         <see cref="ThrowIfGreaterThan{T}" />
+        ///     </em>
+        ///     will throw an <see cref="ArgumentOutOfRangeException" /> if the value passed as the parameter
+        ///     <paramref name="inValue" /> is greater than the value passed as <paramref name="inLimit" />.
+        /// </summary>
+        /// <typeparam name="T">
+        ///     The type parameter <typeparamref name="T" /> captures the type of the value passed to the
+        ///     parameter <paramref name="inValue" /> so that the value can be returned as exactly the same type if it
+        ///     validates successfully. The type should not have to be specified explicitly when calling the method. There are few
+        ///     constraints on the type <typeparamref name="T" />; it must implement the interface
+        ///     <see cref="IComparable{T}" />.
+        /// </typeparam>
+        /// <param name="inLimit">
+        ///     A value which the value <paramref name="inValue" /> will be compared against as a limit that cannot be exceeded. If
+        ///     <paramref name="inValue" /> is greater than <paramref name="inLimit" />, an
+        ///     <see cref="ArgumentOutOfRangeException" /> will be thrown.
+        /// </param>
+        /// <param name="inValue">
+        ///     A value that will be validated to ensure that it is less than or equal to <paramref name="inLimit" />. The
+        ///     name of
+        ///     the variable containing the value should be passed to this method as the <paramref name="inName" /> parameter.
+        /// </param>
+        /// <param name="inName">
+        ///     The name of the variable passed to the <paramref name="inValue" /> parameter. Since C# 6.0, the
+        ///     <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/nameof">nameof</a> operator
+        ///     can be used to retrieve a value to pass here.
+        /// </param>
+        /// <returns>
+        ///     The value passed as parameter <paramref name="inValue" /> will be returned if it validates as being
+        ///     less than or equal to <paramref name="inLimit" />.
+        /// </returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///     <para>
+        ///         A <see cref="ArgumentOutOfRangeException" /> will be thrown if parameter
+        ///         <paramref name="inValue" /> is greater than the parameter <paramref name="inLimit" />.
+        ///     </para>
+        ///     <para>
+        ///         If the parameter <paramref name="inName" /> has been correctly populated, the name of the value that was
+        ///         found to be greater than <paramref name="inLimit" /> will be included in the exception message.
+        ///     </para>
+        /// </exception>
+        public static T ThrowIfGreaterThan<T>(T inLimit, T inValue, string inName)
+            where T : IComparable<T>
+        {
+            if (inValue.CompareTo(inLimit) > 0)
+            {
+                string theMessage = string.Format(CultureInfo.CurrentCulture, Resources.ValueGreaterThanLimit, inName);
+                throw new ArgumentOutOfRangeException(inName, inValue, theMessage);
+            }
+
+            return inValue;
+        }
+
+        /// <summary>
+        ///     <em>
+        ///         <see cref="ThrowIfGreaterThanOrEqualTo{T}" />
+        ///     </em>
+        ///     will throw an <see cref="ArgumentOutOfRangeException" /> if the value passed as the parameter
+        ///     <paramref name="inValue" /> is greater than or equal to the value passed as <paramref name="inLimit" />.
+        /// </summary>
+        /// <typeparam name="T">
+        ///     The type parameter <typeparamref name="T" /> captures the type of the value passed to the
+        ///     parameter <paramref name="inValue" /> so that the value can be returned as exactly the same type if it
+        ///     validates successfully. The type should not have to be specified explicitly when calling the method. There are few
+        ///     constraints on the type <typeparamref name="T" />; it must implement the interface
+        ///     <see cref="IComparable{T}" />.
+        /// </typeparam>
+        /// <param name="inLimit">
+        ///     A value which the value <paramref name="inValue" /> will be compared against as a limit that cannot be equalled or
+        ///     exceeded. If
+        ///     <paramref name="inValue" /> is greater than or equal to <paramref name="inLimit" />, an
+        ///     <see cref="ArgumentOutOfRangeException" /> will be thrown.
+        /// </param>
+        /// <param name="inValue">
+        ///     A value that will be validated to ensure that it is less than <paramref name="inLimit" />. The name of
+        ///     the variable containing the value should be passed to this method as the <paramref name="inName" /> parameter.
+        /// </param>
+        /// <param name="inName">
+        ///     The name of the variable passed to the <paramref name="inValue" /> parameter. Since C# 6.0, the
+        ///     <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/nameof">nameof</a> operator
+        ///     can be used to retrieve a value to pass here.
+        /// </param>
+        /// <returns>
+        ///     The value passed as parameter <paramref name="inValue" /> will be returned if it validates as being
+        ///     less than <paramref name="inLimit" />.
+        /// </returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///     <para>
+        ///         A <see cref="ArgumentOutOfRangeException" /> will be thrown if parameter
+        ///         <paramref name="inValue" /> is greater than or equal to the parameter <paramref name="inLimit" />.
+        ///     </para>
+        ///     <para>
+        ///         If the parameter <paramref name="inName" /> has been correctly populated, the name of the value that was
+        ///         found to be greater than <paramref name="inLimit" /> will be included in the exception message.
+        ///     </para>
+        /// </exception>
+        public static T ThrowIfGreaterThanOrEqualTo<T>(T inLimit, T inValue, string inName)
+            where T : IComparable<T>
+        {
+            if (inValue.CompareTo(inLimit) >= 0)
+            {
+                string theMessage = string.Format(
+                    CultureInfo.CurrentCulture,
+                    Resources.ValueGreaterThanOrEqualToLimit,
+                    inName);
+                throw new ArgumentOutOfRangeException(inName, inValue, theMessage);
+            }
+
+            return inValue;
+        }
+
+        /// <summary>
+        ///     <em>
+        ///         <see cref="ThrowIfLessThan{T}" />
+        ///     </em>
+        ///     will throw an <see cref="ArgumentOutOfRangeException" /> if the value passed as the parameter
+        ///     <paramref name="inValue" /> is less than the value passed as <paramref name="inLimit" />.
+        /// </summary>
+        /// <typeparam name="T">
+        ///     The type parameter <typeparamref name="T" /> captures the type of the value passed to the
+        ///     parameter <paramref name="inValue" /> so that the value can be returned as exactly the same type if it
+        ///     validates successfully. The type should not have to be specified explicitly when calling the method. There are few
+        ///     constraints on the type <typeparamref name="T" />; it must implement the interface
+        ///     <see cref="IComparable{T}" />.
+        /// </typeparam>
+        /// <param name="inLimit">
+        ///     A value which the value <paramref name="inValue" /> will be compared against, as a lower limit that must be
+        ///     equalled or exceeded. If
+        ///     <paramref name="inValue" /> is less than <paramref name="inLimit" />, an
+        ///     <see cref="ArgumentOutOfRangeException" /> will be thrown.
+        /// </param>
+        /// <param name="inValue">
+        ///     A value that will be validated to ensure that it is greater than or equal to <paramref name="inLimit" />. The
+        ///     name of the variable containing the value should be passed to this method as the <paramref name="inName" />
+        ///     parameter.
+        /// </param>
+        /// <param name="inName">
+        ///     The name of the variable passed to the <paramref name="inValue" /> parameter. Since C# 6.0, the
+        ///     <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/nameof">nameof</a> operator
+        ///     can be used to retrieve a value to pass here.
+        /// </param>
+        /// <returns>
+        ///     The value passed as parameter <paramref name="inValue" /> will be returned if it validates as being
+        ///     less than <paramref name="inLimit" />.
+        /// </returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///     <para>
+        ///         A <see cref="ArgumentOutOfRangeException" /> will be thrown if parameter
+        ///         <paramref name="inValue" /> is less than the parameter <paramref name="inLimit" />.
+        ///     </para>
+        ///     <para>
+        ///         If the parameter <paramref name="inName" /> has been correctly populated, the name of the value that was
+        ///         found to be less than <paramref name="inLimit" /> will be included in the exception message.
+        ///     </para>
+        /// </exception>
+        public static T ThrowIfLessThan<T>(T inLimit, T inValue, string inName)
+            where T : IComparable<T>
+        {
+            if (inValue.CompareTo(inLimit) < 0)
+            {
+                string theMessage = string.Format(CultureInfo.CurrentCulture, Resources.ValueLessThanLimit, inName);
+                throw new ArgumentOutOfRangeException(inName, inValue, theMessage);
+            }
+
+            return inValue;
+        }
+
+        /// <summary>
+        ///     <em>
+        ///         <see cref="ThrowIfLessThanOrEqualTo{T}" />
+        ///     </em>
+        ///     will throw an <see cref="ArgumentOutOfRangeException" /> if the value passed as the parameter
+        ///     <paramref name="inValue" /> is less than or equal to the value passed as <paramref name="inLimit" />.
+        /// </summary>
+        /// <typeparam name="T">
+        ///     The type parameter <typeparamref name="T" /> captures the type of the value passed to the
+        ///     parameter <paramref name="inValue" /> so that the value can be returned as exactly the same type if it
+        ///     validates successfully. The type should not have to be specified explicitly when calling the method. There are few
+        ///     constraints on the type <typeparamref name="T" />; it must implement the interface
+        ///     <see cref="IComparable{T}" />.
+        /// </typeparam>
+        /// <param name="inLimit">
+        ///     A value which the value <paramref name="inValue" /> will be compared against, as a lower limit that must be
+        ///     exceeded. If
+        ///     <paramref name="inValue" /> is less than or equal to <paramref name="inLimit" />, an
+        ///     <see cref="ArgumentOutOfRangeException" /> will be thrown.
+        /// </param>
+        /// <param name="inValue">
+        ///     A value that will be validated to ensure that it is less than or equal to <paramref name="inLimit" />. The
+        ///     name of the variable containing the value should be passed to this method as the <paramref name="inName" />
+        ///     parameter.
+        /// </param>
+        /// <param name="inName">
+        ///     The name of the variable passed to the <paramref name="inValue" /> parameter. Since C# 6.0, the
+        ///     <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/nameof">nameof</a> operator
+        ///     can be used to retrieve a value to pass here.
+        /// </param>
+        /// <returns>
+        ///     The value passed as parameter <paramref name="inValue" /> will be returned if it validates as being
+        ///     less than or equal to <paramref name="inLimit" />.
+        /// </returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///     <para>
+        ///         A <see cref="ArgumentOutOfRangeException" /> will be thrown if parameter
+        ///         <paramref name="inValue" /> is less than or equal to the parameter <paramref name="inLimit" />.
+        ///     </para>
+        ///     <para>
+        ///         If the parameter <paramref name="inName" /> has been correctly populated, the name of the value that was
+        ///         found to be less than <paramref name="inLimit" /> will be included in the exception message.
+        ///     </para>
+        /// </exception>
+        public static T ThrowIfLessThanOrEqualTo<T>(T inLimit, T inValue, string inName)
+            where T : IComparable<T>
+        {
+            if (inValue.CompareTo(inLimit) <= 0)
+            {
+                string theMessage = string.Format(
+                    CultureInfo.CurrentCulture,
+                    Resources.ValueLessThanOrEqualToLimit,
+                    inName);
+                throw new ArgumentOutOfRangeException(inName, inValue, theMessage);
+            }
+
+            return inValue;
+        }
+
         /// <summary>Inserts a name into an exception message.</summary>
         /// <param name="inMessage">The message into which the name should be inserted.</param>
         /// <param name="inArgumentName">The name to be inserted in the exception message.</param>

@@ -14,7 +14,9 @@
     <PackageLicenseExpression>MS-PL</PackageLicenseExpression>
     <PackageReleaseNotes>Established feature parity with Java's Optional&lt;T&gt;. Added: Maybe&lt;T&gt;.WithValueOf(T), Maybe&lt;T&gt;.WithGuaranteedValueOf(T), Maybe&lt;T&gt;.Or(Maybe&lt;T&gt;), Maybe&lt;T&gt;.Or(Func&lt;Maybe&lt;T&gt;&gt;) and Maybe&lt;T&gt;.IfExists(Action&lt;T&gt;).
 
-Modified HashCodeHelper behaviour to ensure differernt results in different processes (in line with .NET Core default behaviour).</PackageReleaseNotes>
+Modified HashCodeHelper behaviour to ensure differernt results in different processes (in line with .NET Core default behaviour).
+
+Added GreaterThan/LessThan /GreaterThanOrEqualTo/LessThanOrEqualTo comparators to the Validate class.</PackageReleaseNotes>
     <PackageProjectUrl>https://existential.ggreig.com/</PackageProjectUrl>
     <RepositoryUrl>https://dev.azure.com/ggreig/_git/Existential</RepositoryUrl>
     <PackageIcon>Existential256.png</PackageIcon>

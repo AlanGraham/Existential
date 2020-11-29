@@ -135,4 +135,16 @@
   <data name="EmptyMaybeCannotBeDefaultForEmptyMaybe" xml:space="preserve">
     <value>An empty Maybe&lt;T&gt; cannot be provided as the default value to replace an empty Maybe&lt;T&gt;.</value>
   </data>
+  <data name="ValueGreaterThanLimit" xml:space="preserve">
+    <value>The value {0} was greater than the limit.</value>
+  </data>
+  <data name="ValueGreaterThanOrEqualToLimit" xml:space="preserve">
+    <value>The value {0} was greater than or equal to the limit.</value>
+  </data>
+  <data name="ValueLessThanLimit" xml:space="preserve">
+    <value>The value {0} was less than the limit.</value>
+  </data>
+  <data name="ValueLessThanOrEqualToLimit" xml:space="preserve">
+    <value>The value {0} was less than or equal to the limit.</value>
+  </data>
 </root>
