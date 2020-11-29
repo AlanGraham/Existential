@@ -13,10 +13,10 @@ namespace Existential
     using Properties;
 
     /// <summary>
-    /// A class for converting an <see cref="IEnumerable" /> to an <see cref="IEnumerable{T}" />.
+    ///     A class for converting an <see cref="IEnumerable" /> to an <see cref="IEnumerable{T}" />.
     /// </summary>
     /// <typeparam name="T">The underlying type of the collection.</typeparam>
-    public class EnumerableOf<T> : IEnumerable<T>
+    internal class EnumerableOf<T> : IEnumerable<T>
     {
         private readonly Lazy<int> myLength;
 
@@ -27,7 +27,7 @@ namespace Existential
         ///     The <see cref="IEnumerable" /> to be converted to an <see cref="IEnumerable{T}" />.
         /// </param>
         /// <exception cref="ArgumentTypeException">
-        ///     Thrown if the <see cref="IEnumerable" /> collection contains one or member
+        ///     Thrown if the <see cref="IEnumerable" /> collection contains one or more member
         ///     that is not of type <typeparamref name="T" />.
         /// </exception>
         internal EnumerableOf(IEnumerable inEnumerable)
