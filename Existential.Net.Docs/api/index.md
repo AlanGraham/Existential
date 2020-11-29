@@ -9,7 +9,6 @@ Existential contains the following namespaces and classes:
 * [Existential](xref:Existential) (Namespace)
     * [ArgumentTypeException](xref:Existential.ArgumentTypeException)
     * [Disposable](xref:Existential.Disposable)
-    * [EnumerableOf&lt;T&gt;](xref:Existential.EnumerableOf`1)
     * [GetGenericEnumerable](xref:Existential.GetGenericEnumerable)
     * [HashCodeHelper](xref:Existential.HashCodeHelper)
     * [Maybe](xref:Existential.Maybe)
